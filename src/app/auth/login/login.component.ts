@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { LoginI } from 'src/app/models/login.interface';
 import { RegisterI } from 'src/app/models/response.interface';
 import { ApiService } from 'src/app/services/api.service';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -47,22 +48,38 @@ export class LoginComponent implements OnInit {
   }
 
   onLogin(form:LoginI){
-    this.api.login(form).subscribe(resp => {
 
-      let dataResponse:RegisterI = resp;
-      console.log(resp);
-      console.log('dataResponse: ', dataResponse)
-
-      if(dataResponse.status){
-         localStorage.setItem('token',dataResponse.result.token)
-         this.ruta.navigate(['dashboard'])
+   
+      this.api.login(form).subscribe(resp => {
         
+        let dataResponse:RegisterI = resp;
+        Swal.fire({
+      
+          title: 'Bienvenido ',
+          html: 'Sera redirigido en un momento.',
+          timer: 2000,
+          timerProgressBar: true,
+        }).then((result) => {
+          /* Read more about handling dismissals below */
+          if (result.dismiss === Swal.DismissReason.timer) {
+            console.log('I was closed by the timer')
+          }
+        console.log(resp);
+        console.log('dataResponse: ', dataResponse)
+  
+        if(dataResponse.status){
+           localStorage.setItem('token',dataResponse.result.token)
+           this.ruta.navigate(['dashboard'])
+          
+  
+          console.log('token: ',dataResponse.result);
+          console.log('token: ', dataResponse.status);
+  
+        }
+      })
 
-        console.log('token: ',dataResponse.result);
-        console.log('token: ', dataResponse.status);
-
-      }
     })
+    
   }
 
 

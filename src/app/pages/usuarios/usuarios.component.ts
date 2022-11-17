@@ -62,21 +62,50 @@ export class UsuariosComponent implements OnInit {
       data:row
     }).afterClosed().subscribe(val=>{
       if(val === 'update'){
+        Swal.fire('Exito!','Se ha editado correctamente el usuario','success')
         this.getAllUsers();
       }
     })
   }
 
   deleteUser(code:any){
-    this.api.deleteUser(code).subscribe({
-      next:(res)=>{
-        this.getAllUsers();
-        Swal.fire('Exito','Se ha eliminado el usuario','success')
-      },
-      error:()=>{
-        Swal.fire('Error','Se ha producido un error al eliminar el usuario','error')
+    Swal.fire({
+      title: 'Estas seguro?',
+      text: "Tu no podras revertir esto!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, Borrar usuario!',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+        this.api.deleteUser(code).subscribe({
+          next:(res)=>{
+            
+            this.getAllUsers();
+           
+          },
+          error:()=>{
+            Swal.fire('Error','Se ha producido un error al eliminar el usuario','error')
+          }
+        })
+        Swal.fire(
+          'Exito!',
+          'El usuario fue borrado correctamente.',
+          'success'
+        )
+      }
+      else{
+        Swal.fire(
+          'Atencion!',
+          'Verifique sus acciones.',
+          'warning'
+        )
       }
     })
+   
 
   }
 
