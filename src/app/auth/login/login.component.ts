@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit {
 
   onLogin(form:LoginI){
 
-   
+   console.log('Logueo correcto');
       this.api.login(form).subscribe(resp => {
         
         let dataResponse:RegisterI = resp;
