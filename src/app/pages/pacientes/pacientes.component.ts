@@ -13,7 +13,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./pacientes.component.css']
 })
 export class PacientesComponent implements OnInit {
-  displayedColumns: string[] = ['folio','paciente','edad', 'sexo', 'telefono', 'correo','accion'];
+  displayedColumns: string[] = ['folio','nombre','apellidoP','apellidoM','edad', 'sexo', 'telefono', 'correo','accion'];
   dataSource!: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -48,6 +48,64 @@ export class PacientesComponent implements OnInit {
       }
     })
   }
+
+  editPaciente(row:any){
+    this.dialogPacientes.open(DialogPacientesComponent,{
+      width:'30%',
+      data:row
+    }).afterClosed().subscribe(val=>{
+      if(val === 'update'){
+        Swal.fire('Exito!','Se ha editado correctamente el usuario','success')
+        this.getPacientes();
+      }
+    })
+  }
+
+  deletePaciente(folio:any){
+    Swal.fire({
+      title: 'Estas seguro?',
+      text: "Tu no podras revertir esto!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, Borrar Paciente!',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+        this.api.deletePaciente(folio).subscribe({
+          next:(res)=>{
+            
+            this.getPacientes();
+           
+          },
+          error:()=>{
+            Swal.fire('Error','Se ha producido un error al eliminar el Paciente','error')
+          }
+        })
+        Swal.fire(
+          'Exito!',
+          'El Paciente fue borrado correctamente.',
+          'success'
+        )
+      }
+      else{
+        Swal.fire(
+          'Atencion!',
+          'Verifique sus acciones.',
+          'warning'
+        )
+      }
+    })
+   
+
+  }
+
+
+
+
+
 
   applyFilter(event : Event){
     const filterValue = (event.target as HTMLInputElement).value;
