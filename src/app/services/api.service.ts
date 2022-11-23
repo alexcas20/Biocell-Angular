@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import  Register  from '../models/register.interface';
+import  RegistroPaciente  from '../models/registerPaciente.interface';
 import { RegisterI } from '../models/response.interface';
 import { LoginI } from '../models/login.interface';
 
@@ -10,7 +11,8 @@ import { LoginI } from '../models/login.interface';
 })
 export class ApiService {
 
-  private url:string = 'http://127.0.0.1:3000/lab'
+  private url:string = 'http://127.0.0.1:3000/lab';
+  private urlPacientes:string = 'http://127.0.0.1:3000/lab/pacientes'
 
   constructor(private http:HttpClient) { }
 
@@ -39,14 +41,24 @@ export class ApiService {
     return this.http.delete(direccion,code)
   }
 
-  postPaciente(form:Register):Observable<any>{
-    let direccion = `${this.url}/addPaciente`;
-    return this.http.post<Register>(direccion,form)
+  postPaciente(form:RegistroPaciente):Observable<RegistroPaciente>{
+    let direccion = `${this.urlPacientes}/addPaciente`;
+    return this.http.post<RegistroPaciente>(direccion,form)
   }
 
   getPacientes():Observable<any>{
-    let direccion = `${this.url}/allPacientes`;
+    let direccion = `${this.urlPacientes}/allPacientes`;
     return this.http.get(direccion);
+  }
+
+  updatePaciente(folio:any,form:RegistroPaciente):Observable<RegistroPaciente>{
+    let direccion = `${this.urlPacientes}/updatePaciente/${folio}`;
+    return this.http.put<RegistroPaciente>(direccion,form)
+  }
+
+  deletePaciente(folio:any){
+    let direccion = `${this.urlPacientes}/deletePaciente/${folio}`;
+    return this.http.delete(direccion,folio);
   }
 
 
