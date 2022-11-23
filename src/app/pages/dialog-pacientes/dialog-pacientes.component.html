@@ -1,0 +1,54 @@
+<h1 mat-dialog-title>Registro de Paciente</h1>
+<div mat-dialog-content>
+  <form [formGroup]="productForm">
+    <mat-form-field appearance="outline">
+      <mat-label>Folio</mat-label>
+      <input formControlName="folio" matInput placeholder="Folio" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Nombres</mat-label>
+      <input formControlName="nombre" matInput placeholder="Nombres" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Apeliido Paterno</mat-label>
+        <input formControlName="apellidoP" matInput placeholder="Apeliido Paterno" />
+    </mat-form-field>
+    
+    <mat-form-field appearance="outline">
+        <mat-label>Apeliido Materno</mat-label>
+        <input formControlName="apellidoM" matInput placeholder="Apeliido Materno" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Edad</mat-label>
+      <input formControlName="edad" matInput placeholder="Edad" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Sexo</mat-label>
+    <mat-select formControlName="sexo" placeholder="Sexo">
+      <mat-option value="Masculino">Masculino</mat-option>
+      <mat-option value="Femenino">Femenino</mat-option>
+      <mat-option value="Otro">Otro...</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Telefono</mat-label>
+        <input formControlName="telefono" matInput placeholder="Telefono" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Correo</mat-label>
+      <input formControlName="correo" matInput placeholder="Correo" />
+  </mat-form-field>
+  
+  </form>
+</div>
+
+<div mat-dialog-action [align]="'end'">
+  <button mat-raised-button color="warn" mat-dialog-close>Cerrar</button>
+  <button style="margin-left: 8px;" mat-raised-button color="primary" (click)="addPaciente(productForm.value)">{{actionBtn}}</button>
+</div>

@@ -38,4 +38,16 @@ export class ApiService {
     let direccion = `${this.url}/Delete/${code}`;
     return this.http.delete(direccion,code)
   }
+
+  postPaciente(form:Register):Observable<any>{
+    let direccion = `${this.url}/addPaciente`;
+    return this.http.post<Register>(direccion,form)
+  }
+
+  getPacientes():Observable<any>{
+    let direccion = `${this.url}/allPacientes`;
+    return this.http.get(direccion);
+  }
+
+
 }
