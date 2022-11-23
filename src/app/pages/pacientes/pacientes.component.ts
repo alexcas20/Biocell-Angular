@@ -55,7 +55,6 @@ export class PacientesComponent implements OnInit {
       data:row
     }).afterClosed().subscribe(val=>{
       if(val === 'update'){
-        Swal.fire('Exito!','Se ha editado correctamente el usuario','success')
         this.getPacientes();
       }
     })
