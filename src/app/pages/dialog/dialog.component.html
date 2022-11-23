@@ -18,8 +18,15 @@
     </mat-form-field>
     <mat-form-field appearance="outline">
       <mat-label>Contraseña</mat-label>
-      <input formControlName="password" matInput placeholder="Contraseña" [type]="hide ? 'password' : 'text'" />
-      <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+      <input
+        formControlName="password"
+        matInput
+        placeholder="Contraseña"
+        [type]="hide ? 'password' : 'text'"
+      />
+      <mat-icon matSuffix (click)="hide = !hide">{{
+        hide ? "visibility_off" : "visibility"
+      }}</mat-icon>
     </mat-form-field>
     <mat-form-field *ngIf="editData" appearance="outline">
       <mat-label>Status</mat-label>
@@ -29,9 +36,15 @@
       </mat-select>
     </mat-form-field>
   </form>
-  
 </div>
 <div mat-dialog-action [align]="'end'">
   <button mat-raised-button color="warn" mat-dialog-close>Cerrar</button>
-  <button style="margin-left: 8px;" mat-raised-button color="primary" (click)="addUser(productForm.value)">{{actionBtn}}</button>
+  <button
+    style="margin-left: 8px"
+    mat-raised-button
+    color="primary"
+    (click)="addUser(productForm.value)"
+  >
+    {{ actionBtn }}
+  </button>
 </div>
