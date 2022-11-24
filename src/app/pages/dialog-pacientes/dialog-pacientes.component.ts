@@ -18,9 +18,10 @@ export class DialogPacientesComponent implements OnInit {
   hide = true;
   folioCode = ['B','C','L','A','B']
   folioCode2 = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O']
-  folioRandomCode = Math.floor(Math.random()*this.folioCode.length+1)
+  folioRandomCode = Math.floor(Math.random()*this.folioCode.length)
   folioPositionCode = this.folioCode[this.folioRandomCode]
-  folioRandomCode2 = Math.floor(Math.random()*this.folioCode2.length+1)
+
+  folioRandomCode2 = Math.floor(Math.random()*this.folioCode2.length)
   folioPositionCode2 = this.folioCode2[this.folioRandomCode2]
   folioRandomNumber = Math.floor(Math.random()*10000)
 
@@ -31,15 +32,16 @@ export class DialogPacientesComponent implements OnInit {
     private dialogRef : MatDialogRef<DialogPacientesComponent>) { }
 
   ngOnInit(): void {
+  
     this.productForm = this.formBuilder.group({
       folio: ["BCL"+this.folioPositionCode+this.folioPositionCode2+this.folioRandomNumber,Validators.required],
-      nombre : ['',Validators.required],
-      apellidoP : ['',Validators.required],
-      apellidoM: ['',Validators.required],
+      nombre : ['',[Validators.required, Validators.maxLength(30)]],
+      apellidoP : ['',[Validators.required, Validators.maxLength(30)]],
+      apellidoM: ['',[Validators.required, Validators.maxLength(30)]],
       edad:['',Validators.required],
       sexo:['',Validators.required],
-      telefono: ['', Validators.required],
-      correo:['',Validators.required]
+      telefono: ['', [Validators.required, Validators.maxLength(10)]],
+      correo:['',[Validators.required, Validators.maxLength(120)]]
     });
 
     if(this.editData){
