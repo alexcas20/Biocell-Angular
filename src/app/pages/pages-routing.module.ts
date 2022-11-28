@@ -5,6 +5,7 @@ import { UsuariosComponent } from './usuarios/usuarios.component';
 import { PagesComponent } from './pages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PacientesComponent } from './pacientes/pacientes.component';
+import { MedicosComponent } from './medicos/medicos.component';
 
 const routes: Routes = [
 
@@ -12,7 +13,8 @@ const routes: Routes = [
     children: [
       {path: '', component:DashboardComponent},
       {path: 'usuarios', component:UsuariosComponent},
-      {path: 'pacientes', component:PacientesComponent}
+      {path: 'pacientes', component:PacientesComponent},
+      {path:'medicos',component:MedicosComponent}
     ]
   }
 ]

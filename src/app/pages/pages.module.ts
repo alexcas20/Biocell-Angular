@@ -22,7 +22,9 @@ import { AuthModule } from '../auth/auth.module';
 import { AppRoutingModule } from '../app-routing.module';
 import { BrowserModule } from '@angular/platform-browser';
 import {PacientesComponent} from './pacientes/pacientes.component';
-import { DialogPacientesComponent } from './dialog-pacientes/dialog-pacientes.component'
+import { DialogPacientesComponent } from './dialog-pacientes/dialog-pacientes.component';
+import { MedicosComponent } from './medicos/medicos.component';
+import { DialogMedicosComponent } from './dialog-medicos/dialog-medicos.component'
 
 @NgModule({
   declarations: [
@@ -30,7 +32,9 @@ import { DialogPacientesComponent } from './dialog-pacientes/dialog-pacientes.co
     UsuariosComponent,
     PagesComponent,
     PacientesComponent,
-    DialogPacientesComponent
+    DialogPacientesComponent,
+    MedicosComponent,
+    DialogMedicosComponent
   ],
   imports: [
     CommonModule,

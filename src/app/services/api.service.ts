@@ -62,4 +62,13 @@ export class ApiService {
   }
 
 
+  getMedicos(): Observable<any> {
+    let direccion = `${this.url}/allMedicos`;
+    return this.http.get(direccion);
+  }
+
+  postMedicos(form: Register): Observable<any> {
+    let direccion = `${this.url}/addMedico`;
+    return this.http.post<Register>(direccion, form);
+  }
 }
