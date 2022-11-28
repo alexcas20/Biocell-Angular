@@ -17,6 +17,7 @@ export class DialogPacientesComponent implements OnInit {
   actionBtn : string = "Guardar"
   hide = true;
 
+
   constructor(private formBuilder : FormBuilder, 
     private api : ApiService, 
     @Inject(MAT_DIALOG_DATA) public editData : any,
