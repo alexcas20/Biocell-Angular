@@ -7,16 +7,18 @@ import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DialogPacientesComponent } from '../dialog-pacientes/dialog-pacientes.component';
 import Swal from 'sweetalert2';
 import { DialogComponent } from '../dialog/dialog.component';
+import { DialogMedicosComponent } from '../dialog-medicos/dialog-medicos.component';
 
 @Component({
-  selector: 'app-pacientes',
-  templateUrl: './pacientes.component.html',
-  styleUrls: ['./pacientes.component.css'],
+  selector: 'app-medicos',
+  templateUrl: './medicos.component.html',
+  styleUrls: ['./medicos.component.css']
 })
-export class PacientesComponent implements OnInit {
+export class MedicosComponent implements OnInit {
   displayedColumns: string[] = [
     'folio',
     'paciente',
+    'especialidad',
     'edad',
     'sexo',
     'telefono',
@@ -28,27 +30,27 @@ export class PacientesComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private api: ApiService, private dialogPacientes: MatDialog) {}
+  constructor(private api: ApiService, private dialogMedicos: MatDialog) { }
 
   ngOnInit(): void {
-    this.getPacientes();
+    this.getMedicos();
   }
 
-  openDialogPacientes() {
-    this.dialogPacientes
-      .open(DialogPacientesComponent, {
+  openDialogMedicos() {
+    this.dialogMedicos
+      .open(DialogMedicosComponent, {
         width: '30%',
       })
       .afterClosed()
       .subscribe((val) => {
         if (val === 'save') {
-          this.getPacientes();
+          this.getMedicos();
         }
       });
   }
 
-  getPacientes() {
-    this.api.getPacientes().subscribe({
+  getMedicos() {
+    this.api.getMedicos().subscribe({
       next: (res) => {
         console.log(res);
         this.dataSource = new MatTableDataSource(res);
@@ -61,24 +63,24 @@ export class PacientesComponent implements OnInit {
     });
   }
 
-  editPaciente(row: any) {
-    this.dialogPacientes
-      .open(DialogPacientesComponent, {
+  editMedico(row: any) {
+    this.dialogMedicos
+      .open(DialogMedicosComponent, {
         width: '30%',
         data: row,
       })
       .afterClosed()
       .subscribe((val) => {
         if (val === 'update') {
-          this.getPacientes();
+          this.getMedicos();
         }
       });
   }
 
-  deletePaciente(code: any) {
+  deleteMedico(code: any) {
     this.api.deletePaciente(code).subscribe({
       next: (res) => {
-        this.getPacientes();
+        this.getMedicos();
         Swal.fire('Exito', 'Se ha eliminado el usuario', 'success');
       },
       error: () => {
@@ -91,6 +93,7 @@ export class PacientesComponent implements OnInit {
     });
   }
 
+
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLocaleLowerCase();
@@ -99,4 +102,5 @@ export class PacientesComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
+
 }

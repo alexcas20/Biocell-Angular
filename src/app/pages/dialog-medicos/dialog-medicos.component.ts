@@ -7,11 +7,11 @@ import Swal from 'sweetalert2';
 import { DialogComponent } from '../dialog/dialog.component';
 
 @Component({
-  selector: 'app-dialog-pacientes',
-  templateUrl: './dialog-pacientes.component.html',
-  styleUrls: ['./dialog-pacientes.component.css'],
+  selector: 'app-dialog-medicos',
+  templateUrl: './dialog-medicos.component.html',
+  styleUrls: ['./dialog-medicos.component.css'],
 })
-export class DialogPacientesComponent implements OnInit {
+export class DialogMedicosComponent implements OnInit {
   productForm!: FormGroup;
   actionBtn: string = 'Guardar';
   hide = true;
@@ -29,6 +29,7 @@ export class DialogPacientesComponent implements OnInit {
       nombre: ['', Validators.required],
       apellidoP: ['', Validators.required],
       apellidoM: ['', Validators.required],
+      especialidad:['',Validators.required],
       edad: ['', Validators.required],
       sexo: ['', Validators.required],
       telefono: ['', Validators.required],
@@ -42,6 +43,7 @@ export class DialogPacientesComponent implements OnInit {
       this.productForm.controls['nombre'].setValue(this.editData.nombre);
       this.productForm.controls['apellidoP'].setValue(this.editData.apellidoP);
       this.productForm.controls['apellidoM'].setValue(this.editData.apellidoM);
+      this.productForm.controls['especialidad'].setValue(this.editData.especialidad);
       this.productForm.controls['edad'].setValue(this.editData.edad);
       this.productForm.controls['sexo'].setValue(this.editData.sexo);
       this.productForm.controls['telefono'].setValue(this.editData.telefono);
@@ -49,19 +51,19 @@ export class DialogPacientesComponent implements OnInit {
     }
   }
 
-  addPaciente(form: Register) {
+  addMedico(form: Register) {
     if (!this.editData) {
       if (this.productForm.valid) {
-        this.api.postPaciente(form).subscribe({
+        this.api.postMedicos(form).subscribe({
           next: (res) => {
-            Swal.fire('Exito', 'Se ha registrado el usuario', 'success');
+            Swal.fire('Exito', 'Se ha registrado al medico', 'success');
             this.productForm.reset();
             this.dialogRef.close('save');
           },
           error: () => {
             Swal.fire(
               'Error',
-              'Se ha producido un error al registar el usuario',
+              'Se ha producido un error al registar al medico',
               'error'
             );
           },

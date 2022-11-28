@@ -52,4 +52,14 @@ export class ApiService {
     let direccion = `${this.url}/deletePaciente/${code}`;
     return this.http.delete(direccion, code);
   }
+
+  getMedicos(): Observable<any> {
+    let direccion = `${this.url}/allMedicos`;
+    return this.http.get(direccion);
+  }
+
+  postMedicos(form: Register): Observable<any> {
+    let direccion = `${this.url}/addMedico`;
+    return this.http.post<Register>(direccion, form);
+  }
 }
