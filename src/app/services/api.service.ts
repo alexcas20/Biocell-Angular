@@ -37,4 +37,38 @@ export class ApiService {
   
   }
 
+  putUser(code: any, form: Register): Observable<Register> {
+    let direccion = `${this.url}/editUser/${code}`;
+    return this.http.put<Register>(direccion, form);
+  }
+
+  deleteUser(code: any) {
+    let direccion = `${this.url}/Delete/${code}`;
+    return this.http.delete(direccion, code);
+  }
+
+  postPaciente(form: Register): Observable<any> {
+    let direccion = `${this.url}/addPaciente`;
+    return this.http.post<Register>(direccion, form);
+  }
+
+  getPacientes(): Observable<any> {
+    let direccion = `${this.url}/allPacientes`;
+    return this.http.get(direccion);
+  }
+
+  deletePaciente(code: any) {
+    let direccion = `${this.url}/deletePaciente/${code}`;
+    return this.http.delete(direccion, code);
+  }
+
+  getMedicos(): Observable<any> {
+    let direccion = `${this.url}/allMedicos`;
+    return this.http.get(direccion);
+  }
+
+  postMedicos(form: Register): Observable<any> {
+    let direccion = `${this.url}/addMedico`;
+    return this.http.post<Register>(direccion, form);
+  }
 }

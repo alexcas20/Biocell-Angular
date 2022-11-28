@@ -5,14 +5,16 @@ import { UsuariosComponent } from './usuarios/usuarios.component';
 import { PagesComponent } from './pages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PacientesComponent } from './pacientes/pacientes.component';
+import { MedicosComponent } from './medicos/medicos.component';
 
 const routes: Routes = [
 
  {path: 'dashboard', component: PagesComponent,
     children: [
-      {path: '', component:DashboardComponent, data:{titulo:'Dashboard'}},
-      {path: 'usuarios', component:UsuariosComponent, data:{titulo:'Usuarios'}},
-      {path: 'pacientes', component:PacientesComponent, data:{titulo:'Pacientes'}}
+      {path: '', component:DashboardComponent},
+      {path: 'usuarios', component:UsuariosComponent},
+      {path: 'pacientes', component:PacientesComponent},
+      {path:'medicos',component:MedicosComponent}
     ]
   }
 ]
