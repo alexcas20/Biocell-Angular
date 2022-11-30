@@ -16,6 +16,7 @@ export class DialogPacientesComponent implements OnInit {
   productForm !: FormGroup;
   actionBtn : string = "Guardar"
   hide = true;
+  
   folioCode = ['B','C','L','A','B']
   folioCode2 = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O']
   folioRandomCode = Math.floor(Math.random()*this.folioCode.length)

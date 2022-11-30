@@ -8,17 +8,17 @@
 
     <mat-form-field appearance="outline">
       <mat-label>Nombres</mat-label>
-      <input formControlName="nombre" matInput placeholder="Nombres" />
+      <input formControlName="nombre" matInput placeholder="Nombres" pattern=" ^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$" />
     </mat-form-field>
 
     <mat-form-field appearance="outline">
         <mat-label>Apeliido Paterno</mat-label>
-        <input formControlName="apellidoP" matInput placeholder="Apeliido Paterno" />
+        <input formControlName="apellidoP" matInput placeholder="Apeliido Paterno" pattern=" ^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$" />
     </mat-form-field>
     
     <mat-form-field appearance="outline">
         <mat-label>Apeliido Materno</mat-label>
-        <input formControlName="apellidoM" matInput placeholder="Apeliido Materno" />
+        <input formControlName="apellidoM" matInput placeholder="Apeliido Materno" pattern=" ^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$" />
     </mat-form-field>
 
     <mat-form-field appearance="outline">
@@ -42,7 +42,7 @@
 
     <mat-form-field appearance="outline">
       <mat-label>Correo</mat-label>
-      <input formControlName="correo" matInput placeholder="Correo" pattern="^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$" />
+      <input formControlName="correo" matInput placeholder="Correo" pattern="^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})$" />
   </mat-form-field>
   
   </form>
