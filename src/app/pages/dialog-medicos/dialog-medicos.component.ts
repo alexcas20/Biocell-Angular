@@ -1,10 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import Register from 'src/app/models/register.interface';
 import { ApiService } from 'src/app/services/api.service';
 import Swal from 'sweetalert2';
-import { DialogComponent } from '../dialog/dialog.component';
+import RegistroMedico from '../../models/registerMedicos.interface';
 
 @Component({
   selector: 'app-dialog-medicos',
@@ -16,24 +15,31 @@ export class DialogMedicosComponent implements OnInit {
   actionBtn: string = 'Guardar';
   hide = true;
 
+  folioCode = ['B','C','L','A','B','B','C','L','A','B']
+  folioCode2 = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O']
+  folioRandomCode = Math.floor(Math.random()*this.folioCode.length)
+  folioPositionCode = this.folioCode[this.folioRandomCode]
+
+  folioRandomCode2 = Math.floor(Math.random()*this.folioCode2.length)
+  folioPositionCode2 = this.folioCode2[this.folioRandomCode2]
+  folioRandomNumber = Math.floor(Math.random()*10000)
+
   constructor(
     private formBuilder: FormBuilder,
     private api: ApiService,
     @Inject(MAT_DIALOG_DATA) public editData: any,
-    private dialogRef: MatDialogRef<DialogComponent>
+    private dialogRef: MatDialogRef<DialogMedicosComponent>
   ) {}
 
   ngOnInit(): void {
     this.productForm = this.formBuilder.group({
-      folio: ['', Validators.required],
-      nombre: ['', Validators.required],
-      apellidoP: ['', Validators.required],
-      apellidoM: ['', Validators.required],
+      folio: ["MBCL"+this.folioPositionCode+this.folioPositionCode2+this.folioRandomNumber,Validators.required],
+      nombre: ['', [Validators.required, Validators.maxLength(30)]],
       especialidad:['',Validators.required],
       edad: ['', Validators.required],
       sexo: ['', Validators.required],
-      telefono: ['', Validators.required],
-      correo: ['', Validators.required],
+      telefono: ['', [Validators.required, Validators.maxLength(10)]],
+      correo: ['', [Validators.required, Validators.maxLength(120)]],
     });
 
     if (this.editData) {
@@ -41,8 +47,6 @@ export class DialogMedicosComponent implements OnInit {
       this.actionBtn = 'Actualizar';
       this.productForm.controls['folio'].setValue(this.editData.folio);
       this.productForm.controls['nombre'].setValue(this.editData.nombre);
-      this.productForm.controls['apellidoP'].setValue(this.editData.apellidoP);
-      this.productForm.controls['apellidoM'].setValue(this.editData.apellidoM);
       this.productForm.controls['especialidad'].setValue(this.editData.especialidad);
       this.productForm.controls['edad'].setValue(this.editData.edad);
       this.productForm.controls['sexo'].setValue(this.editData.sexo);
@@ -51,7 +55,7 @@ export class DialogMedicosComponent implements OnInit {
     }
   }
 
-  addMedico(form: Register) {
+  addMedico(form: RegistroMedico) {
     if (!this.editData) {
       if (this.productForm.valid) {
         this.api.postMedicos(form).subscribe({
@@ -70,21 +74,22 @@ export class DialogMedicosComponent implements OnInit {
         });
       }
     } else {
-      this.updateUser(form);
+      this.updateMedico(form);
     }
   }
-  updateUser(form: Register) {
-    console.log(this.productForm.get('code')?.value);
-    this.api.putUser(this.productForm.get('code')?.value, form).subscribe({
+
+  updateMedico(form: RegistroMedico) {
+    console.log(this.productForm.get('folio')?.value);
+    this.api.putMedico(this.productForm.get('folio')?.value, form).subscribe({
       next: (res) => {
-        Swal.fire('Exito', 'Se ha actualizado el usuario', 'success');
+        Swal.fire('Exito', 'Se ha actualizado el Medico', 'success');
         this.productForm.reset();
         this.dialogRef.close('update');
       },
       error: () => {
         Swal.fire(
           'Exito',
-          'Se ha producido un error al actualizar el usuario',
+          'Se ha producido un error al actualizar el Medico',
           'error'
         );
       },
