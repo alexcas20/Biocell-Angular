@@ -5,6 +5,7 @@ import  Register  from '../models/register.interface';
 import  RegistroPaciente  from '../models/registerPaciente.interface';
 import { RegisterI } from '../models/response.interface';
 import { LoginI } from '../models/login.interface';
+import RegistroMedico from '../models/registerMedicos.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,7 @@ export class ApiService {
 
   private url:string = 'http://127.0.0.1:3000/lab';
   private urlPacientes:string = 'http://127.0.0.1:3000/lab/pacientes'
+  private urlMedicos:string = 'http://127.0.0.1:3000/lab/medicos'
 
   constructor(private http:HttpClient) { }
 
@@ -63,12 +65,23 @@ export class ApiService {
 
 
   getMedicos(): Observable<any> {
-    let direccion = `${this.url}/allMedicos`;
+    let direccion = `${this.urlMedicos}/allMedicos`;
     return this.http.get(direccion);
   }
 
-  postMedicos(form: Register): Observable<any> {
-    let direccion = `${this.url}/addMedico`;
-    return this.http.post<Register>(direccion, form);
+  postMedicos(form: RegistroMedico): Observable<RegistroMedico> {
+    let direccion = `${this.urlMedicos}/addMedico`;
+    return this.http.post<RegistroMedico>(direccion, form);
   }
+
+  putMedico(folio:any,form:RegistroMedico):Observable<RegistroMedico>{
+    let direccion = `${this.urlMedicos}/updateMedico/${folio}`;
+    return this.http.put<RegistroMedico>(direccion,form)
+  }
+
+  deleteMedico(folio:any){
+    let direccion = `${this.urlMedicos}/deleteMedico/${folio}`;
+    return this.http.delete(direccion,folio);
+  }
+
 }
