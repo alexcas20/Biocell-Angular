@@ -17,7 +17,7 @@ import { DialogMedicosComponent } from '../dialog-medicos/dialog-medicos.compone
 export class MedicosComponent implements OnInit {
   displayedColumns: string[] = [
     'folio',
-    'paciente',
+    'nombre',
     'especialidad',
     'edad',
     'sexo',
@@ -39,7 +39,7 @@ export class MedicosComponent implements OnInit {
   openDialogMedicos() {
     this.dialogMedicos
       .open(DialogMedicosComponent, {
-        width: '30%',
+        width: '50%',
       })
       .afterClosed()
       .subscribe((val) => {
@@ -66,7 +66,7 @@ export class MedicosComponent implements OnInit {
   editMedico(row: any) {
     this.dialogMedicos
       .open(DialogMedicosComponent, {
-        width: '30%',
+        width: '50%',
         data: row,
       })
       .afterClosed()
@@ -77,20 +77,43 @@ export class MedicosComponent implements OnInit {
       });
   }
 
-  deleteMedico(code: any) {
-    this.api.deletePaciente(code).subscribe({
-      next: (res) => {
-        this.getMedicos();
-        Swal.fire('Exito', 'Se ha eliminado el usuario', 'success');
-      },
-      error: () => {
+  deleteMedico(folio: any) {
+    Swal.fire({
+      title: 'Estas seguro?',
+      text: "Tu no podras revertir esto!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, Borrar Medico!',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+        this.api.deleteMedico(folio).subscribe({
+          next:(res)=>{
+            
+            this.getMedicos();
+           
+          },
+          error:()=>{
+            Swal.fire('Error','Se ha producido un error al eliminar el Paciente','error')
+          }
+        })
         Swal.fire(
-          'Error',
-          'Se ha producido un error al eliminar el usuario',
-          'error'
-        );
-      },
-    });
+          'Exito!',
+          'El Medico fue borrado correctamente.',
+          'success'
+        )
+      }
+      else{
+        Swal.fire(
+          'Atencion!',
+          'Verifique sus acciones.',
+          'warning'
+        )
+      }
+    })
   }
 
 

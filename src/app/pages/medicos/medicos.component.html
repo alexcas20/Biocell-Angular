@@ -21,9 +21,9 @@
           </ng-container>
           
           <!-- User Column -->
-          <ng-container matColumnDef="paciente">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Paciente </th>
-            <td mat-cell *matCellDef="let row"> {{row.paciente}} </td>
+          <ng-container matColumnDef="nombre">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+            <td mat-cell *matCellDef="let row"> {{row.nombre}} </td>
           </ng-container>
 
           <!-- User Column -->
@@ -62,7 +62,7 @@
               <button mat-icon-button (click)="editMedico(row)" color="primary">
                 <mat-icon>edit</mat-icon>
               </button>
-              <button mat-icon-button  (click)="deleteMedico(row.code)" color="warn">
+              <button mat-icon-button  (click)="deleteMedico(row.folio)" color="warn">
                 <mat-icon>delete</mat-icon>
               </button>
             </td>
