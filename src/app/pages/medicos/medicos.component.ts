@@ -17,7 +17,7 @@ import { DialogMedicosComponent } from '../dialog-medicos/dialog-medicos.compone
 export class MedicosComponent implements OnInit {
   displayedColumns: string[] = [
     'folio',
-    'paciente',
+    'medico',
     'especialidad',
     'edad',
     'sexo',
