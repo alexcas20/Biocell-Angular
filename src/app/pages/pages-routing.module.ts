@@ -6,6 +6,7 @@ import { PagesComponent } from './pages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PacientesComponent } from './pacientes/pacientes.component';
 import { MedicosComponent } from './medicos/medicos.component';
+import { ExamenesComponent } from './examenes/examenes.component';
 
 const routes: Routes = [
 
@@ -14,7 +15,8 @@ const routes: Routes = [
       {path: '', component:DashboardComponent},
       {path: 'usuarios', component:UsuariosComponent},
       {path: 'pacientes', component:PacientesComponent},
-      {path:'medicos',component:MedicosComponent}
+      {path:'medicos',component:MedicosComponent},
+      {path:'examenes',component:ExamenesComponent}
     ]
   }
 ]

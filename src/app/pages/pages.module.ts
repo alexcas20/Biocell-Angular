@@ -24,7 +24,12 @@ import { BrowserModule } from '@angular/platform-browser';
 import {PacientesComponent} from './pacientes/pacientes.component';
 import { DialogPacientesComponent } from './dialog-pacientes/dialog-pacientes.component';
 import { MedicosComponent } from './medicos/medicos.component';
-import { DialogMedicosComponent } from './dialog-medicos/dialog-medicos.component'
+import { DialogMedicosComponent } from './dialog-medicos/dialog-medicos.component';
+import { ExamenesComponent } from './examenes/examenes.component';
+import { DialogExamenesComponent } from './dialog-examenes/dialog-examenes.component';
+import { DialogBuscarPacienteComponent } from './dialog-buscar-paciente/dialog-buscar-paciente.component';
+import { DialogBuscarMedicoComponent } from './dialog-buscar-medico/dialog-buscar-medico.component'
+import {MatListModule} from '@angular/material/list';
 
 @NgModule({
   declarations: [
@@ -34,12 +39,17 @@ import { DialogMedicosComponent } from './dialog-medicos/dialog-medicos.componen
     PacientesComponent,
     DialogPacientesComponent,
     MedicosComponent,
-    DialogMedicosComponent
+    DialogMedicosComponent,
+    ExamenesComponent,
+    DialogExamenesComponent,
+    DialogBuscarPacienteComponent,
+    DialogBuscarMedicoComponent
   ],
   imports: [
     CommonModule,
     RouterModule,
     SharedModule,
+    MatListModule,
     MatFormFieldModule,
     MatPaginatorModule,
     MatTableModule,
