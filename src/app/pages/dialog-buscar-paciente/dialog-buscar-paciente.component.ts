@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ApiService } from 'src/app/services/api.service';
@@ -11,7 +11,8 @@ import { DialogComponent } from '../dialog/dialog.component';
 })
 export class DialogBuscarPacienteComponent implements OnInit {
   productForm!: FormGroup;
-  ListarPacientes :any[]= []
+  ListarPacientes: any[] = [];
+  
 
   constructor(
     private formBuilder: FormBuilder,
@@ -21,17 +22,27 @@ export class DialogBuscarPacienteComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getPacientes()
+    this.getPacientes();
   }
-
 
   getPacientes() {
     this.api.getPacientes().subscribe({
       next: (res) => {
         console.log(res);
-    let values = Object.values(res)
-        this.ListarPacientes = values
-        console.log('Lista:  ', this.ListarPacientes)
+        let values = Object.values(res);
+        this.ListarPacientes = values;
+        console.log('Lista:  ', this.ListarPacientes);
+      },
+    });
+  }
 
-      }})}
+  editPaciente(e: any) {
+    console.log(e);
+  }
+
+ selectPaciente(e:any){
+    console.log(e._value);
+    this.dialogRef.close();
+    
+  }
 }

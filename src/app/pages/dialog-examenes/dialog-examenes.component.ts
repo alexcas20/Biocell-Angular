@@ -18,6 +18,8 @@ export class DialogExamenesComponent implements OnInit {
   productForm!: FormGroup;
   actionBtn: string = 'Guardar';
   hide = true;
+
+  selectPaciente:any
   
   dataSource!: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -26,7 +28,7 @@ export class DialogExamenesComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private api: ApiService,
-    @Inject(MAT_DIALOG_DATA) public editData: any,
+    @Inject(MAT_DIALOG_DATA) 
     private dialogRef: MatDialogRef<DialogComponent>,
     private dialogPacientes: MatDialog
   ) { }
@@ -34,7 +36,7 @@ export class DialogExamenesComponent implements OnInit {
   ngOnInit(): void {
     this.productForm = this.formBuilder.group({
       folio: ['', Validators.required],
-      paciente: ['', Validators.required],
+      nombre: ['', Validators.required],
       apellidoP: ['', Validators.required],
       apellidoM: ['', Validators.required],
       especialidad:['',Validators.required],
@@ -43,8 +45,12 @@ export class DialogExamenesComponent implements OnInit {
       telefono: ['', Validators.required],
       correo: ['', Validators.required],
     });
-  }
 
+    if(this.selectPaciente){
+      this.productForm.controls['folio'].setValue(this.selectPaciente.folio);
+      this.productForm.controls['nombre'].setValue(this.selectPaciente.nombre);
+    }
+  }
 
   BuscarPacientes(){
     this.dialogPacientes
@@ -72,5 +78,10 @@ export class DialogExamenesComponent implements OnInit {
       },
     });
   }
+
+
+  
+
+
 
 }

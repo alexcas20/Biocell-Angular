@@ -1,7 +1,7 @@
 <mat-selection-list #item [multiple]="false">
-    <mat-list-option *ngFor="let item of ListarPacientes" [value]="item">
+    <mat-list-option *ngFor="let item of ListarPacientes" [value]="item" (click)="editPaciente(item)">
       {{item.nombre}} <br>
-     <p>Folio: </p> {{item.folio}} <br>
     </mat-list-option>
+    <button style="margin-left: 8px" mat-raised-button color="primary" (click)="selectPaciente(item)">Seleccionar</button>
   </mat-selection-list>
   
