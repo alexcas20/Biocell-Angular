@@ -8,6 +8,7 @@ import { ApiService } from 'src/app/services/api.service';
 import Swal from 'sweetalert2';
 import { DialogBuscarPacienteComponent } from '../dialog-buscar-paciente/dialog-buscar-paciente.component';
 import { DialogComponent } from '../dialog/dialog.component';
+import { ServicioModalesService } from '../servicio-modales.service';
 
 @Component({
   selector: 'app-dialog-examenes',
@@ -18,6 +19,7 @@ export class DialogExamenesComponent implements OnInit {
   productForm!: FormGroup;
   actionBtn: string = 'Guardar';
   hide = true;
+  cual: boolean= false
 
   selectPaciente:any
   
@@ -30,7 +32,8 @@ export class DialogExamenesComponent implements OnInit {
     private api: ApiService,
     @Inject(MAT_DIALOG_DATA) 
     private dialogRef: MatDialogRef<DialogComponent>,
-    private dialogPacientes: MatDialog
+    private dialogPacientes: MatDialog,
+    private ServicioModal:ServicioModalesService
   ) { }
 
   ngOnInit(): void {
@@ -46,9 +49,11 @@ export class DialogExamenesComponent implements OnInit {
       correo: ['', Validators.required],
     });
 
-    if(this.selectPaciente){
-      this.productForm.controls['folio'].setValue(this.selectPaciente.folio);
-      this.productForm.controls['nombre'].setValue(this.selectPaciente.nombre);
+    this.ServicioModal.getDatos(this.productForm)
+
+    if(this.ServicioModal.getDatos){
+    console.log("true")
+      this.productForm.controls['nombre'].setValue(this.ServicioModal.getDatos(this.productForm));
     }
   }
 
