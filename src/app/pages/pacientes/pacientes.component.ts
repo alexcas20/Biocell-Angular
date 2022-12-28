@@ -3,14 +3,15 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ApiService } from 'src/app/services/api.service';
-import { MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DialogPacientesComponent } from '../dialog-pacientes/dialog-pacientes.component';
 import Swal from 'sweetalert2';
+import { DialogComponent } from '../dialog/dialog.component';
 
 @Component({
   selector: 'app-pacientes',
   templateUrl: './pacientes.component.html',
-  styleUrls: ['./pacientes.component.css']
+  styleUrls: ['./pacientes.component.css'],
 })
 export class PacientesComponent implements OnInit {
   displayedColumns: string[] = ['folio','nombre','apellidoP','apellidoM','edad', 'sexo', 'telefono', 'correo','accion'];
@@ -19,34 +20,37 @@ export class PacientesComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private api: ApiService, private dialogPacientes: MatDialog) { }
+  constructor(private api: ApiService, private dialogPacientes: MatDialog) {}
 
   ngOnInit(): void {
     this.getPacientes();
   }
 
-  openDialogPacientes(){
-    this.dialogPacientes.open(DialogPacientesComponent, {
-      width: '30%'
-    }).afterClosed().subscribe(val=>{
-      if(val === 'save'){
-        this.getPacientes();
-      }
-    })
+  openDialogPacientes() {
+    this.dialogPacientes
+      .open(DialogPacientesComponent, {
+        width: '30%',
+      })
+      .afterClosed()
+      .subscribe((val) => {
+        if (val === 'save') {
+          this.getPacientes();
+        }
+      });
   }
 
-  getPacientes(){
+  getPacientes() {
     this.api.getPacientes().subscribe({
-      next:(res)=>{
+      next: (res) => {
         console.log(res);
         this.dataSource = new MatTableDataSource(res);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       },
-      error:(err)=>{
-        Swal.fire('Error','No se han encontrado los usuarios','error')
-      }
-    })
+      error: (err) => {
+        Swal.fire('Error', 'No se han encontrado los usuarios', 'error');
+      },
+    });
   }
 
   editPaciente(row:any){
@@ -74,7 +78,7 @@ export class PacientesComponent implements OnInit {
       if (result.isConfirmed) {
 
         this.api.deletePaciente(folio).subscribe({
-          next:(res)=>{
+          next:(res:any)=>{
             
             this.getPacientes();
            
@@ -110,9 +114,8 @@ export class PacientesComponent implements OnInit {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLocaleLowerCase();
 
-    if(this.dataSource.paginator){
+    if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
   }
-
 }

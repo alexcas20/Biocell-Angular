@@ -7,50 +7,50 @@ import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DialogPacientesComponent } from '../dialog-pacientes/dialog-pacientes.component';
 import Swal from 'sweetalert2';
 import { DialogComponent } from '../dialog/dialog.component';
-import { DialogMedicosComponent } from '../dialog-medicos/dialog-medicos.component';
+import { DialogExamenesComponent } from '../dialog-examenes/dialog-examenes.component';
 
 @Component({
-  selector: 'app-medicos',
-  templateUrl: './medicos.component.html',
-  styleUrls: ['./medicos.component.css']
+  selector: 'app-examenes',
+  templateUrl: './examenes.component.html',
+  styleUrls: ['./examenes.component.css'],
 })
-export class MedicosComponent implements OnInit {
+export class ExamenesComponent implements OnInit {
   displayedColumns: string[] = [
+    'user',
     'folio',
+    'paciente',
     'medico',
-    'especialidad',
-    'edad',
-    'sexo',
-    'telefono',
-    'correo',
+    'fecha',
+    'estatus',
     'accion',
   ];
+
   dataSource!: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private api: ApiService, private dialogMedicos: MatDialog) { }
+  constructor(private api: ApiService, private dialogPacientes: MatDialog) {}
 
   ngOnInit(): void {
-    this.getMedicos();
+    this.getDatosExamenes();
   }
 
-  openDialogMedicos() {
-    this.dialogMedicos
-      .open(DialogMedicosComponent, {
+  openDialogExamenes() {
+    this.dialogPacientes
+      .open(DialogExamenesComponent, {
         width: '30%',
       })
       .afterClosed()
       .subscribe((val) => {
         if (val === 'save') {
-          this.getMedicos();
+          this.getPacientes();
         }
       });
   }
 
-  getMedicos() {
-    this.api.getMedicos().subscribe({
+  getAllUsers() {
+    this.api.getUsers().subscribe({
       next: (res) => {
         console.log(res);
         this.dataSource = new MatTableDataSource(res);
@@ -63,37 +63,25 @@ export class MedicosComponent implements OnInit {
     });
   }
 
-  editMedico(row: any) {
-    this.dialogMedicos
-      .open(DialogMedicosComponent, {
-        width: '30%',
-        data: row,
-      })
-      .afterClosed()
-      .subscribe((val) => {
-        if (val === 'update') {
-          this.getMedicos();
-        }
-      });
-  }
-
-  deleteMedico(code: any) {
-    this.api.deletePaciente(code).subscribe({
-      next: (res:any) => {
-        this.getMedicos();
-        Swal.fire('Exito', 'Se ha eliminado el usuario', 'success');
+  getPacientes() {
+    this.api.getPacientes().subscribe({
+      next: (res) => {
+        console.log(res);
+        this.dataSource = new MatTableDataSource(res);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
       },
-      error: () => {
-        Swal.fire(
-          'Error',
-          'Se ha producido un error al eliminar el usuario',
-          'error'
-        );
+      error: (err) => {
+        Swal.fire('Error', 'No se han encontrado los usuarios', 'error');
       },
     });
   }
 
-
+  getDatosExamenes(){
+    this.getPacientes();
+    this.getAllUsers();
+  }
+  
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLocaleLowerCase();
@@ -102,5 +90,4 @@ export class MedicosComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
-
 }

@@ -1,9 +1,11 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import Register from 'src/app/models/register.interface';
+import RegistroMedico from 'src/app/models/registerMedicos.interface';
 import { ApiService } from 'src/app/services/api.service';
 import Swal from 'sweetalert2';
-import RegistroMedico from '../../models/registerMedicos.interface';
+import { DialogComponent } from '../dialog/dialog.component';
 
 @Component({
   selector: 'app-dialog-medicos',

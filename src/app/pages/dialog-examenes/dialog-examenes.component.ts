@@ -8,6 +8,7 @@ import { ApiService } from 'src/app/services/api.service';
 import Swal from 'sweetalert2';
 import { DialogBuscarPacienteComponent } from '../dialog-buscar-paciente/dialog-buscar-paciente.component';
 import { DialogComponent } from '../dialog/dialog.component';
+import { ServicioModalesService } from '../servicio-modales.service';
 
 @Component({
   selector: 'app-dialog-examenes',
@@ -18,6 +19,9 @@ export class DialogExamenesComponent implements OnInit {
   productForm!: FormGroup;
   actionBtn: string = 'Guardar';
   hide = true;
+  cual: boolean= false
+
+  selectPaciente:any
   
   dataSource!: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -26,15 +30,16 @@ export class DialogExamenesComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private api: ApiService,
-    @Inject(MAT_DIALOG_DATA) public editData: any,
+    @Inject(MAT_DIALOG_DATA) 
     private dialogRef: MatDialogRef<DialogComponent>,
-    private dialogPacientes: MatDialog
+    private dialogPacientes: MatDialog,
+    private ServicioModal:ServicioModalesService
   ) { }
 
   ngOnInit(): void {
     this.productForm = this.formBuilder.group({
       folio: ['', Validators.required],
-      paciente: ['', Validators.required],
+      nombre: ['', Validators.required],
       apellidoP: ['', Validators.required],
       apellidoM: ['', Validators.required],
       especialidad:['',Validators.required],
@@ -43,8 +48,14 @@ export class DialogExamenesComponent implements OnInit {
       telefono: ['', Validators.required],
       correo: ['', Validators.required],
     });
-  }
 
+    this.ServicioModal.getDatos(this.productForm)
+
+    if(this.ServicioModal.getDatos){
+    console.log("true")
+      this.productForm.controls['nombre'].setValue(this.ServicioModal.getDatos(this.productForm));
+    }
+  }
 
   BuscarPacientes(){
     this.dialogPacientes
@@ -72,5 +83,10 @@ export class DialogExamenesComponent implements OnInit {
       },
     });
   }
+
+
+  
+
+
 
 }

@@ -8,34 +8,33 @@ import { LoginI } from '../models/login.interface';
 import RegistroMedico from '../models/registerMedicos.interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ApiService {
 
   private url:string = 'http://127.0.0.1:3000/lab';
   private urlPacientes:string = 'http://127.0.0.1:3000/lab/pacientes'
   private urlMedicos:string = 'http://127.0.0.1:3000/lab/medicos'
+  constructor(private http: HttpClient) {}
 
-  constructor(private http:HttpClient) { }
-
-  login(form:LoginI):Observable<RegisterI>{
-    let direccion = `${this.url}/auth`
-    return this.http.post<RegisterI>(direccion,form)
+  login(form: LoginI): Observable<RegisterI> {
+    let direccion = `${this.url}/auth`;
+    return this.http.post<RegisterI>(direccion, form);
   }
 
-  postData(form:Register ):Observable<Register>{
+  postData(form: Register): Observable<Register> {
     let direccion = `${this.url}/registerUser`;
-    return this.http.post<Register>(direccion,form);
+    return this.http.post<Register>(direccion, form);
   }
 
-  getUsers():Observable<any>{
+  getUsers(): Observable<any> {
     let direccion = `${this.url}/allUsers`;
     return this.http.get(direccion);
   }
 
-  putUser(code:any, form:Register):Observable<Register>{
+  putUser(code: any, form: Register): Observable<Register> {
     let direccion = `${this.url}/editUser/${code}`;
-    return this.http.put<Register>(direccion, form)
+    return this.http.put<Register>(direccion, form);
   }
 
   deleteUser(code:any){

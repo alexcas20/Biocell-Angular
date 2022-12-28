@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import Register from 'src/app/models/register.interface';
 import RegistroPaciente from 'src/app/models/registerPaciente.interface';
 import { ApiService } from 'src/app/services/api.service';
 import Swal from 'sweetalert2';
@@ -9,12 +10,11 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-dialog-pacientes',
   templateUrl: './dialog-pacientes.component.html',
-  styleUrls: ['./dialog-pacientes.component.css']
+  styleUrls: ['./dialog-pacientes.component.css'],
 })
 export class DialogPacientesComponent implements OnInit {
-
-  productForm !: FormGroup;
-  actionBtn : string = "Guardar"
+  productForm!: FormGroup;
+  actionBtn: string = 'Guardar';
   hide = true;
   
   folioCode = ['B','C','L','A','B']
@@ -45,7 +45,7 @@ export class DialogPacientesComponent implements OnInit {
       correo:['',[Validators.required, Validators.maxLength(120)]]
     });
 
-    if(this.editData){
+    if (this.editData) {
       console.log(this.editData);
       this.actionBtn = "Actualizar";
       this.productForm.controls["folio"].setValue(this.editData.folio);
@@ -94,6 +94,6 @@ export class DialogPacientesComponent implements OnInit {
     
     }
 
-  }
   
-
+  
+}
