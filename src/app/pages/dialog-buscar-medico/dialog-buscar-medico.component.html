@@ -1,1 +1,6 @@
-<p>dialog-buscar-medico works!</p>
+<mat-selection-list #item [multiple]="false">
+    <mat-list-option *ngFor="let item of listarMedicos" [value]="item" (click)="selectMedico(item)">
+      {{item.nombreMedico}} <br>
+    </mat-list-option>
+    <!-- <button style="margin-left: 8px" mat-raised-button color="primary" (click)="selectPaciente(item)">Seleccionar</button> -->
+  </mat-selection-list>
