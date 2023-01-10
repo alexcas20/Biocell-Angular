@@ -18,7 +18,7 @@ export class ExamenesComponent implements OnInit {
   displayedColumns: string[] = [
     'user',
     'folio',
-    'paciente',
+    'nombre',
     'medico',
     'fecha',
     'estatus',
@@ -33,7 +33,7 @@ export class ExamenesComponent implements OnInit {
   constructor(private api: ApiService, private dialogPacientes: MatDialog) {}
 
   ngOnInit(): void {
-    this.getDatosExamenes();
+     this.getDatosExamenes();
   }
 
   openDialogExamenes() {
