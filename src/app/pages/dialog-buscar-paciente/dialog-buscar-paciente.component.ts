@@ -1,10 +1,11 @@
 import { ThisReceiver } from '@angular/compiler';
 import { Component, OnInit, Inject, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ApiService } from 'src/app/services/api.service';
 import { DialogComponent } from '../dialog/dialog.component';
 import { ServicioModalesService } from '../servicio-modales.service';
+import { DialogExamenesComponent } from '../dialog-examenes/dialog-examenes.component';
 
 @Component({
   selector: 'app-dialog-buscar-paciente',
@@ -18,9 +19,9 @@ export class DialogBuscarPacienteComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private api: ApiService,
-    @Inject(MAT_DIALOG_DATA) public editData: any,
     private dialogRef: MatDialogRef<DialogComponent>,
-    private ServicioModal : ServicioModalesService
+    private ServicioModal : ServicioModalesService,
+    private dialogExamenes: MatDialog
   ) {}
 
   ngOnInit(): void {  
@@ -38,17 +39,23 @@ export class DialogBuscarPacienteComponent implements OnInit {
     });
   }
 
-  editPaciente(e: any) {
-    console.log(e);
-    this.ServicioModal.getDatos(e);
+  editPaciente(item: any) {
+    console.log(item);
+    this.ServicioModal.getDatos(item);
+    this.dialogExamenes
+    .open(DialogExamenesComponent, {
+      width: '30%',
+      data: item
+    });
     this.dialogRef.close();
   }
 
- selectPaciente(e:any){
-    console.log("Dta: "+e._value);
-    this.dialogRef.close();
-    this.ServicioModal.getDatos(e);
+//  selectPaciente(e:any){
+//   this.ServicioModal.getDatos(e);
+//     console.log("Dta: "+e._value);
+//     this.dialogRef.close();
+  
 
-    }
+//     }
   }
 
