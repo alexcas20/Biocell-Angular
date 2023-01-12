@@ -30,16 +30,7 @@
 
       <mat-form-field appearance="outline">
         <mat-label>Nombre</mat-label>
-        <input formControlName="nombre" matInput placeholder="nombre" />
-      </mat-form-field>
-
-      <mat-form-field appearance="outline">
-        <mat-label>Nombre Medico</mat-label>
-        <input
-          formControlName="nombreMedico"
-          matInput
-          placeholder="nombreMedico"
-        />
+        <input formControlName="nombre" matInput placeholder="Nombre" />
       </mat-form-field>
 
       <mat-form-field appearance="outline">
@@ -57,6 +48,15 @@
           formControlName="apellidoM"
           matInput
           placeholder="Apeliido Materno"
+        />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Nombre Medico</mat-label>
+        <input
+          formControlName="nombreMedico"
+          matInput
+          placeholder="Nombre del Medico"
         />
       </mat-form-field>
 
@@ -79,7 +79,6 @@
         <mat-select formControlName="sexo" placeholder="Sexo">
           <mat-option value="Masculino">Masculino</mat-option>
           <mat-option value="Femenino">Femenino</mat-option>
-          
         </mat-select>
       </mat-form-field>
 
@@ -95,7 +94,7 @@
 
       <mat-form-field appearance="outline">
         <mat-label>Tipo de Examen</mat-label>
-        <mat-select formControlName="sexo" placeholder="Sexo">
+        <mat-select formControlName="tipoExamen" placeholder="Tipo de Examen">
           <mat-option value="Prueba de embarazo">Prueba de embarazo</mat-option>
           <mat-option value="Grupo sanguineo">Grupo sanguineo</mat-option>
         </mat-select>
@@ -103,35 +102,29 @@
 
       <mat-form-field appearance="outline">
         <mat-label>Prueba</mat-label>
-        <mat-select formControlName="sexo" placeholder="Sexo">
-          <mat-option value="Prueba de embarazo">Prueba de embarazo</mat-option>
-          <mat-option value="Grupo sanguineo">Grupo sanguineo</mat-option>
-        </mat-select>
+        <input formControlName="prueba" matInput placeholder="Prueba" />
       </mat-form-field>
 
       <mat-form-field appearance="outline">
         <mat-label>Resultado</mat-label>
-        <mat-select formControlName="sexo" placeholder="Sexo">
-          <mat-option value="Prueba de embarazo">Prueba de embarazo</mat-option>
-          <mat-option value="Grupo sanguineo">Grupo sanguineo</mat-option>
-        </mat-select>
+        <input formControlName="resultado" matInput placeholder="Resultado" />
       </mat-form-field>
 
       <mat-form-field appearance="outline">
-        <mat-label>Dimencional</mat-label>
-        <mat-select formControlName="sexo" placeholder="Sexo">
-          <mat-option value="Prueba de embarazo">Prueba de embarazo</mat-option>
-          <mat-option value="Grupo sanguineo">Grupo sanguineo</mat-option>
-        </mat-select>
+        <mat-label>Dimensional</mat-label>
+        <input
+          formControlName="dimensional"
+          matInput
+          placeholder="Dimensional"
+        />
       </mat-form-field>
-
     </form>
   </div>
 </mat-grid-list>
 
 <div mat-dialog-action [align]="'end'">
   <button mat-raised-button color="warn" mat-dialog-close>Cerrar</button>
-  <button style="margin-left: 8px" mat-raised-button color="primary">
+  <button (click)="registrarExamen(productForm.value)" style="margin-left: 8px" mat-raised-button color="primary">
     {{ actionBtn }}
   </button>
 </div>

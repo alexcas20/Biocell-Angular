@@ -14,6 +14,7 @@ import { DialogBuscarPacienteComponent } from '../dialog-buscar-paciente/dialog-
 import { DialogComponent } from '../dialog/dialog.component';
 import { ServicioModalesService } from '../servicio-modales.service';
 import { DialogBuscarMedicoComponent } from '../dialog-buscar-medico/dialog-buscar-medico.component';
+import registarExamen from 'src/app/models/registrarExamen.interface';
 
 @Component({
   selector: 'app-dialog-examenes',
@@ -56,18 +57,21 @@ export class DialogExamenesComponent implements OnInit {
       sexo: ['', Validators.required],
       telefono: ['', Validators.required],
       correo: ['', Validators.required],
+      tipoExamen: ['', Validators.required],
+      prueba: ['', Validators.required],
+      resultado: ['', Validators.required],
+      dimensional: ['', Validators.required],
     });
 
     if (this.data) {
       this.productForm.controls['folio'].patchValue(this.data.folio);
       this.productForm.controls['nombre'].patchValue(this.data.nombre);
-
       this.productForm.controls['apellidoP'].patchValue(this.data.apellidoP);
       this.productForm.controls['apellidoM'].patchValue(this.data.apellidoM);
       this.productForm.controls['edad'].patchValue(this.data.edad);
       this.productForm.controls['sexo'].patchValue(this.data.sexo);
       this.productForm.controls['telefono'].patchValue(this.data.telefono);
-      this.productForm.controls['correo'].patchValue(this.data.correo);
+      this.productForm.controls['correo'].patchValue(this.data.correo);      
     }
   }
 
@@ -82,7 +86,6 @@ export class DialogExamenesComponent implements OnInit {
           this.getPacientes();
         }
       });
-
     this.dialogRef.close();
   }
 
@@ -117,5 +120,9 @@ export class DialogExamenesComponent implements OnInit {
     const especialidad = localStorage.getItem('especialidad');
     this.productForm.controls['nombreMedico'].patchValue(medico);
     this.productForm.controls['especialidad'].patchValue(especialidad);
+  }
+
+  registrarExamen(form:registarExamen){
+    this.api.registarExamen(form).subscribe(resp => console.log("Examen guardado"))
   }
 }
