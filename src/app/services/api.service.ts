@@ -12,9 +12,9 @@ import RegistroMedico from '../models/registerMedicos.interface';
 })
 export class ApiService {
 
-  private url:string = 'http://127.0.0.1:3000/lab';
-  private urlPacientes:string = 'http://127.0.0.1:3000/lab/pacientes'
-  private urlMedicos:string = 'http://127.0.0.1:3000/lab/medicos'
+  private url:string = 'http://127.0.0.1:5000/lab';
+  private urlPacientes:string = 'http://127.0.0.1:5000/lab/'
+  private urlMedicos:string = 'http://127.0.0.1:5000/lab/'
   constructor(private http: HttpClient) {}
 
   login(form: LoginI): Observable<RegisterI> {
