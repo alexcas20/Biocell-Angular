@@ -1,96 +1,133 @@
 <h1 mat-dialog-title>Registro de Examenes</h1>
 
-<button style="margin: 5px;" (click)="buscarMedicos()" >Buscar Medico</button>
-<div mat-dialog-content>
-  <form [formGroup]="productForm">
-    <mat-form-field appearance="outline">
-      <mat-label>Folio</mat-label>
-      <input formControlName="folio" matInput placeholder="Folio"  />
-    </mat-form-field>
+<button
+  style="margin: 5px"
+  mat-raised-button
+  color="primary"
+  (click)="buscarMedicos()"
+>
+  Buscar Medico
+  <mat-icon>search</mat-icon>
+</button>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Nombre</mat-label>
-      <input
-        formControlName="nombre"
-        matInput
-        placeholder="nombre"
-       
-      />
-    </mat-form-field>
+<button
+  style="margin-left: 8px"
+  mat-raised-button
+  color="primary"
+  (click)="BuscarPacientes()"
+>
+  Buscar Paciente
+  <mat-icon>search</mat-icon>
+</button>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Nombre Medico</mat-label>
-      <input
-        formControlName="nombreMedico"
-        matInput
-        placeholder="nombreMedico"
-       
-      />
-    </mat-form-field>
+<mat-grid-list cols="1">
+  <div mat-dialog-content>
+    <form [formGroup]="productForm">
+      <mat-form-field appearance="outline">
+        <mat-label>Folio</mat-label>
+        <input formControlName="folio" matInput placeholder="Folio" />
+      </mat-form-field>
 
-    <button
-      style="margin-left: 8px"
-      mat-raised-button
-      color="primary"
-      (click)="BuscarPacientes()"
-    >
-      Buscar
-      <mat-icon>search</mat-icon>
-    </button>
-    
+      <mat-form-field appearance="outline">
+        <mat-label>Nombre</mat-label>
+        <input formControlName="nombre" matInput placeholder="nombre" />
+      </mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Apeliido Paterno</mat-label>
-      <input
-        formControlName="apellidoP"
-        matInput
-        placeholder="Apeliido Paterno"
-      />
-    </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Nombre Medico</mat-label>
+        <input
+          formControlName="nombreMedico"
+          matInput
+          placeholder="nombreMedico"
+        />
+      </mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Apeliido Materno</mat-label>
-      <input
-        formControlName="apellidoM"
-        matInput
-        placeholder="Apeliido Materno"
-      />
-    </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Apeliido Paterno</mat-label>
+        <input
+          formControlName="apellidoP"
+          matInput
+          placeholder="Apeliido Paterno"
+        />
+      </mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Especialidad</mat-label>
-      <input
-        formControlName="especialidad"
-        matInput
-        placeholder="Especialidad"
-      />
-    </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Apeliido Materno</mat-label>
+        <input
+          formControlName="apellidoM"
+          matInput
+          placeholder="Apeliido Materno"
+        />
+      </mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Edad</mat-label>
-      <input formControlName="edad" matInput placeholder="Edad" />
-    </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Especialidad</mat-label>
+        <input
+          formControlName="especialidad"
+          matInput
+          placeholder="Especialidad"
+        />
+      </mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Sexo</mat-label>
-      <mat-select formControlName="sexo" placeholder="Sexo">
-        <mat-option value="Masculino">Masculino</mat-option>
-        <mat-option value="Femenino">Femenino</mat-option>
-        <mat-option value="Otro">Otro...</mat-option>
-      </mat-select>
-    </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Edad</mat-label>
+        <input formControlName="edad" matInput placeholder="Edad" />
+      </mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Telefono</mat-label>
-      <input formControlName="telefono" matInput placeholder="Telefono" />
-    </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Sexo</mat-label>
+        <mat-select formControlName="sexo" placeholder="Sexo">
+          <mat-option value="Masculino">Masculino</mat-option>
+          <mat-option value="Femenino">Femenino</mat-option>
+          
+        </mat-select>
+      </mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Correo</mat-label>
-      <input formControlName="correo" matInput placeholder="Correo" />
-    </mat-form-field>
-  </form>
-</div>
+      <mat-form-field appearance="outline">
+        <mat-label>Telefono</mat-label>
+        <input formControlName="telefono" matInput placeholder="Telefono" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Correo</mat-label>
+        <input formControlName="correo" matInput placeholder="Correo" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Tipo de Examen</mat-label>
+        <mat-select formControlName="sexo" placeholder="Sexo">
+          <mat-option value="Prueba de embarazo">Prueba de embarazo</mat-option>
+          <mat-option value="Grupo sanguineo">Grupo sanguineo</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Prueba</mat-label>
+        <mat-select formControlName="sexo" placeholder="Sexo">
+          <mat-option value="Prueba de embarazo">Prueba de embarazo</mat-option>
+          <mat-option value="Grupo sanguineo">Grupo sanguineo</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Resultado</mat-label>
+        <mat-select formControlName="sexo" placeholder="Sexo">
+          <mat-option value="Prueba de embarazo">Prueba de embarazo</mat-option>
+          <mat-option value="Grupo sanguineo">Grupo sanguineo</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Dimencional</mat-label>
+        <mat-select formControlName="sexo" placeholder="Sexo">
+          <mat-option value="Prueba de embarazo">Prueba de embarazo</mat-option>
+          <mat-option value="Grupo sanguineo">Grupo sanguineo</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+    </form>
+  </div>
+</mat-grid-list>
 
 <div mat-dialog-action [align]="'end'">
   <button mat-raised-button color="warn" mat-dialog-close>Cerrar</button>
