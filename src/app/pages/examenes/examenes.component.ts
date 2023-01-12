@@ -39,7 +39,7 @@ export class ExamenesComponent implements OnInit {
   openDialogExamenes() {
     this.dialogPacientes
       .open(DialogExamenesComponent, {
-        width: '30%',
+        width: '60%',
       })
       .afterClosed()
       .subscribe((val) => {

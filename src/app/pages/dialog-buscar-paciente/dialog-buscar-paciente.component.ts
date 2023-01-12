@@ -44,7 +44,7 @@ export class DialogBuscarPacienteComponent implements OnInit {
     this.ServicioModal.getDatos(item);
     this.dialogExamenes
     .open(DialogExamenesComponent, {
-      width: '30%',
+      width: '60%',
       data: item
     });
     this.dialogRef.close();

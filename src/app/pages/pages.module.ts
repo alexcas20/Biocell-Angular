@@ -30,6 +30,8 @@ import { DialogExamenesComponent } from './dialog-examenes/dialog-examenes.compo
 import { DialogBuscarPacienteComponent } from './dialog-buscar-paciente/dialog-buscar-paciente.component';
 import { DialogBuscarMedicoComponent } from './dialog-buscar-medico/dialog-buscar-medico.component'
 import {MatListModule} from '@angular/material/list';
+import {MatGridListModule} from '@angular/material/grid-list';
+
 
 @NgModule({
   declarations: [
@@ -47,6 +49,7 @@ import {MatListModule} from '@angular/material/list';
   ],
   imports: [
     CommonModule,
+    MatGridListModule,
     RouterModule,
     SharedModule,
     MatListModule,
