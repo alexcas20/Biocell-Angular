@@ -6,6 +6,7 @@ import  RegistroPaciente  from '../models/registerPaciente.interface';
 import { RegisterI } from '../models/response.interface';
 import { LoginI } from '../models/login.interface';
 import RegistroMedico from '../models/registerMedicos.interface';
+import registarExamen from '../models/registrarExamen.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -81,6 +82,11 @@ export class ApiService {
   deleteMedico(folio:any){
     let direccion = `${this.urlMedicos}/deleteMedico/${folio}`;
     return this.http.delete(direccion,folio);
+  }
+
+  registarExamen(form:registarExamen):Observable<registarExamen>{
+    let direccion= `${this.urlMedicos}datosExamen`;
+    return this.http.post<registarExamen>(direccion,form);
   }
 
 }
