@@ -49,9 +49,9 @@ export class DialogExamenesComponent implements OnInit {
     this.productForm = this.formBuilder.group({
       folio: ['', Validators.required],
       nombre: ['', Validators.required],
-      nombreMedico: ['', Validators.required],
       apellidoP: ['', Validators.required],
       apellidoM: ['', Validators.required],
+      nombreMedico: ['', Validators.required],
       especialidad: ['', Validators.required],
       edad: ['', Validators.required],
       sexo: ['', Validators.required],
