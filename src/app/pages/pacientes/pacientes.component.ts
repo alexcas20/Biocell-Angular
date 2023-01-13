@@ -6,7 +6,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DialogPacientesComponent } from '../dialog-pacientes/dialog-pacientes.component';
 import Swal from 'sweetalert2';
-import { DialogComponent } from '../dialog/dialog.component';
+
 
 @Component({
   selector: 'app-pacientes',
@@ -43,9 +43,9 @@ export class PacientesComponent implements OnInit {
     this.api.getPacientes().subscribe({
       next: (res) => {
         console.log(res);
-        this.dataSource = new MatTableDataSource(res);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
+         this.dataSource = new MatTableDataSource(res);
+         this.dataSource.paginator = this.paginator;
+         this.dataSource.sort = this.sort;
       },
       error: (err) => {
         Swal.fire('Error', 'No se han encontrado los usuarios', 'error');

@@ -31,6 +31,7 @@ import { DialogBuscarPacienteComponent } from './dialog-buscar-paciente/dialog-b
 import { DialogBuscarMedicoComponent } from './dialog-buscar-medico/dialog-buscar-medico.component'
 import {MatListModule} from '@angular/material/list';
 import {MatGridListModule} from '@angular/material/grid-list';
+import { GeneroPipe } from '../pipes/genero.pipe';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import {MatGridListModule} from '@angular/material/grid-list';
     ExamenesComponent,
     DialogExamenesComponent,
     DialogBuscarPacienteComponent,
-    DialogBuscarMedicoComponent
+    DialogBuscarMedicoComponent,
+    GeneroPipe
   ],
   imports: [
     CommonModule,
@@ -75,7 +77,8 @@ import {MatGridListModule} from '@angular/material/grid-list';
   exports:[
     DashboardComponent,
     UsuariosComponent,
-    PacientesComponent
+    PacientesComponent,
+
   ]
 })
 export class PagesModule { }

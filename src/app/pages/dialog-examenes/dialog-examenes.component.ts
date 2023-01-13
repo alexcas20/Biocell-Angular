@@ -78,7 +78,7 @@ export class DialogExamenesComponent implements OnInit {
   BuscarPacientes() {
     this.dialogPacientes
       .open(DialogBuscarPacienteComponent, {
-        width: '30%',
+        width: '60%',
       })
       .afterClosed()
       .subscribe((val) => {
@@ -93,9 +93,7 @@ export class DialogExamenesComponent implements OnInit {
     this.api.getPacientes().subscribe({
       next: (res) => {
         console.log(res);
-        this.dataSource = new MatTableDataSource(res);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
+        
       },
       error: (err) => {
         Swal.fire('Error', 'No se han encontrado los usuarios', 'error');
