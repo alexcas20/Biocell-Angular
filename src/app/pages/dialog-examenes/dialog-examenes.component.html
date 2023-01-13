@@ -21,6 +21,8 @@
   <mat-icon>search</mat-icon>
 </button>
 
+
+
 <mat-grid-list cols="1">
   <div mat-dialog-content>
     <form [formGroup]="productForm">
@@ -94,6 +96,14 @@
       </mat-form-field>
 
       <mat-form-field appearance="outline">
+        <mat-label>Fecha de examen</mat-label>
+        <input type="date"  matInput>
+      </mat-form-field>
+
+
+    
+
+      <mat-form-field appearance="outline">
         <mat-label>Tipo de Examen</mat-label>
         <mat-select formControlName="tipoExamen" placeholder="Tipo de Examen">
           <mat-option value="Prueba de embarazo">Prueba de embarazo</mat-option>
@@ -122,6 +132,8 @@
     </form>
   </div>
 </mat-grid-list>
+
+<
 
 <div mat-dialog-action [align]="'end'">
   <button mat-raised-button color="warn" mat-dialog-close>Cerrar</button>

@@ -29,6 +29,9 @@ export class DialogExamenesComponent implements OnInit {
   medico: boolean = false;
   nombreMedico!: string;
 
+  nameMedico: any;
+  especialidad:any;
+
   selectPaciente: any;
 
   dataSource!: MatTableDataSource<any>;
@@ -103,7 +106,7 @@ export class DialogExamenesComponent implements OnInit {
 
   buscarMedicos() {
     this.DialogMedicos.open(DialogBuscarMedicoComponent, {
-      width: '30%',
+      width: '50%',
     });
 
     // if(this.ServicioModal.nombreMedico === '' || undefined){
@@ -111,13 +114,19 @@ export class DialogExamenesComponent implements OnInit {
     // }
 
     this.traerDatos();
+
   }
 
   traerDatos() {
-    const medico = localStorage.getItem('medico');
-    const especialidad = localStorage.getItem('especialidad');
-    this.productForm.controls['nombreMedico'].patchValue(medico);
-    this.productForm.controls['especialidad'].patchValue(especialidad);
+     this.ServicioModal.getNombreMedico();
+
+     this.valoresSet();
+    
+  }
+
+  valoresSet(){
+    this.productForm.controls['nombreMedico'].patchValue(localStorage.getItem("medico"));
+    this.productForm.controls['especialidad'].patchValue(localStorage.getItem("especialidad"));
   }
 
   registrarExamen(form:registarExamen){
