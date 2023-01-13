@@ -1,11 +1,13 @@
-import { ThisReceiver } from '@angular/compiler';
-import { Component, OnInit, Inject, Input } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ApiService } from 'src/app/services/api.service';
 import { DialogComponent } from '../dialog/dialog.component';
 import { ServicioModalesService } from '../servicio-modales.service';
 import { DialogExamenesComponent } from '../dialog-examenes/dialog-examenes.component';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-dialog-buscar-paciente',
@@ -13,11 +15,27 @@ import { DialogExamenesComponent } from '../dialog-examenes/dialog-examenes.comp
   styleUrls: ['./dialog-buscar-paciente.component.css'],
 })
 export class DialogBuscarPacienteComponent implements OnInit {
-  productForm!: FormGroup;
-  ListarPacientes: any[] = [];
+
+  
+
+  displayedColumns: string[] = [
+    'folio',
+    'nombre',
+    'apellidoP',
+    'apellidoM',
+    'edad',
+    'sexo',
+    'telefono',
+    'accion'
+    
+  ];
+  dataSource!: MatTableDataSource<any>;
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
   
   constructor(
-    private formBuilder: FormBuilder,
+    
     private api: ApiService,
     private dialogRef: MatDialogRef<DialogComponent>,
     private ServicioModal : ServicioModalesService,
@@ -28,13 +46,15 @@ export class DialogBuscarPacienteComponent implements OnInit {
     this.getPacientes();
   }
 
+
+
   getPacientes() {
     this.api.getPacientes().subscribe({
       next: (res) => {
         console.log(res);
-        let values = Object.values(res);
-        this.ListarPacientes = values;
-        console.log('Lista:  ', this.ListarPacientes);
+         this.dataSource = new MatTableDataSource(res);
+         this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
       },
     });
   }
@@ -57,5 +77,16 @@ export class DialogBuscarPacienteComponent implements OnInit {
   
 
 //     }
+
+
+  applyFilter(event: Event) {
+  const filterValue = (event.target as HTMLInputElement).value;
+  this.dataSource.filter = filterValue.trim().toLowerCase();
+
+  if (this.dataSource.paginator) {
+    this.dataSource.paginator.firstPage();
+  }
+}
+
   }
 
