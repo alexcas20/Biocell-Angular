@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
 import { ApiService } from 'src/app/services/api.service';
 import { DialogExamenesComponent } from '../dialog-examenes/dialog-examenes.component';
 import { DialogComponent } from '../dialog/dialog.component';
@@ -14,6 +15,8 @@ import { ServicioModalesService } from '../servicio-modales.service';
 export class DialogBuscarMedicoComponent implements OnInit {
 
   listarMedicos:any[] = []
+
+  
 
 
   constructor(private service: ApiService, private servicioModal: ServicioModalesService,
@@ -41,4 +44,5 @@ export class DialogBuscarMedicoComponent implements OnInit {
     this.dialogRef.close();
   }
 
+  
 }

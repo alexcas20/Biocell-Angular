@@ -24,11 +24,13 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
+
 @NgModule({
   declarations: [
     AppComponent,
     NopageFoundComponent,
-    DialogComponent
+    DialogComponent,
+    
   ],
   imports: [
     BrowserModule,
