@@ -60,6 +60,7 @@ export class DialogExamenesComponent implements OnInit {
       sexo: ['', Validators.required],
       telefono: ['', Validators.required],
       correo: ['', Validators.required],
+      fechaExamen: ['', Validators.required],
       tipoExamen: ['', Validators.required],
       prueba: ['', Validators.required],
       resultado: ['', Validators.required],
