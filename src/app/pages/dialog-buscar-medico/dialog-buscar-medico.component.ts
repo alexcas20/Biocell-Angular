@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ApiService } from 'src/app/services/api.service';
 import { DialogExamenesComponent } from '../dialog-examenes/dialog-examenes.component';
@@ -14,13 +16,28 @@ import { ServicioModalesService } from '../servicio-modales.service';
 })
 export class DialogBuscarMedicoComponent implements OnInit {
 
-  listarMedicos:any[] = []
+  displayedColumns: string[] = [
+    'folio',
+    'nombre',
+    'especialidad',
+    'edad',
+    'sexo',
+    'telefono',
+    'accion'
+    
+  ];
+  dataSource!: MatTableDataSource<any>;
 
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+  
   
 
 
-  constructor(private service: ApiService, private servicioModal: ServicioModalesService,
-    private dialogExamenes: MatDialog, private dialogRef: MatDialogRef<DialogComponent>,) { }
+  constructor(
+    private service: ApiService,
+    private servicioModal: ServicioModalesService,
+   private dialogRef: MatDialogRef<DialogComponent>,) { }
 
   ngOnInit(): void {
 
@@ -28,20 +45,32 @@ export class DialogBuscarMedicoComponent implements OnInit {
   }
 
   getMedicos() {
-    this.service.getMedicos().subscribe( resp => this.listarMedicos = resp)
+    this.service.getMedicos().subscribe( resp  => {
+
+      console.log(resp);
+         this.dataSource = new MatTableDataSource(resp);
+         this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+
+    })
   }
 
 
   selectMedico(item:any){
     console.log(item);
     this.servicioModal.getDatosMedico(item);
-      
-
-     
-
-
   
     this.dialogRef.close();
+  }
+
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
   
