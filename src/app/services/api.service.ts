@@ -14,8 +14,8 @@ import registarExamen from '../models/registrarExamen.interface';
 export class ApiService {
 
   private url:string = 'http://127.0.0.1:5000/lab';
-  private urlPacientes:string = 'http://127.0.0.1:5000/lab/'
-  private urlMedicos:string = 'http://127.0.0.1:5000/lab/'
+  private urlPacientes:string = 'http://127.0.0.1:5000/lab'
+  private urlMedicos:string = 'http://127.0.0.1:5000/lab'
   constructor(private http: HttpClient) {}
 
   login(form: LoginI): Observable<RegisterI> {
@@ -85,8 +85,13 @@ export class ApiService {
   }
 
   registarExamen(form:registarExamen):Observable<registarExamen>{
-    let direccion= `${this.urlMedicos}datosExamen`;
+    let direccion= `${this.urlMedicos}nuevoExamen`;
     return this.http.post<registarExamen>(direccion,form);
+  }
+
+  getExamenes():Observable<any>{
+    let direccion = `${this.urlMedicos}/datosExamenes`;
+    return this.http.get(direccion);
   }
 
 }

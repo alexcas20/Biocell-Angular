@@ -14,10 +14,10 @@ import { DialogExamenesComponent } from '../dialog-examenes/dialog-examenes.comp
 })
 export class ExamenesComponent implements OnInit {
   displayedColumns: string[] = [
-    'user',
+  
     'folio',
     'nombre',
-    'medico',
+    'nombreMedico',
     'fecha',
     'estatus',
     'accion',
@@ -31,7 +31,7 @@ export class ExamenesComponent implements OnInit {
   constructor(private api: ApiService, private dialogPacientes: MatDialog) {}
 
   ngOnInit(): void {
-     this.getDatosExamenes();
+     this.getExamenes();
   }
 
   openDialogExamenes() {
@@ -75,9 +75,15 @@ export class ExamenesComponent implements OnInit {
     });
   }
 
-  getDatosExamenes(){
-    this.getPacientes();
-    this.getAllUsers();
+  getExamenes(){
+    this.api.getExamenes().subscribe({
+      next:(res)=>{
+        console.log(res);
+        this.dataSource = new MatTableDataSource(res);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      }
+    })
   }
   
   applyFilter(event: Event) {

@@ -37,6 +37,8 @@ export class DialogMedicosComponent implements OnInit {
     this.productForm = this.formBuilder.group({
       folio: ["MBCL"+this.folioPositionCode+this.folioPositionCode2+this.folioRandomNumber,Validators.required],
       nombre: ['', [Validators.required, Validators.maxLength(30)]],
+      apellidoP:['',Validators.required],
+      apellidoM:['',Validators.required],
       especialidad:['',Validators.required],
       edad: ['', Validators.required],
       sexo: ['', Validators.required],
@@ -49,6 +51,8 @@ export class DialogMedicosComponent implements OnInit {
       this.actionBtn = 'Actualizar';
       this.productForm.controls['folio'].setValue(this.editData.folio);
       this.productForm.controls['nombre'].setValue(this.editData.nombre);
+      this.productForm.controls['apellidoP'].setValue(this.editData.apellidoP);
+      this.productForm.controls['apellidoM'].setValue(this.editData.apellidoM);
       this.productForm.controls['especialidad'].setValue(this.editData.especialidad);
       this.productForm.controls['edad'].setValue(this.editData.edad);
       this.productForm.controls['sexo'].setValue(this.editData.sexo);
