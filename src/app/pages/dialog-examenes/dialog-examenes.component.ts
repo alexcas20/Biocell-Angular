@@ -131,6 +131,20 @@ export class DialogExamenesComponent implements OnInit {
   }
 
   registrarExamen(form:registarExamen){
-    this.api.registarExamen(form).subscribe(resp => console.log("Examen guardado"))
+    this.api.registarExamen(form).subscribe({
+      next: (res) => {
+        console.log("Examen guardado: ", res)
+        Swal.fire('Exito', 'Se ha registrado el examen', 'success');
+        this.productForm.reset();
+        this.dialogRef.close('save');
+      },
+      error: () => {
+        Swal.fire(
+          'Error',
+          'Se ha producido un error al registar el examen',
+          'error'
+        );
+      },
+    });
   }
 }
