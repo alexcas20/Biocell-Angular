@@ -36,7 +36,7 @@ export class DialogMedicosComponent implements OnInit {
   ngOnInit(): void {
     this.productForm = this.formBuilder.group({
       folio: ["MBCL"+this.folioPositionCode+this.folioPositionCode2+this.folioRandomNumber,Validators.required],
-      nombre: ['', [Validators.required, Validators.maxLength(30)]],
+      nombreMedico: ['', [Validators.required, Validators.maxLength(30)]],
       apellidoP:['',Validators.required],
       apellidoM:['',Validators.required],
       especialidad:['',Validators.required],
@@ -50,7 +50,7 @@ export class DialogMedicosComponent implements OnInit {
       console.log(this.editData);
       this.actionBtn = 'Actualizar';
       this.productForm.controls['folio'].setValue(this.editData.folio);
-      this.productForm.controls['nombre'].setValue(this.editData.nombre);
+      this.productForm.controls['nombreMedico'].setValue(this.editData.nombreMedico);
       this.productForm.controls['apellidoP'].setValue(this.editData.apellidoP);
       this.productForm.controls['apellidoM'].setValue(this.editData.apellidoM);
       this.productForm.controls['especialidad'].setValue(this.editData.especialidad);

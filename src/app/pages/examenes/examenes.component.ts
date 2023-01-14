@@ -18,7 +18,7 @@ export class ExamenesComponent implements OnInit {
     'folio',
     'nombre',
     'nombreMedico',
-    'fecha',
+    'fechaExamen',
     'estatus',
     'accion',
   ];

@@ -18,6 +18,8 @@ export class MedicosComponent implements OnInit {
   displayedColumns: string[] = [
     'folio',
     'medico',
+    'apellidoP',
+    'apellidoM',
     'especialidad',
     'edad',
     'sexo',

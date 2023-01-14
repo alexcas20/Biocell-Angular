@@ -85,7 +85,7 @@ export class ApiService {
   }
 
   registarExamen(form:registarExamen):Observable<registarExamen>{
-    let direccion= `${this.urlMedicos}nuevoExamen`;
+    let direccion= `${this.urlMedicos}/nuevoExamen`;
     return this.http.post<registarExamen>(direccion,form);
   }
 
