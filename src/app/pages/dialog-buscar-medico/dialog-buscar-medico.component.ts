@@ -42,6 +42,7 @@ export class DialogBuscarMedicoComponent implements OnInit {
   ngOnInit(): void {
 
     this.getMedicos()
+    
   }
 
   getMedicos() {

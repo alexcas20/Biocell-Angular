@@ -1,4 +1,4 @@
-export default interface registarExamen{
+export default interface registrarExamen{
 
     folio: string,
     nombre: string,
