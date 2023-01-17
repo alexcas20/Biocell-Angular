@@ -263,13 +263,13 @@ def datosExamen():
         "nombre": nombre,
         "apellidoP": apellidoP,
         "apellidoM": apellidoM,
-        "nombreMedico":nombreMedico,
+        "nombreMedico": nombreMedico,
         "especialidad": especialidad,
         "edad": edad,
         "sexo": sexo,
         "telefono": telefono,
         "correo": correo,
-        "fechaExamen" : fechaExamen,
+        "fechaExamen": fechaExamen,
         "tipoExamen": tipoExamen,
         "prueba": prueba,
         "resultado": resultado,
@@ -277,6 +277,7 @@ def datosExamen():
     })
 
     return jsonify(message="Se ha registrado el examen"), 201
+
 
 @app.route("/lab/datosExamenes", methods=["GET"])
 def datosExamenes():
