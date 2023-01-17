@@ -1,4 +1,5 @@
 import { EventEmitter, Injectable, Output } from '@angular/core';
+import { ApiService } from '../services/api.service';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,7 @@ export class ServicioModalesService {
   localMedico!:any;
   localEspecialidad!: any;
 
-  constructor() { }
+  constructor(private api: ApiService) { }
 
   getDatos(data:any){
       this.cual = true
@@ -35,22 +36,30 @@ export class ServicioModalesService {
     }
 
     getDatosMedico(data:any){
-      console.log(JSON.stringify(data))
+      console.log(data)
       this.nombreMedicoS = data.nombreMedico
       this.especialidadS = data.especialidad
+      console.log("Nombre: ", this.nombreMedicoS, "espe: ", this.especialidadS);
+
+      localStorage.setItem("medico", this.nombreMedicoS);
+      localStorage.setItem("especialidad", this.especialidadS);
 
       this.getNombreMedico()
      
     }
 
      getNombreMedico(){
-          this.nombreMedico = this.nombreMedicoS
-          this.especialidad = this.especialidadS
-          this.localMedico = localStorage.setItem('medico',this.nombreMedico);
-          this.localEspecialidad = localStorage.setItem('especialidad',this.especialidad)
-          console.log(this.nombreMedicoS);
-          console.log(this.especialidadS);
+      localStorage.getItem("medico");
+      localStorage.getItem("especialidad");
 
+     // this.api.getMedicos()
+        //  this.nombreMedico = this.nombreMedicoS
+        //  this.especialidad = this.especialidadS
+        //  this.localMedico = localStorage.setItem('medico',this.nombreMedico);
+        //  this.localEspecialidad = localStorage.setItem//('especialidad',this.especialidad)
+        //  console.log(this.nombreMedicoS);
+        //  console.log(this.especialidadS);
+     }
     }
-  }
+  
 
