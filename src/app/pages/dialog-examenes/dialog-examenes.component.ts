@@ -14,7 +14,7 @@ import { DialogBuscarPacienteComponent } from '../dialog-buscar-paciente/dialog-
 import { DialogComponent } from '../dialog/dialog.component';
 import { ServicioModalesService } from '../servicio-modales.service';
 import { DialogBuscarMedicoComponent } from '../dialog-buscar-medico/dialog-buscar-medico.component';
-import registarExamen from 'src/app/models/registrarExamen.interface';
+import registrarExamen from 'src/app/models/registrarExamen.interface';
 
 @Component({
   selector: 'app-dialog-examenes',
@@ -128,8 +128,8 @@ export class DialogExamenesComponent implements OnInit {
 
   
 
-  registrarExamen(form:registarExamen){
-    this.api.registarExamen(form).subscribe({
+  registrarExamen(folio:any,form:registrarExamen){
+    this.api.agregarExamen(this.productForm.get("folio")?.value, form).subscribe({
       next: (res) => {
         console.log("Examen guardado: ", res)
         Swal.fire('Exito', 'Se ha registrado el examen', 'success');

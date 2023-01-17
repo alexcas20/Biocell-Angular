@@ -135,7 +135,7 @@
   <div mat-dialog-action [align]="'end'">
     <button mat-raised-button color="warn" mat-dialog-close>Cerrar</button>
     <button
-      (click)="registrarExamen(productForm.value)"
+      (click)="registrarExamen(productForm.controls['folio'],productForm.value)"
       style="margin-left: 8px"
       mat-raised-button
       color="primary"
