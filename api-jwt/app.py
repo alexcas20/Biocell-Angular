@@ -16,6 +16,7 @@ collUser = db["users"]
 collPaciente = db["pacientes"]
 collMedicos = db["medicos"]
 collExamenes = db["examenes"]
+collExamenesPacientes = db["examenesPacientes"]
 
 app = Flask(__name__)
 CORS(app)
@@ -240,6 +241,8 @@ def allMedicos():
         return jsonify(message='Error')
 
 
+     #########   Examenes #########
+
 @app.route("/lab/nuevoExamen", methods=["POST"])
 def datosExamen():
 
@@ -291,6 +294,65 @@ def datosExamenes():
         return Response(response, mimetype='application/json')
     else:
         return jsonify(message='Error')
+
+
+
+@app.route("/lab/addExamen/<folio>", methods=["PUT"])   
+def addExamen(folio):
+
+
+    nombre = request.json["nombre"]
+    apellidoP = request.json["apellidoP"]
+    apellidoM = request.json["apellidoM"]
+    nombreMedico = request.json["nombreMedico"]
+    especialidad = request.json["especialidad"]
+    edad = request.json["edad"]
+    sexo = request.json["sexo"]
+    telefono = request.json["telefono"]
+    correo = request.json["correo"]
+    fechaExamen = request.json["fechaExamen"]
+    tipoExamen = request.json["tipoExamen"]
+    prueba = request.json["prueba"]
+    resultado = request.json["resultado"]
+    dimensional = request.json["dimensional"]
+
+    test = collExamenesPacientes.update_one(
+        {"folio": folio},
+        {"$addToSet": {"examenesPacientes": {
+        "folio": folio,
+        "nombre": nombre,
+        "apellidoP": apellidoP,
+        "apellidoM": apellidoM,
+        "nombreMedico": nombreMedico,
+        "especialidad": especialidad,
+        "edad": edad,
+        "sexo": sexo,
+        "telefono": telefono,
+        "correo": correo,
+        "fechaExamen": fechaExamen,
+        "tipoExamen": tipoExamen,
+        "prueba": prueba,
+        "resultado": resultado,
+        "dimensional": dimensional
+        }}}
+        )
+
+    print("respBD: ", test)
+
+    return  jsonify(message="Se ha añadido el examen"), 201
+
+
+    
+@app.route("/lab/obtenerExamenes", methods= ["GET"])
+def obtenerExamenes():
+    test = collExamenesPacientes.find({},{
+        "examenesPacientes": 1,
+        "_id": 0
+    })
+
+    response = json_util.dumps(test)
+    return Response(response, mimetype='application/json')
+
 
 
 if __name__ == '__main__':
