@@ -77,6 +77,8 @@ export class DialogExamenesComponent implements OnInit {
       this.productForm.controls['telefono'].patchValue(this.data.telefono);
       this.productForm.controls['correo'].patchValue(this.data.correo);      
     }
+
+    this.traerDatos()
   }
 
   BuscarPacientes() {
@@ -110,9 +112,7 @@ export class DialogExamenesComponent implements OnInit {
       width: '50%',
     });
 
-    // if(this.ServicioModal.nombreMedico === '' || undefined){
-    //     alert('espera')
-    // }
+
 
     this.traerDatos();
 

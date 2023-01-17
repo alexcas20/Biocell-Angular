@@ -44,22 +44,10 @@ export class ServicioModalesService {
       localStorage.setItem("medico", this.nombreMedicoS);
       localStorage.setItem("especialidad", this.especialidadS);
 
-      this.getNombreMedico()
+     
      
     }
 
-     getNombreMedico(){
-      localStorage.getItem("medico");
-      localStorage.getItem("especialidad");
-
-     // this.api.getMedicos()
-        //  this.nombreMedico = this.nombreMedicoS
-        //  this.especialidad = this.especialidadS
-        //  this.localMedico = localStorage.setItem('medico',this.nombreMedico);
-        //  this.localEspecialidad = localStorage.setItem//('especialidad',this.especialidad)
-        //  console.log(this.nombreMedicoS);
-        //  console.log(this.especialidadS);
-     }
-    }
   
-
+  
+}
