@@ -42,38 +42,12 @@ export class ExamenesComponent implements OnInit {
       .afterClosed()
       .subscribe((val) => {
         if (val === 'save') {
-          this.getPacientes();
+          this.getExamenes();
         }
       });
   }
 
-  getAllUsers() {
-    this.api.getUsers().subscribe({
-      next: (res) => {
-        console.log(res);
-        this.dataSource = new MatTableDataSource(res);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-      },
-      error: (err) => {
-        Swal.fire('Error', 'No se han encontrado los usuarios', 'error');
-      },
-    });
-  }
 
-  getPacientes() {
-    this.api.getPacientes().subscribe({
-      next: (res) => {
-        console.log(res);
-        this.dataSource = new MatTableDataSource(res);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-      },
-      error: (err) => {
-        Swal.fire('Error', 'No se han encontrado los usuarios', 'error');
-      },
-    });
-  }
 
   getExamenes(){
     this.api.getExamenes().subscribe({

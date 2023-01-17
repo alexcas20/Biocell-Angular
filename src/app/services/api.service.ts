@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of, tap } from 'rxjs';
 import  Register  from '../models/register.interface';
 import  RegistroPaciente  from '../models/registerPaciente.interface';
 import { RegisterI } from '../models/response.interface';
@@ -13,14 +13,37 @@ import registarExamen from '../models/registrarExamen.interface';
 })
 export class ApiService {
 
+  
+  private _auth: any| undefined;
+  private _mDicos: any
+
+  get auth(): any {
+    return {...this._auth!}
+  }
+
+  get mDicos(): any {
+    return {...this._mDicos!}
+  }
+
   private url:string = 'http://127.0.0.1:5000/lab';
   private urlPacientes:string = 'http://127.0.0.1:5000/lab'
   private urlMedicos:string = 'http://127.0.0.1:5000/lab'
   constructor(private http: HttpClient) {}
 
+
+ 
+
   login(form: LoginI): Observable<RegisterI> {
     let direccion = `${this.url}/auth`;
-    return this.http.post<RegisterI>(direccion, form);
+    return this.http.post<RegisterI>(direccion, form)
+    .pipe(
+      tap (auth => {
+        console.log(auth)
+        this._auth = auth.result
+        console.log(this._auth)
+      }),
+      tap   ( auth =>  localStorage.setItem('user', auth.result.user))
+    );
   }
 
   postData(form: Register): Observable<Register> {
@@ -66,7 +89,10 @@ export class ApiService {
 
   getMedicos(): Observable<any> {
     let direccion = `${this.urlMedicos}/allMedicos`;
-    return this.http.get(direccion);
+    return this.http.get(direccion)
+      .pipe(
+        tap(medicos => this._mDicos = medicos)
+      )
   }
 
   postMedicos(form: RegistroMedico): Observable<RegistroMedico> {

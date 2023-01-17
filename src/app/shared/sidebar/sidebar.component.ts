@@ -38,6 +38,7 @@ export class SidebarComponent implements OnInit {
       if (result.isConfirmed) {
 
         localStorage.removeItem('token');
+        localStorage.removeItem('user');
         this.ngOnInit();
        
       }

@@ -42,7 +42,8 @@ def login():
         return jsonify({
             "status": "ok",
             "result": {
-                "token": token
+                "token": token,
+                "user": user
             }
         }), 201
     else:

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { LoginI } from 'src/app/models/login.interface';
 import { RegisterI } from 'src/app/models/response.interface';
 import { ApiService } from 'src/app/services/api.service';
+import { loginService } from 'src/app/services/login.service';
 import Swal from 'sweetalert2';
 
 
@@ -20,7 +21,9 @@ export class LoginComponent implements OnInit {
 
  
 
-  constructor(private fb:FormBuilder, private ruta:Router, private api:ApiService) { }
+  constructor(private fb:FormBuilder, private ruta:Router,
+     private api:ApiService,
+    private loginService: loginService) { }
 
   ngOnInit(): void {
     this.myForm = this.createMyForm();
@@ -66,10 +69,14 @@ export class LoginComponent implements OnInit {
           }
         console.log(resp);
         console.log('dataResponse: ', dataResponse)
+        
+      
   
         if(dataResponse.status){
            localStorage.setItem('token',dataResponse.result.token)
            this.ruta.navigate(['dashboard'])
+
+           
           
   
           console.log('token: ',dataResponse.result);

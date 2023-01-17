@@ -8,6 +8,9 @@ import { Observable } from "rxjs";
 
 export class loginService{
 
+    user: any;
+    userSave: any;
+
     url:string = 'http://localhost/';
 
     constructor(private http:HttpClient){ }
@@ -17,4 +20,10 @@ export class loginService{
         let direccion = this.url + '/users/'
         return this.http.post<Response>(direccion,form);
     }
+
+    
+
+   
+
+    
 }
