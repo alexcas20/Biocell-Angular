@@ -119,16 +119,14 @@ export class DialogExamenesComponent implements OnInit {
   }
 
   traerDatos() {
-     this.ServicioModal.getNombreMedico();
-
-     this.valoresSet();
+   
+   this.productForm.controls['nombreMedico'].patchValue(localStorage.getItem("medico"));
+   this.productForm.controls['especialidad'].patchValue(localStorage.getItem("especialidad"));
+     
     
   }
 
-  valoresSet(){
-    this.productForm.controls['nombreMedico'].patchValue(localStorage.getItem("medico"));
-    this.productForm.controls['especialidad'].patchValue(localStorage.getItem("especialidad"));
-  }
+  
 
   registrarExamen(form:registarExamen){
     this.api.registarExamen(form).subscribe({
