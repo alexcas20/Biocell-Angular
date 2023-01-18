@@ -30,7 +30,7 @@ export class DialogExamenesComponent implements OnInit {
   nombreMedico!: string;
 
   nameMedico: any;
-  especialidad:any;
+  especialidad: any;
 
   selectPaciente: any;
 
@@ -75,10 +75,10 @@ export class DialogExamenesComponent implements OnInit {
       this.productForm.controls['edad'].patchValue(this.data.edad);
       this.productForm.controls['sexo'].patchValue(this.data.sexo);
       this.productForm.controls['telefono'].patchValue(this.data.telefono);
-      this.productForm.controls['correo'].patchValue(this.data.correo);      
+      this.productForm.controls['correo'].patchValue(this.data.correo);
     }
 
-    this.traerDatos()
+    this.traerDatos();
   }
 
   BuscarPacientes() {
@@ -99,7 +99,6 @@ export class DialogExamenesComponent implements OnInit {
     this.api.getPacientes().subscribe({
       next: (res) => {
         console.log(res);
-        
       },
       error: (err) => {
         Swal.fire('Error', 'No se han encontrado los usuarios', 'error');
@@ -112,37 +111,35 @@ export class DialogExamenesComponent implements OnInit {
       width: '50%',
     });
 
-
-
     this.traerDatos();
-
   }
 
   traerDatos() {
-   
-   this.productForm.controls['nombreMedico'].patchValue(localStorage.getItem("medico"));
-   this.productForm.controls['especialidad'].patchValue(localStorage.getItem("especialidad"));
-     
-    
+    this.productForm.controls['nombreMedico'].patchValue(
+      localStorage.getItem('medico')
+    );
+    this.productForm.controls['especialidad'].patchValue(
+      localStorage.getItem('especialidad')
+    );
   }
 
-  
-
-  registrarExamen(folio:any,form:registrarExamen){
-    this.api.agregarExamen(this.productForm.get("folio")?.value, form).subscribe({
-      next: (res) => {
-        console.log("Examen guardado: ", res)
-        Swal.fire('Exito', 'Se ha registrado el examen', 'success');
-        this.productForm.reset();
-        this.dialogRef.close('save');
-      },
-      error: () => {
-        Swal.fire(
-          'Error',
-          'Se ha producido un error al registar el examen',
-          'error'
-        );
-      },
-    });
+  registrarExamen(folio: any, form: registrarExamen) {
+    this.api
+      .agregarExamen(this.productForm.get('folio')?.value, form)
+      .subscribe({
+        next: (res) => {
+          console.log('Examen guardado: ', res);
+          Swal.fire('Exito', 'Se ha registrado el examen', 'success');
+          this.productForm.reset();
+          this.dialogRef.close('save');
+        },
+        error: () => {
+          Swal.fire(
+            'Error',
+            'Se ha producido un error al registar el examen',
+            'error'
+          );
+        },
+      });
   }
 }

@@ -8,14 +8,12 @@ import { DialogExamenesComponent } from '../dialog-examenes/dialog-examenes.comp
 import { DialogComponent } from '../dialog/dialog.component';
 import { ServicioModalesService } from '../servicio-modales.service';
 
-
 @Component({
   selector: 'app-dialog-buscar-medico',
   templateUrl: './dialog-buscar-medico.component.html',
-  styleUrls: ['./dialog-buscar-medico.component.css']
+  styleUrls: ['./dialog-buscar-medico.component.css'],
 })
 export class DialogBuscarMedicoComponent implements OnInit {
-
   displayedColumns: string[] = [
     'folio',
     'nombreMedico',
@@ -23,56 +21,45 @@ export class DialogBuscarMedicoComponent implements OnInit {
     'edad',
     'sexo',
     'telefono',
-    'accion'
-    
+    'accion',
   ];
   dataSource!: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  
-  
-
 
   constructor(
     private service: ApiService,
     private servicioModal: ServicioModalesService,
-   private dialogRef: MatDialogRef<DialogComponent>,) { }
+    private dialogRef: MatDialogRef<DialogComponent>
+  ) {}
 
   ngOnInit(): void {
-
-    this.getMedicos()
-    
+    this.getMedicos();
   }
 
   getMedicos() {
-    this.service.getMedicos().subscribe( resp  => {
-
+    this.service.getMedicos().subscribe((resp) => {
       console.log(resp);
-         this.dataSource = new MatTableDataSource(resp);
-         this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-
-    })
+      this.dataSource = new MatTableDataSource(resp);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    });
   }
 
-
-  selectMedico(item:any){
+  selectMedico(item: any) {
     console.log(item);
     this.servicioModal.getDatosMedico(item);
-  
+
     this.dialogRef.close();
   }
-
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
-  
+
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
   }
-
-  
 }

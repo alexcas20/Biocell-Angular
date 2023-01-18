@@ -2,22 +2,22 @@
   <h1 mat-dialog-title>Registro de Examenes</h1>
 
   <button
-    style="margin: 5px"
-    mat-raised-button
-    color="primary"
-    (click)="buscarMedicos()"
-  >
-    Buscar Medico
-    <mat-icon>search</mat-icon>
-  </button>
-
-  <button
     style="margin-left: 8px"
     mat-raised-button
     color="primary"
     (click)="BuscarPacientes()"
   >
     Buscar Paciente
+    <mat-icon>search</mat-icon>
+  </button>
+
+  <button
+    style="margin: 5px"
+    mat-raised-button
+    color="primary"
+    (click)="buscarMedicos()"
+  >
+    Buscar Medico
     <mat-icon>search</mat-icon>
   </button>
 
@@ -135,7 +135,9 @@
   <div mat-dialog-action [align]="'end'">
     <button mat-raised-button color="warn" mat-dialog-close>Cerrar</button>
     <button
-      (click)="registrarExamen(productForm.controls['folio'],productForm.value)"
+      (click)="
+        registrarExamen(productForm.controls['folio'], productForm.value)
+      "
       style="margin-left: 8px"
       mat-raised-button
       color="primary"
