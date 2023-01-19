@@ -8,8 +8,7 @@ import { Observable } from "rxjs";
 
 export class loginService{
 
-    user: any;
-    userSave: any;
+    
 
     url:string = 'http://localhost/';
 

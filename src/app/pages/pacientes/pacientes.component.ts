@@ -112,10 +112,11 @@ export class PacientesComponent implements OnInit {
     });
   }
 
-  asignarExamenPaciente(){
+  asignarExamenPaciente(folio:any){
     this.dialogAsignarExamen
       .open(DialogAsignarExamenPacienteComponent, {
         width: '60%',
+        data: folio
       })
       .afterClosed()
       .subscribe((val) => {

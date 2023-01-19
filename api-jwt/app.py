@@ -351,8 +351,17 @@ def obtenerExamenes():
     })
 
     response = json_util.dumps(test)
-    return Response(response, mimetype='application/json')
+    return Response(response, mimetype='application/json'),201
 
+@app.route("/lab/obtenerExamenes/<folio>", methods=["GET"])
+def obtenerExamenesFolio(folio):
+    test = collExamenesPacientes.find({'folio': folio},{
+        "examenesPacientes": 1,
+        "_id": 0
+    })
+
+    response = json_util.dumps(test)
+    return Response(response, mimetype="application/json"),201
 
 
 if __name__ == '__main__':

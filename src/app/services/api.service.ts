@@ -126,4 +126,9 @@ export class ApiService {
     return this.http.put<registrarExamen>(direccion, form);
   }
 
+  obtenerExamenFolio(folio:any): Observable<any>{
+    let direccion = `${this.url}/obtenerExamenes/${folio}`;
+      return this.http.get<any>(direccion);
+  }
+
 }

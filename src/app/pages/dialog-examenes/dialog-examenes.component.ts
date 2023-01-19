@@ -123,7 +123,7 @@ export class DialogExamenesComponent implements OnInit {
     );
   }
 
-  registrarExamen(folio: any, form: registrarExamen) {
+  registrarExamen( form: registrarExamen) {
     this.api
       .agregarExamen(this.productForm.get('folio')?.value, form)
       .subscribe({
@@ -132,6 +132,8 @@ export class DialogExamenesComponent implements OnInit {
           Swal.fire('Exito', 'Se ha registrado el examen', 'success');
           this.productForm.reset();
           this.dialogRef.close('save');
+          localStorage.removeItem('medico');
+          localStorage.removeItem('especialidad');
         },
         error: () => {
           Swal.fire(
@@ -141,5 +143,7 @@ export class DialogExamenesComponent implements OnInit {
           );
         },
       });
+
+      this.api.registarExamen(form).subscribe( resp => console.log("Registro en col Examenes", resp))
   }
 }
