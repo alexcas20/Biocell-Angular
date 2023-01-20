@@ -4,7 +4,6 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ApiService } from 'src/app/services/api.service';
 import { MatDialog } from '@angular/material/dialog';
-import Swal from 'sweetalert2';
 import { DialogExamenesComponent } from '../dialog-examenes/dialog-examenes.component';
 
 @Component({
@@ -19,7 +18,7 @@ export class ExamenesComponent implements OnInit {
     'nombre',
     'nombreMedico',
     'fechaExamen',
-    'estatus',
+    'estado',
     'accion',
   ];
 

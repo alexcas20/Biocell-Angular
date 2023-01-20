@@ -5,6 +5,11 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ApiService } from 'src/app/services/api.service';
 
+
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
+
 @Component({
   selector: 'app-dialog-asignar-examen-paciente',
   templateUrl: './dialog-asignar-examen-paciente.component.html',
@@ -15,7 +20,9 @@ export class DialogAsignarExamenPacienteComponent implements OnInit {
     'nombreMedico',
     'fechaExamen',
     'tipoExamen',
-    'prueba'
+    'prueba',
+    'accion'
+    
   ];
 
   dataSource!: MatTableDataSource<any>;
@@ -48,6 +55,21 @@ export class DialogAsignarExamenPacienteComponent implements OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  createPDF(){
+ 
+    const pdfDefinition: any = {
+      content: [
+        {
+          text: 'Hola mundo',
+        }
+      ]
+    }
+ 
+    const pdf = pdfMake.createPdf(pdfDefinition);
+    pdf.download();
+ 
   }
 
 }

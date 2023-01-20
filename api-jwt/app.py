@@ -261,6 +261,7 @@ def datosExamen():
     prueba = request.json["prueba"]
     resultado = request.json["resultado"]
     dimensional = request.json["dimensional"]
+  
 
     collExamenes.insert_one({
         "folio": folio,
@@ -277,7 +278,8 @@ def datosExamen():
         "tipoExamen": tipoExamen,
         "prueba": prueba,
         "resultado": resultado,
-        "dimensional": dimensional
+        "dimensional": dimensional,
+        "estado": "activo"
     })
 
     return jsonify(message="Se ha registrado el examen"), 201
