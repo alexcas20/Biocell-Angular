@@ -11,3 +11,7 @@ table {
   
     margin-left: 12px;
   }
+
+  .tabla {
+    border: none;
+  }

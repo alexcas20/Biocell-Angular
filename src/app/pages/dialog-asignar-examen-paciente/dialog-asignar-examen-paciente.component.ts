@@ -8,6 +8,7 @@ import { ApiService } from 'src/app/services/api.service';
 
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
+import { ServicioModalesService } from '../servicio-modales.service';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
@@ -29,9 +30,12 @@ export class DialogAsignarExamenPacienteComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
+  datosExamen: any;
+
   constructor(
     private api: ApiService,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private servicioModal : ServicioModalesService
   ) { }
 
   ngOnInit(): void {
@@ -48,6 +52,12 @@ export class DialogAsignarExamenPacienteComponent implements OnInit {
     });
   }
 
+  selectExamen(item: any) {
+    console.log(item);
+  this.datosExamen = item;
+    this.servicioModal.getDatos(item)
+  }
+
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -58,18 +68,52 @@ export class DialogAsignarExamenPacienteComponent implements OnInit {
   }
 
   createPDF(){
+
+   
  
     const pdfDefinition: any = {
       content: [
         {
-          text: 'Hola mundo',
+          text: 'Datos Examen: ',
+          style: 'header'
+        },
+        "_______________________________________",
+        {
+          text: 'Datos Paciente',
+          style: 'subheader'
+        },
+        {
+          table: {
+            heights: [10, 20, 30],
+            body: [
+              [
+                'Nombre',
+                'Apellido Paterno',
+                'Apellido Materno'
+              ],
+              [
+                this.datosExamen.nombre,
+                this.datosExamen.apellidoP,
+                this.datosExamen.apellidoM,
+              ],
+            ]
+          },
+          layout: 'noBorders'
         }
-      ]
+      ],
+      styles: {
+        table: {
+          fontSize: 22,
+          bold: true
+        },
     }
  
-    const pdf = pdfMake.createPdf(pdfDefinition);
-    pdf.download();
+   
  
   }
+  const pdf = pdfMake.createPdf(pdfDefinition);
+  pdf.open();
+
+}
 
 }
