@@ -72,6 +72,11 @@ export class DialogPacientesComponent implements OnInit {
               Swal.fire('Error','Se ha producido un error al registar el usuario','error')
             }
           })
+          this.api.postPacienteExamen(form).subscribe({
+            next:(res)=>{
+              console.log("Se agrego a examenes Pacientes", res)
+            }
+          })
         }
       }else{
         this.editPaciente(form)
