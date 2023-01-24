@@ -119,7 +119,7 @@ def editUser(code):
 
 
 #   Delete usuario
-@app.route('/lab/Delete/<code>', methods=['DELETE'])
+@app.route('/lab/deleteUser/<code>', methods=['DELETE'])
 def deleteUser(code):
 
     test = collUser.delete_one({"code": code})
@@ -130,7 +130,7 @@ def deleteUser(code):
         return jsonify(message='Error')
 
 
-##########  PACIENTES #########
+##########  PACIENTES ###########################################################
 
 
 #   Post Paciente
@@ -178,7 +178,35 @@ def allPacientes():
     else:
         return jsonify(message='Error')
 
-#   Delete usuario
+#   Actualizar Paciente
+
+
+@app.route('/lab/updatePaciente/<folio>', methods=['PUT'])
+def updatePaciente(folio):
+    folio = request.json['folio']
+    nombre = request.json['nombre']
+    apellidoP = request.json['apellidoP']
+    apellidoM = request.json['apellidoM']
+    edad = request.json['edad']
+    sexo = request.json['sexo']
+    telefono = request.json['telefono']
+    correo = request.json['correo']
+
+    test = collPaciente.update_one({"folio": folio}, {'$set': {
+        "folio": folio,
+        "nombre": nombre,
+        "apellidoP": apellidoP,
+        "apellidoM": apellidoM,
+        "edad": edad,
+        "sexo": sexo,
+        "telefono": telefono,
+        "correo": correo
+    }})
+
+    if test:
+        return jsonify(message="Paciente with id: "+folio + " update succesfully"), 201
+    else:
+        return jsonify(message='Error')
 
 
 @app.route('/lab/deletePaciente/<code>', methods=['DELETE'])
@@ -192,7 +220,7 @@ def deletePaciente(code):
         return jsonify(message='Error')
 
 
-##########  MEDICOS  #########
+##########  MEDICOS  #############################################################
 
 
 #   Post Medico
@@ -227,6 +255,8 @@ def addMedico():
 
         return jsonify(message="Se ha añadido al medico"), 201
 
+# Get Medicos
+
 
 @app.route("/lab/allMedicos", methods=["GET"])
 def allMedicos():
@@ -240,8 +270,53 @@ def allMedicos():
     else:
         return jsonify(message='Error')
 
+# Update Medicos
 
-     #########   Examenes #########
+
+@app.route('/lab/updateMedico/<folio>', methods=['PUT'])
+def updateMedico(folio):
+    folio = request.json['folio']
+    nombreMedico = request.json['nombreMedico']
+    apellidoP = request.json['apellidoP']
+    apellidoM = request.json['apellidoM']
+    especialidad = request.json['especialidad']
+    edad = request.json['edad']
+    sexo = request.json['sexo']
+    telefono = request.json['telefono']
+    correo = request.json['correo']
+
+    test = collMedicos.update_one({"folio": folio}, {'$set': {
+        "folio": folio,
+        "nombreMedico": nombreMedico,
+        "apellidoP": apellidoP,
+        "apellidoM": apellidoM,
+        "especiaidad": especialidad,
+        "edad": edad,
+        "sexo": sexo,
+        "telefono": telefono,
+        "correo": correo
+    }})
+
+    if test:
+        return jsonify(message="Medico with id: "+folio + " update succesfully"), 201
+    else:
+        return jsonify(message='Error')
+
+
+# DeleteMedico
+@app.route('/lab/deleteMedico/<folio>', methods=['DELETE'])
+def deleteMedico(folio):
+
+    test = collMedicos.delete_one({"folio": folio})
+
+    if test:
+        return jsonify(message="User with folio: "+folio + " deleted succesfully"), 201
+    else:
+        return jsonify(message='Error')
+
+
+#########   Examenes #########
+
 
 @app.route("/lab/nuevoExamen", methods=["POST"])
 def datosExamen():
@@ -261,7 +336,6 @@ def datosExamen():
     prueba = request.json["prueba"]
     resultado = request.json["resultado"]
     dimensional = request.json["dimensional"]
-  
 
     collExamenes.insert_one({
         "folio": folio,
@@ -298,10 +372,8 @@ def datosExamenes():
         return jsonify(message='Error')
 
 
-
-@app.route("/lab/addExamen/<folio>", methods=["PUT"])   
+@app.route("/lab/addExamen/<folio>", methods=["PUT"])
 def addExamen(folio):
-
 
     nombre = request.json["nombre"]
     apellidoP = request.json["apellidoP"]
@@ -321,49 +393,75 @@ def addExamen(folio):
     test = collExamenesPacientes.update_one(
         {"folio": folio},
         {"$addToSet": {"examenesPacientes": {
+            "folio": folio,
+            "nombre": nombre,
+            "apellidoP": apellidoP,
+            "apellidoM": apellidoM,
+            "nombreMedico": nombreMedico,
+            "especialidad": especialidad,
+            "edad": edad,
+            "sexo": sexo,
+            "telefono": telefono,
+            "correo": correo,
+            "fechaExamen": fechaExamen,
+            "tipoExamen": tipoExamen,
+            "prueba": prueba,
+            "resultado": resultado,
+            "dimensional": dimensional
+        }}}
+    )
+
+    print("respBD: ", test)
+
+    return jsonify(message="Se ha añadido el examen"), 201
+
+
+@app.route('/lab/addPacienteExamen', methods=['POST'])
+def addPacienteExamen():
+
+    folio = request.json["folio"]
+    nombre = request.json["nombre"]
+    apellidoP = request.json["apellidoP"]
+    apellidoM = request.json["apellidoM"]
+    edad = request.json["edad"]
+    sexo = request.json["sexo"]
+    telefono = request.json["telefono"]
+    correo = request.json["correo"]
+
+    collExamenesPacientes.insert_one({
         "folio": folio,
         "nombre": nombre,
         "apellidoP": apellidoP,
         "apellidoM": apellidoM,
-        "nombreMedico": nombreMedico,
-        "especialidad": especialidad,
         "edad": edad,
         "sexo": sexo,
         "telefono": telefono,
-        "correo": correo,
-        "fechaExamen": fechaExamen,
-        "tipoExamen": tipoExamen,
-        "prueba": prueba,
-        "resultado": resultado,
-        "dimensional": dimensional
-        }}}
-        )
+        "correo": correo
+    })
 
-    print("respBD: ", test)
-
-    return  jsonify(message="Se ha añadido el examen"), 201
+    return jsonify(message="Patient added sucessfully"), 201
 
 
-    
-@app.route("/lab/obtenerExamenes", methods= ["GET"])
+@app.route("/lab/obtenerExamenes", methods=["GET"])
 def obtenerExamenes():
-    test = collExamenesPacientes.find({},{
+    test = collExamenesPacientes.find({}, {
         "examenesPacientes": 1,
         "_id": 0
     })
 
     response = json_util.dumps(test)
-    return Response(response, mimetype='application/json'),201
+    return Response(response, mimetype='application/json'), 201
+
 
 @app.route("/lab/obtenerExamenes/<folio>", methods=["GET"])
 def obtenerExamenesFolio(folio):
-    test = collExamenesPacientes.find({'folio': folio},{
+    test = collExamenesPacientes.find({'folio': folio}, {
         "examenesPacientes": 1,
         "_id": 0
     })
 
     response = json_util.dumps(test)
-    return Response(response, mimetype="application/json"),201
+    return Response(response, mimetype="application/json"), 201
 
 
 if __name__ == '__main__':

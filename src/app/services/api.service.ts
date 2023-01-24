@@ -131,4 +131,9 @@ export class ApiService {
       return this.http.get<any>(direccion);
   }
 
+  postPacienteExamen(form:RegistroPaciente):Observable<RegistroPaciente>{
+    let direccion = `${this.urlPacientes}/addPacienteExamen`;
+    return this.http.post<RegistroPaciente>(direccion,form)
+  }
+
 }
