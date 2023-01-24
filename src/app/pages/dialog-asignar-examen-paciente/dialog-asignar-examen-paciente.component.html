@@ -17,7 +17,7 @@
           <!-- Fecha Examen Column -->
           <ng-container matColumnDef="fechaExamen">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha Examen </th>
-            <td mat-cell *matCellDef="let row"> {{row.fechaExamen | date: "dd MMMM  yyyy "}} </td>
+            <td mat-cell *matCellDef="let row"> {{row.fechaExamen | date: "ddMMMMyyyy"}} </td>
           </ng-container>
   
           <!-- Tipo Examen Column -->
@@ -47,7 +47,7 @@
                 <mat-icon >reply</mat-icon>
               </button>
               <button class="btn" mat-raised-button color="primary"
-              (click)="createPDF()"
+              (click)="openPDF()"
               (click)="selectExamen(row)">
                 <mat-icon >download</mat-icon>
               </button>
@@ -67,5 +67,8 @@
       </div>
     </div>
   </div>
+
+  
+
 
   

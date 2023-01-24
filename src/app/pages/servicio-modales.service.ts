@@ -18,6 +18,7 @@ export class ServicioModalesService {
   especialidad!:string;
   especialidadS: any;
   nombreMedicoS: any;
+  dataD: any;
 
   localMedico!:any;
   localEspecialidad!: any;
@@ -48,6 +49,18 @@ export class ServicioModalesService {
      
     }
 
+    
+
+
+
+  obtenerDataHtml(data: any){
+
+    console.log(data)
+
+    this.dataD = data;
+
+  
+  }
   
   
 }
