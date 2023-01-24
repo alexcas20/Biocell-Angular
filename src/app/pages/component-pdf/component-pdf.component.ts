@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 
 import { ServicioModalesService } from '../servicio-modales.service';
 
@@ -13,7 +13,7 @@ export class ComponentPdfComponent implements OnInit {
 
   @ViewChild('htmlData') htmlData!: ElementRef;
   
-  USERS = [
+  @Input() USERS = [
     {
       id: 1,
       name: 'Leanne Graham',
