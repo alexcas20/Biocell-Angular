@@ -442,7 +442,7 @@ def addPacienteExamen():
     return jsonify(message="Patient added sucessfully"), 201
 
 
-@app.route("/lab/obtenerExamenes", methods=["GET"])
+@app.route("/lab/Examenes", methods=["GET"])
 def obtenerExamenes():
     test = collExamenesPacientes.find({}, {
         "examenesPacientes": 1,
