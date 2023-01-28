@@ -13,6 +13,7 @@ export class ServicioModalesService {
   folioPaciente:any;
   nombrePaciente: any;
   medico: boolean = false;
+  datosExamen: any;
 
   nombreMedico!:string;
   especialidad!:string;
@@ -26,12 +27,9 @@ export class ServicioModalesService {
   constructor(private api: ApiService) { }
 
   getDatos(data:any){
-      this.cual = true
-      console.log("DATA: " + data)
-      this.folioPaciente = data.folio;
-      this.nombrePaciente = data.nombre;
+    console.log(data)
+    this.datosExamen = data;
 
-      console.log(`folio: ${this.folioPaciente} - nombre: ${this.nombrePaciente}`)
 
 
     }

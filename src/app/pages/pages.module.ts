@@ -33,7 +33,7 @@ import {MatListModule} from '@angular/material/list';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { GeneroPipe } from '../pipes/genero.pipe';
 import { DialogAsignarExamenPacienteComponent } from './dialog-asignar-examen-paciente/dialog-asignar-examen-paciente.component';
-import { ComponentPdfComponent } from './component-pdf/component-pdf.component';
+
 
 
 @NgModule({
@@ -51,7 +51,7 @@ import { ComponentPdfComponent } from './component-pdf/component-pdf.component';
     DialogBuscarMedicoComponent,
     GeneroPipe,
     DialogAsignarExamenPacienteComponent,
-    ComponentPdfComponent
+    
   ],
   imports: [
     CommonModule,
