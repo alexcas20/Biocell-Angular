@@ -7,6 +7,7 @@ import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DialogPacientesComponent } from '../dialog-pacientes/dialog-pacientes.component';
 import Swal from 'sweetalert2';
 import { DialogAsignarExamenPacienteComponent } from '../dialog-asignar-examen-paciente/dialog-asignar-examen-paciente.component';
+import { ServicioModalesService } from '../servicio-modales.service';
 
 @Component({
   selector: 'app-pacientes',
@@ -28,6 +29,7 @@ export class PacientesComponent implements OnInit {
   dataSource!: MatTableDataSource<any>;
 
   showPDF: any;
+  datosExamen: any;
 
 
   USERS = [
@@ -73,9 +75,11 @@ export class PacientesComponent implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private api: ApiService, private dialogPacientes: MatDialog, private dialogAsignarExamen: MatDialog,
+    private modalService: ServicioModalesService
     ) {}
 
   ngOnInit(): void {
+    this.datosExamen = this.modalService.datosExamen
     this.getPacientes();
   }
 
