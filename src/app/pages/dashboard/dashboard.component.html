@@ -3,13 +3,7 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1>[titulo]</h1>
-        </div>
-        <div class="col-sm-6">
-          <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item active">Blank Page</li>
-          </ol>
+          <h1>{{titulo}}</h1>
         </div>
       </div>
     </div><!-- /.container-fluid -->
@@ -20,31 +14,44 @@
 
   <div class="row">
 
-    <div class="col-lg-3 col-6">
+    <div class="col-lg-3 col-6 caja-animated">
     <div class="small-box bg-info">
     <div class="inner">
     <h3>{{totalExamenes?.length}}</h3>
     <p>Examenes Totales</p>
     </div>
     <div class="icon">
-    <i class="ion ion-bag"></i>
+      <i class="fa fa-book" aria-hidden="true"></i>
     </div>
     <a routerLink="examenes" class="small-box-footer">Ver examenes <i class="fas fa-arrow-circle-right"></i></a>
     </div>
     </div>
 
-    <div class="col-lg-3 col-6">
+    <div class="col-lg-3 col-6 caja-animated">
       <div class="small-box bg-info">
       <div class="inner">
       <h3>{{totalExamenesActivos?.length}}</h3>
       <p>Examenes Activos</p>
       </div>
       <div class="icon">
-      <i class="ion ion-bag"></i>
+        <i class="fa fa-paperclip" aria-hidden="true"></i>
       </div>
       <a routerLink="examenes" class="small-box-footer">Ver examenes <i class="fas fa-arrow-circle-right"></i></a>
       </div>
       </div>
+
+      <div class="col-lg-3 col-6 caja-animated">
+        <div class="small-box bg-success">
+        <div class="inner">
+        <h3>{{totalPacientes?.length}}</h3>
+        <p>Pacientes Totales</p>
+        </div>
+        <div class="icon">
+          <i class="fa fa-users"></i>
+        </div>
+        <a routerLink="pacientes" class="small-box-footer">Ver pacientes <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+        </div>
 
 
   </div>
