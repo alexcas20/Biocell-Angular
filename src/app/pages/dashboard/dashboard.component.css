@@ -1,0 +1,17 @@
+
+.caja-animated{
+    margin-top: 5rem;
+    animation: float 8s  linear infinite;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(4rem);
+    }
+
+    50%{
+        transform: translateY(-6.5rem);
+    }
+
+    
+}

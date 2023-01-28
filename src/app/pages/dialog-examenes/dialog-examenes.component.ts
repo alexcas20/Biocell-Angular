@@ -15,6 +15,7 @@ import { DialogComponent } from '../dialog/dialog.component';
 import { ServicioModalesService } from '../servicio-modales.service';
 import { DialogBuscarMedicoComponent } from '../dialog-buscar-medico/dialog-buscar-medico.component';
 import registrarExamen from 'src/app/models/registrarExamen.interface';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dialog-examenes',
@@ -45,7 +46,7 @@ export class DialogExamenesComponent implements OnInit {
     private dialogRef: MatDialogRef<DialogComponent>,
     private dialogPacientes: MatDialog,
     private DialogMedicos: MatDialog,
-    private ServicioModal: ServicioModalesService
+    private ServicioModal: ServicioModalesService,private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -134,6 +135,10 @@ export class DialogExamenesComponent implements OnInit {
           this.dialogRef.close('save');
           localStorage.removeItem('medico');
           localStorage.removeItem('especialidad');
+          setTimeout(() => {
+            this.reloadCurrentRoute()
+          },2000)
+         
         },
         error: () => {
           Swal.fire(
@@ -146,4 +151,11 @@ export class DialogExamenesComponent implements OnInit {
 
       this.api.registarExamen(form).subscribe( resp => console.log("Registro en col Examenes", resp))
   }
+
+  reloadCurrentRoute() {
+    let currentUrl = this.router.url;
+    this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+        this.router.navigate([currentUrl]);
+    });
+}
 }

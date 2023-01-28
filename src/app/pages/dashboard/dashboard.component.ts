@@ -14,6 +14,11 @@ export class DashboardComponent implements OnInit {
   totalExamenes:any;
   examenesActivos: any[] = [] ;
   totalExamenesActivos: any;
+  totalPacientes: any[] = [];
+  titulo:string = "Dashboard"
+
+  
+
 
   ngOnInit(): void {
     this.api.getExamenes()
@@ -31,6 +36,9 @@ export class DashboardComponent implements OnInit {
         this.totalExamenes = resp;
         console.log(resp)
       })
+
+      this.api.getPacientes()
+        .subscribe(resp => this.totalPacientes = resp )
 
     
 
