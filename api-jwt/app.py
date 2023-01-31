@@ -314,6 +314,21 @@ def deleteMedico(folio):
     else:
         return jsonify(message='Error')
 
+@app.route("/lab/datosMedico/<nombreMedico>", methods=["GET"])
+def datosMedico(nombreMedico):
+    test = collMedicos.find_one({"nombreMedico":nombreMedico}, {
+        "_id": 0,
+        "nombreMedico":1,
+        "apellidoP":1,
+        "apellidoM":1
+    })
+
+    if test:
+        response = json_util.dumps(test)
+        return Response(response, mimetype='application/json')
+    else:
+        return jsonify(message='Error')
+
 
 #########   Examenes #########
 

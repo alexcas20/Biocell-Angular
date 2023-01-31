@@ -136,4 +136,9 @@ export class ApiService {
     return this.http.post<RegistroPaciente>(direccion,form)
   }
 
+  getDatosMedico(nombre: any): Observable<any>{
+    let direccion = `${this.url}/datosMedico/${nombre}`;
+    return this.http.get<any>(direccion)
+  }
+
 }
