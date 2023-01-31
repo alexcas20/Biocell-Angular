@@ -19,13 +19,25 @@
           <td mat-cell *matCellDef="let row">{{ row.folio }}</td>
         </ng-container>
 
-        <!-- Nombre Paciente Column -->
+        <!-- Nombre Medico Column -->
         <ng-container matColumnDef="nombreMedico">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre(s)</th>
           <td mat-cell *matCellDef="let row">{{ row.nombreMedico }}</td>
         </ng-container>
 
-        <!-- apellido Materno Column -->
+        <!-- Apellido Paterno Medico Column -->
+        <ng-container matColumnDef="apellidoP">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Apellido Paterno</th>
+          <td mat-cell *matCellDef="let row">{{ row.apellidoP }}</td>
+        </ng-container>
+
+        <!-- Apeliido Materno Medico Column -->
+        <ng-container matColumnDef="apellidoM">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Apellido Materno</th>
+          <td mat-cell *matCellDef="let row">{{ row.apellidoM }}</td>
+        </ng-container>
+
+        <!-- Especialidad Column -->
         <ng-container matColumnDef="especialidad">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>
             Especialidad

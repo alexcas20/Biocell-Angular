@@ -17,6 +17,8 @@ export class DialogBuscarMedicoComponent implements OnInit {
   displayedColumns: string[] = [
     'folio',
     'nombreMedico',
+    'apellidoP',
+    'apellidoM',
     'especialidad',
     'edad',
     'sexo',
