@@ -30,6 +30,8 @@ export class DialogAsignarExamenPacienteComponent implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
 
   datosExamen: any;
+  apellidoP:any;
+  apellidoM:any;
 
   constructor(
     private api: ApiService,
@@ -55,6 +57,16 @@ export class DialogAsignarExamenPacienteComponent implements OnInit {
     console.log(item);
     this.datosExamen = item;
     this.servicioModal.getDatos(item);
+    this.api.getDatosMedico(item.nombreMedico)
+      .subscribe(resp => {
+        this.apellidoP= resp.apellidoP;
+        this.apellidoM = resp.apellidoM;
+        console.log(this.apellidoP)
+      })
+    
+
+
+
   }
 
   applyFilter(event: Event) {
@@ -176,25 +188,29 @@ export class DialogAsignarExamenPacienteComponent implements OnInit {
   }
   */
   public openPDF():void{
+
     var img = new Image()
-    img.src = "../../../assets/images/headerbiocell.jpg"
+    img.src = "../../../assets/images/plantillaBiocell.jpg"
+    
+    var img2 = new Image()
+    img2.src = "../../../assets/images/footerbiocell.jpg"
+    
     
     var doc = new jsPDF();
 
-    doc.addImage(img, 'JPEG',10,10,190,30 )
+    doc.addImage(img, 'JPEG',1,1,200,300 )
+    doc.addImage(img2, 'JPEG',10,260,190,30 )
 
-
-    
     doc.setFont("helvetica", "bold");
     doc.setFontSize(12);
-    doc.setTextColor(100);
-    doc.text("Paciente: " + this.datosExamen.nombre, 20, 50);
+    
+    doc.text("Paciente: " + this.datosExamen.nombre + " "+this.datosExamen.apellidoP + " "+this.datosExamen.apellidoM , 20, 50);
     
     doc.text("Edad: "+ this.datosExamen.edad, 20, 60);
     doc.text("años ", 40, 60)
     doc.text("Sexo: "+this.datosExamen.sexo, 80, 60);
     doc.text("Fecha del Examen: "+this.datosExamen.fechaExamen, 20, 70)
-    doc.text("Medico: "+this.datosExamen.nombreMedico, 20, 80)
+    doc.text("Medico: "+this.datosExamen.nombreMedico+  " "+  this.apellidoP+ " " + this.apellidoM , 20, 80)
     doc.text("Diagostico del paciente", 20, 90)
     
     
@@ -204,13 +220,16 @@ export class DialogAsignarExamenPacienteComponent implements OnInit {
     doc.text("UNIDADES", 107, 100)
     doc.text("VALORES DE REFERENCIA", 140, 100) 
 
-    doc.text(""+ this.datosExamen.tipoExamen, 20, 110)
-    doc.text(this.datosExamen.resultado, 70, 110)
-    doc.text("" + this.datosExamen.dimensional, 107, 110)
+
+    doc.setFont("arial", "normal")
+    doc.text(this.datosExamen.tipoExamen, 30, 110)
+    doc.text(this.datosExamen.resultado, 80, 110)
+    doc.text(this.datosExamen.dimensional, 117, 110)
     doc.text("", 140, 110) 
 
-    doc.save("PruebaPDF.pdf")
-  }
+    
 
-  
+    doc.save("Examen de " + this.datosExamen.nombre + ".pdf")
+  }
+ 
 }
