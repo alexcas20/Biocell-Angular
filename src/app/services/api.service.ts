@@ -141,4 +141,10 @@ export class ApiService {
     return this.http.get<any>(direccion)
   }
 
+  // FinalizarExamen
+  finalExamen(folio:any): Observable<any>{
+    let direccion = `${this.url}/finalizarExamen/${folio}`; 
+    return this.http.put<any>(direccion,folio)
+  }
+
 }

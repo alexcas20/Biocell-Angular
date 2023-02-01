@@ -318,14 +318,15 @@ def deleteMedico(folio):
     else:
         return jsonify(message = 'Error')
 
+        
 
-@ app.route("/lab/datosMedico/<nombreMedico>", methods = ["GET"])
+@app.route("/lab/datosMedico/<nombreMedico>", methods=["GET"])
 def datosMedico(nombreMedico):
-    test=collMedicos.find_one({"nombreMedico": nombreMedico}, {
-        "_id": 0,
-        "nombreMedico": 1,
-        "apellidoP": 1,
-        "apellidoM": 1
+    test = collMedicos.find_one({"nombreMedico":nombreMedico}, {
+        "nombreMedico":1,
+        "apellidoP":1,
+        "apellidoM":1,
+         "_id": 0
     })
 
     if test:
@@ -341,21 +342,19 @@ def datosMedico(nombreMedico):
 @ app.route("/lab/nuevoExamen", methods = ["POST"])
 def datosExamen():
 
-    folio=request.json["folio"]
-    nombre=request.json["nombre"]
-    apellidoP=request.json["apellidoP"]
-    apellidoM=request.json["apellidoM"]
-    nombreMedico=request.json["nombreMedico"]
-    especialidad=request.json["especialidad"]
-    edad=request.json["edad"]
-    sexo=request.json["sexo"]
-    telefono=request.json["telefono"]
-    correo=request.json["correo"]
-    fechaExamen=request.json["fechaExamen"]
-    tipoExamen=request.json["tipoExamen"]
-    prueba=request.json["prueba"]
-    resultado=request.json["resultado"]
-    dimensional=request.json["dimensional"]
+    folio = request.json["folio"]
+    nombre = request.json["nombre"]
+    apellidoP = request.json["apellidoP"]
+    apellidoM = request.json["apellidoM"]
+    nombreMedico = request.json["nombreMedico"]
+    especialidad = request.json["especialidad"]
+    edad = request.json["edad"]
+    sexo = request.json["sexo"]
+    telefono = request.json["telefono"]
+    correo = request.json["correo"]
+    fechaExamen = request.json["fechaExamen"]
+    tipoExamen = request.json["tipoExamen"]
+    estudio = request.json["prueba"]
 
     collExamenes.insert_one({
         "folio": folio,
@@ -370,9 +369,7 @@ def datosExamen():
         "correo": correo,
         "fechaExamen": fechaExamen,
         "tipoExamen": tipoExamen,
-        "prueba": prueba,
-        "resultado": resultado,
-        "dimensional": dimensional,
+        "estudio": estudio,
         "estado": "activo"
     })
 
@@ -494,6 +491,22 @@ def tiposExamenes():
 
     response=json_util.dumps(test)
     return Response(response, mimetype = 'application/json'), 201
+
+
+@app.route("/lab/finalizarExamen/<folio>", methods=["PUT"])
+def finalizarExamenes(folio):
+
+
+   test = collExamenes.update_one(
+        {"folio": folio},
+        {"$addToSet": {"estado": "finalizado"}}
+        
+    
+    )
+
+   print("respBD: ", test)
+
+   return jsonify(message="Se ha actualizado el status"), 201
 
 
 if __name__ == '__main__':

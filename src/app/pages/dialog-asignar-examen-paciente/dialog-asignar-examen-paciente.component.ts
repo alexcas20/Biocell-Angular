@@ -32,7 +32,7 @@ export class DialogAsignarExamenPacienteComponent implements OnInit {
   datosExamen: any;
   apellidoP:any;
   apellidoM:any;
-
+  activarDescarga: boolean = false;
   constructor(
     private api: ApiService,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -53,15 +53,16 @@ export class DialogAsignarExamenPacienteComponent implements OnInit {
     });
   }
 
-  selectExamen(item: any) {
+   selectExamen(item: any) {
     console.log(item);
-    this.datosExamen = item;
+    this.datosExamen =  item;
     this.servicioModal.getDatos(item);
-    this.api.getDatosMedico(item.nombreMedico)
+    this.activarDescarga = true;
+    this.api.getDatosMedico(this.datosExamen.nombreMedico)
       .subscribe(resp => {
         this.apellidoP= resp.apellidoP;
         this.apellidoM = resp.apellidoM;
-        console.log(this.apellidoP)
+        console.log(resp)
       })
     
 
@@ -189,6 +190,9 @@ export class DialogAsignarExamenPacienteComponent implements OnInit {
   */
   public openPDF():void{
 
+    const datosExamen = this.datosExamen
+    console.log(datosExamen)
+
     var img = new Image()
     img.src = "../../../assets/images/plantillaBiocell.jpg"
     
@@ -204,13 +208,13 @@ export class DialogAsignarExamenPacienteComponent implements OnInit {
     doc.setFont("helvetica", "bold");
     doc.setFontSize(12);
     
-    doc.text("Paciente: " + this.datosExamen.nombre + " "+this.datosExamen.apellidoP + " "+this.datosExamen.apellidoM , 20, 50);
+    doc.text("Paciente: " + datosExamen?.nombre + " "+datosExamen?.apellidoP + " "+datosExamen?.apellidoM , 20, 50);
     
-    doc.text("Edad: "+ this.datosExamen.edad, 20, 60);
+    doc.text("Edad: "+ datosExamen?.edad, 20, 60);
     doc.text("años ", 40, 60)
-    doc.text("Sexo: "+this.datosExamen.sexo, 80, 60);
-    doc.text("Fecha del Examen: "+this.datosExamen.fechaExamen, 20, 70)
-    doc.text("Medico: "+this.datosExamen.nombreMedico+  " "+  this.apellidoP+ " " + this.apellidoM , 20, 80)
+    doc.text("Sexo: "+datosExamen?.sexo, 80, 60);
+    doc.text("Fecha del Examen: "+datosExamen?.fechaExamen, 20, 70)
+    doc.text("Medico: "+datosExamen?.nombreMedico+  " "+  this.apellidoP+ " " + this.apellidoM , 20, 80)
     doc.text("Diagostico del paciente", 20, 90)
     
     
@@ -218,18 +222,18 @@ export class DialogAsignarExamenPacienteComponent implements OnInit {
     doc.text("ESTUDIO", 40, 100)
     doc.text("RESULTADO", 70, 100)
     doc.text("UNIDADES", 107, 100)
-    doc.text("VALORES DE REFERENCIA", 140, 100) 
+    doc.text("VALORES DE REFERENCIA",140,100) 
 
 
     doc.setFont("arial", "normal")
-    doc.text(this.datosExamen.tipoExamen, 30, 110)
-    doc.text(this.datosExamen.resultado, 80, 110)
-    doc.text(this.datosExamen.dimensional, 117, 110)
-    doc.text("", 140, 110) 
+    doc.text(""+datosExamen?.tipoExamen, 30, 110)
+    doc.text(""+datosExamen?.resultado, 80, 110)
+    doc.text(""+datosExamen?.dimensional, 117, 110)
+    doc.text("",140,110) 
 
     
 
-    doc.save("Examen de " + this.datosExamen.nombre + ".pdf")
+    doc.save("Examen de " + datosExamen?.nombre + ".pdf")
   }
  
 }
