@@ -102,8 +102,7 @@
           <mat-label>Tipo de Examen</mat-label>
           <mat-select formControlName="tipoExamen" placeholder="Tipo de Examen">
             <mat-option value="Prueba de embarazo"
-              >Prueba de embarazo</mat-option
-            >
+              >Prueba de embarazo</mat-option>
             <mat-option value="Grupo sanguineo">Grupo sanguineo</mat-option>
           </mat-select>
         </mat-form-field>
@@ -113,12 +112,12 @@
           <input formControlName="prueba" matInput placeholder="Prueba" />
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
+        <mat-form-field appearance="outline" *ngIf="data?.estado === 'activo' " >
           <mat-label>Resultado</mat-label>
           <input formControlName="resultado" matInput placeholder="Resultado" />
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
+        <mat-form-field appearance="outline" *ngIf="data?.estado === 'activo' ">
           <mat-label>Dimensional</mat-label>
           <input
             formControlName="dimensional"
@@ -130,7 +129,7 @@
     </div>
   </mat-grid-list>
 
-  <
+  
 
   <div mat-dialog-action [align]="'end'">
     <button mat-raised-button color="warn" mat-dialog-close>Cerrar</button>

@@ -50,6 +50,7 @@ export class DialogExamenesComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+
     this.productForm = this.formBuilder.group({
       folio: ['', Validators.required],
       nombre: ['', Validators.required],
@@ -68,7 +69,21 @@ export class DialogExamenesComponent implements OnInit {
       dimensional: ['', Validators.required],
     });
 
-    if (this.data) {
+    if (this.data?.estado) {
+      this.actionBtn = "Finalizar";
+      this.productForm.controls["nombreMedico"].patchValue(this.data.nombreMedico);
+      this.productForm.controls["especialidad"].patchValue(this.data.especialidad);
+      this.productForm.controls['folio'].patchValue(this.data.folio);
+      this.productForm.controls['nombre'].patchValue(this.data.nombre);
+      this.productForm.controls['apellidoP'].patchValue(this.data.apellidoP);
+      this.productForm.controls['apellidoM'].patchValue(this.data.apellidoM);
+      this.productForm.controls['edad'].patchValue(this.data.edad);
+      this.productForm.controls['sexo'].patchValue(this.data.sexo);
+      this.productForm.controls['telefono'].patchValue(this.data.telefono);
+      this.productForm.controls['correo'].patchValue(this.data.correo);
+      this.productForm.controls["fechaExamen"].patchValue(this.data.fechaExamen);
+      this.productForm.controls["tipoExamen"].patchValue(this.data.tipoExamen);
+    } else if(this.data) {
       this.productForm.controls['folio'].patchValue(this.data.folio);
       this.productForm.controls['nombre'].patchValue(this.data.nombre);
       this.productForm.controls['apellidoP'].patchValue(this.data.apellidoP);
@@ -79,8 +94,11 @@ export class DialogExamenesComponent implements OnInit {
       this.productForm.controls['correo'].patchValue(this.data.correo);
     }
 
-    this.traerDatos();
+   
+
   }
+
+
 
   BuscarPacientes() {
     this.dialogPacientes
@@ -108,11 +126,12 @@ export class DialogExamenesComponent implements OnInit {
   }
 
   buscarMedicos() {
+    this.traerDatos();
     this.DialogMedicos.open(DialogBuscarMedicoComponent, {
       width: '50%',
-    });
+    })
 
-    this.traerDatos();
+    
   }
 
   traerDatos() {
@@ -125,7 +144,8 @@ export class DialogExamenesComponent implements OnInit {
   }
 
   registrarExamen( form: registrarExamen) {
-    this.api
+    if(!this.data){
+      this.api
       .agregarExamen(this.productForm.get('folio')?.value, form)
       .subscribe({
         next: (res) => {
@@ -150,7 +170,19 @@ export class DialogExamenesComponent implements OnInit {
       });
 
       this.api.registarExamen(form).subscribe( resp => console.log("Registro en col Examenes", resp))
+
+    } else {
+      console.log(this.productForm.get('folio')?.value)
+      this.api.finalExamen(this.productForm.get('folio')?.value)
+        .subscribe(resp => console.log(resp))
+    }
+   
   }
+
+ 
+
+
+  
 
   reloadCurrentRoute() {
     let currentUrl = this.router.url;
