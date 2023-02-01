@@ -147,4 +147,9 @@ export class ApiService {
     return this.http.put<any>(direccion,folio)
   }
 
+  getTiposExamenes():Observable<any>{
+    let direccion = `${this.urlMedicos}/tiposExamenes`;
+    return this.http.get(direccion);
+  }
+
 }
