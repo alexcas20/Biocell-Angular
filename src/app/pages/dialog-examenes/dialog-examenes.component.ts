@@ -52,7 +52,7 @@ export class DialogExamenesComponent implements OnInit {
   ngOnInit(): void {
 
     this.productForm = this.formBuilder.group({
-      folio: ['', Validators.required],
+      folioExamen: ['', Validators.required],
       nombre: ['', Validators.required],
       apellidoP: ['', Validators.required],
       apellidoM: ['', Validators.required],
@@ -73,7 +73,7 @@ export class DialogExamenesComponent implements OnInit {
       this.actionBtn = "Finalizar";
       this.productForm.controls["nombreMedico"].patchValue(this.data.nombreMedico);
       this.productForm.controls["especialidad"].patchValue(this.data.especialidad);
-      this.productForm.controls['folio'].patchValue(this.data.folio);
+      this.productForm.controls['folioExamen'].patchValue(this.data.folioExamen);
       this.productForm.controls['nombre'].patchValue(this.data.nombre);
       this.productForm.controls['apellidoP'].patchValue(this.data.apellidoP);
       this.productForm.controls['apellidoM'].patchValue(this.data.apellidoM);
@@ -84,7 +84,7 @@ export class DialogExamenesComponent implements OnInit {
       this.productForm.controls["fechaExamen"].patchValue(this.data.fechaExamen);
       this.productForm.controls["tipoExamen"].patchValue(this.data.tipoExamen);
     } else if(this.data) {
-      this.productForm.controls['folio'].patchValue(this.data.folio);
+      this.productForm.controls['folioExamen'].patchValue(this.data.folioExamen);
       this.productForm.controls['nombre'].patchValue(this.data.nombre);
       this.productForm.controls['apellidoP'].patchValue(this.data.apellidoP);
       this.productForm.controls['apellidoM'].patchValue(this.data.apellidoM);
@@ -93,6 +93,8 @@ export class DialogExamenesComponent implements OnInit {
       this.productForm.controls['telefono'].patchValue(this.data.telefono);
       this.productForm.controls['correo'].patchValue(this.data.correo);
     }
+
+    
 
    
 
