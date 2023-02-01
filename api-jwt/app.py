@@ -342,6 +342,7 @@ def datosMedico(nombreMedico):
 @ app.route("/lab/nuevoExamen", methods = ["POST"])
 def datosExamen():
 
+    folioExamen= request.json["folioExamen"]
     folio = request.json["folio"]
     nombre = request.json["nombre"]
     apellidoP = request.json["apellidoP"]
@@ -357,6 +358,7 @@ def datosExamen():
     estudio = request.json["prueba"]
 
     collExamenes.insert_one({
+        "folioExamen": folioExamen,
         "folio": folio,
         "nombre": nombre,
         "apellidoP": apellidoP,
@@ -392,6 +394,7 @@ def datosExamenes():
 @ app.route("/lab/addExamen/<folio>", methods = ["PUT"])
 def addExamen(folio):
 
+    folioExamen = request.json["folioExamen"]
     nombre=request.json["nombre"]
     apellidoP=request.json["apellidoP"]
     apellidoM=request.json["apellidoM"]
@@ -410,6 +413,7 @@ def addExamen(folio):
     test=collExamenesPacientes.update_one(
         {"folio": folio},
         {"$addToSet": {"examenesPacientes": {
+            "folioExamen": folioExamen,
             "folio": folio,
             "nombre": nombre,
             "apellidoP": apellidoP,
@@ -436,6 +440,7 @@ def addExamen(folio):
 @ app.route('/lab/addPacienteExamen', methods = ['POST'])
 def addPacienteExamen():
 
+    folioExamen = request.json["folioExamen"]
     folio=request.json["folio"]
     nombre=request.json["nombre"]
     apellidoP=request.json["apellidoP"]
@@ -446,6 +451,7 @@ def addPacienteExamen():
     correo=request.json["correo"]
 
     collExamenesPacientes.insert_one({
+        "folioEXamen": folioExamen,
         "folio": folio,
         "nombre": nombre,
         "apellidoP": apellidoP,
