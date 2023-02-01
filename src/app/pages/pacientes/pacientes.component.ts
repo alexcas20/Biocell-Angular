@@ -161,17 +161,12 @@ export class PacientesComponent implements OnInit {
   }
 
   asignarExamenPaciente(folio:any){
-    this.showPDF= true
     this.dialogAsignarExamen
       .open(DialogAsignarExamenPacienteComponent, {
         width: '60%',
         data: folio
       })
-      .afterClosed(
-      )
-      .subscribe(resp => 
-        this.showPDF = false
-      );
+      .afterClosed()
 
      
      
