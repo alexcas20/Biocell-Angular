@@ -27,14 +27,14 @@ export class ExamenesComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private api: ApiService, private dialogPacientes: MatDialog) {}
+  constructor(private api: ApiService, private dialogExamenes: MatDialog) {}
 
   ngOnInit(): void {
      this.getExamenes();
   }
 
   openDialogExamenes() {
-    this.dialogPacientes
+    this.dialogExamenes
       .open(DialogExamenesComponent, {
         width: '60%',
       })
@@ -44,6 +44,24 @@ export class ExamenesComponent implements OnInit {
           this.getExamenes();
         }
       });
+  }
+
+  editExamen(item: any){
+    console.log(item);
+
+    this.dialogExamenes
+    .open(DialogExamenesComponent, {
+      width: '60%',
+      data: item
+    }) 
+    .afterClosed()
+      .subscribe((val) => {
+        if (val === 'save') {
+          this.getExamenes();
+        }
+      });
+      
+    
   }
 
 
