@@ -43,12 +43,9 @@
           <ng-container matColumnDef="accion">
             <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
             <td mat-cell *matCellDef="let row">
-              <button class="btn" mat-raised-button color="primary">
-                <mat-icon >reply</mat-icon>
-              </button>
               <button class="btn" mat-raised-button color="primary"
-              (click)="openPDF()"
-              (click)="selectExamen(row)">
+              (click)="selectExamen(row)"
+              (dblclick)="openPDF()">
                 <mat-icon >download</mat-icon>
               </button>
             </td>
