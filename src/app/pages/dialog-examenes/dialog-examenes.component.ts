@@ -32,8 +32,10 @@ export class DialogExamenesComponent implements OnInit {
 
   nameMedico: any;
   especialidad: any;
-
   selectPaciente: any;
+
+  tiposExamenes: any;
+  estudios:any;
 
   dataSource!: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -52,11 +54,11 @@ export class DialogExamenesComponent implements OnInit {
     private dialogRef: MatDialogRef<DialogComponent>,
     private dialogPacientes: MatDialog,
     private DialogMedicos: MatDialog,
-    private ServicioModal: ServicioModalesService,private router: Router
+    private ServicioModal: ServicioModalesService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-
     this.productForm = this.formBuilder.group({
       folioExamen: ['', Validators.required],
       folio: ['', Validators.required],
@@ -125,8 +127,6 @@ export class DialogExamenesComponent implements OnInit {
     
 
 
-
-
   BuscarPacientes() {
     this.dialogPacientes
       .open(DialogBuscarPacienteComponent, {
@@ -156,9 +156,7 @@ export class DialogExamenesComponent implements OnInit {
     this.traerDatos();
     this.DialogMedicos.open(DialogBuscarMedicoComponent, {
       width: '50%',
-    })
-
-    
+    });
   }
 
   traerDatos() {
@@ -173,31 +171,31 @@ export class DialogExamenesComponent implements OnInit {
   registrarExamen( form: registrarExamen) {
     if(this.guardar){
       this.api
-      .agregarExamen(this.productForm.get('folio')?.value, form)
-      .subscribe({
-        next: (res) => {
-          console.log('Examen guardado: ', res);
-          Swal.fire('Exito', 'Se ha registrado el examen', 'success');
-          this.productForm.reset();
-          this.dialogRef.close('save');
-          localStorage.removeItem('medico');
-          localStorage.removeItem('especialidad');
-          setTimeout(() => {
-            this.reloadCurrentRoute()
-          },2000)
-         
-        },
-        error: () => {
-          Swal.fire(
-            'Error',
-            'Se ha producido un error al registar el examen',
-            'error'
-          );
-        },
-      });
+        .agregarExamen(this.productForm.get('folio')?.value, form)
+        .subscribe({
+          next: (res) => {
+            console.log('Examen guardado: ', res);
+            Swal.fire('Exito', 'Se ha registrado el examen', 'success');
+            this.productForm.reset();
+            this.dialogRef.close('save');
+            localStorage.removeItem('medico');
+            localStorage.removeItem('especialidad');
+            setTimeout(() => {
+              this.reloadCurrentRoute();
+            }, 2000);
+          },
+          error: () => {
+            Swal.fire(
+              'Error',
+              'Se ha producido un error al registar el examen',
+              'error'
+            );
+          },
+        });
 
-      this.api.registarExamen(form).subscribe( resp => console.log("Registro en col Examenes", resp))
-
+      this.api
+        .registarExamen(form)
+        .subscribe((resp) => console.log('Registro en col Examenes', resp));
     } else {
 
       Swal.fire({
@@ -229,18 +227,12 @@ export class DialogExamenesComponent implements OnInit {
       })
       
     }
-   
   }
-
- 
-
-
-  
 
   reloadCurrentRoute() {
     let currentUrl = this.router.url;
-    this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
-        this.router.navigate([currentUrl]);
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate([currentUrl]);
     });
-}
+  }
 }
