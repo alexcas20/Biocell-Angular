@@ -39,6 +39,12 @@ export class DialogExamenesComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
+  noPaciente =  false;
+  guardar= true;
+
+  //Folio Examen
+  numeroRandom = Math.round(Math.random()*5000)
+
   constructor(
     private formBuilder: FormBuilder,
     private api: ApiService,
@@ -53,6 +59,7 @@ export class DialogExamenesComponent implements OnInit {
 
     this.productForm = this.formBuilder.group({
       folioExamen: ['', Validators.required],
+      folio: ['', Validators.required],
       nombre: ['', Validators.required],
       apellidoP: ['', Validators.required],
       apellidoM: ['', Validators.required],
@@ -64,16 +71,24 @@ export class DialogExamenesComponent implements OnInit {
       correo: ['', Validators.required],
       fechaExamen: ['', Validators.required],
       tipoExamen: ['', Validators.required],
-      prueba: ['', Validators.required],
+      estudio: ['', Validators.required],
       resultado: ['', Validators.required],
       dimensional: ['', Validators.required],
     });
 
-    if (this.data?.estado) {
+    
+
+ 
+
+    if (this.data){
+        if(this.data.estado){
+          this.guardar =false
+          console.log(this.data)
       this.actionBtn = "Finalizar";
       this.productForm.controls["nombreMedico"].patchValue(this.data.nombreMedico);
       this.productForm.controls["especialidad"].patchValue(this.data.especialidad);
       this.productForm.controls['folioExamen'].patchValue(this.data.folioExamen);
+      this.productForm.controls['folio'].patchValue(this.data.folio);
       this.productForm.controls['nombre'].patchValue(this.data.nombre);
       this.productForm.controls['apellidoP'].patchValue(this.data.apellidoP);
       this.productForm.controls['apellidoM'].patchValue(this.data.apellidoM);
@@ -83,22 +98,32 @@ export class DialogExamenesComponent implements OnInit {
       this.productForm.controls['correo'].patchValue(this.data.correo);
       this.productForm.controls["fechaExamen"].patchValue(this.data.fechaExamen);
       this.productForm.controls["tipoExamen"].patchValue(this.data.tipoExamen);
-    } else if(this.data) {
-      this.productForm.controls['folioExamen'].patchValue(this.data.folioExamen);
-      this.productForm.controls['nombre'].patchValue(this.data.nombre);
-      this.productForm.controls['apellidoP'].patchValue(this.data.apellidoP);
-      this.productForm.controls['apellidoM'].patchValue(this.data.apellidoM);
-      this.productForm.controls['edad'].patchValue(this.data.edad);
-      this.productForm.controls['sexo'].patchValue(this.data.sexo);
-      this.productForm.controls['telefono'].patchValue(this.data.telefono);
-      this.productForm.controls['correo'].patchValue(this.data.correo);
+
+
+        }
+
+        else if(this.data?.folio){
+          console.log(this.data)
+       console.log("condicional folio"+ this.data.folio)
+      this.noPaciente = true
+      this.productForm.controls["folio"].patchValue(this.data.item?.folio)
+      this.productForm.controls["folioExamen"].patchValue(this.data.folio)
+      this.productForm.controls['nombre'].patchValue(this.data.item?.nombre);
+      this.productForm.controls['apellidoP'].patchValue(this.data.item?.apellidoP);
+      this.productForm.controls['apellidoM'].patchValue(this.data.item?.apellidoM);
+      this.productForm.controls['edad'].patchValue(this.data.item?.edad);
+      this.productForm.controls['sexo'].patchValue(this.data.item?.sexo);
+      this.productForm.controls['telefono'].patchValue(this.data.item?.telefono);
+      this.productForm.controls['correo'].patchValue(this.data.item?.correo);
+        }
+
     }
+
+  
+  }
 
     
 
-   
-
-  }
 
 
 
@@ -146,7 +171,7 @@ export class DialogExamenesComponent implements OnInit {
   }
 
   registrarExamen( form: registrarExamen) {
-    if(!this.data){
+    if(this.guardar){
       this.api
       .agregarExamen(this.productForm.get('folio')?.value, form)
       .subscribe({
@@ -174,9 +199,35 @@ export class DialogExamenesComponent implements OnInit {
       this.api.registarExamen(form).subscribe( resp => console.log("Registro en col Examenes", resp))
 
     } else {
-      console.log(this.productForm.get('folio')?.value)
-      this.api.finalExamen(this.productForm.get('folio')?.value)
-        .subscribe(resp => console.log(resp))
+
+      Swal.fire({
+        title: '¿Estas seguro/a de finalizar el examen?',
+        text: "No podras revertir los cambios!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si, finalizar!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          console.log(this.productForm.get('folio')?.value)
+          this.api.finalExamen(this.productForm.get('folio')?.value)
+            .subscribe(resp => console.log(resp))
+          Swal.fire(
+            '',
+            'El examen ha sido finalizado.',
+            'success'
+          )
+        }
+        else {
+          Swal.fire(
+            'Atencion!',
+            'Verifique sus acciones.',
+            'warning'
+          )
+        }
+      })
+      
     }
    
   }
