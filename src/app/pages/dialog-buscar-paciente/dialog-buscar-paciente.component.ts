@@ -16,6 +16,8 @@ import { MatSort } from '@angular/material/sort';
 })
 export class DialogBuscarPacienteComponent implements OnInit {
 
+  numeroRandom = Math.round(Math.random()*5000)
+
   
 
   displayedColumns: string[] = [
@@ -61,11 +63,15 @@ export class DialogBuscarPacienteComponent implements OnInit {
 
   editPaciente(item: any) {
     console.log(item);
+    localStorage.setItem("folio", "LAB"+JSON.stringify(this.numeroRandom))
     this.ServicioModal.getDatos(item);
     this.dialogExamenes
     .open(DialogExamenesComponent, {
       width: '60%',
-      data: item
+      data: {
+        item,
+        folio: localStorage.getItem("folio")
+      }
     });
     this.dialogRef.close();
   }
