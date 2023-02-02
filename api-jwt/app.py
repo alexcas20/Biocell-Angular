@@ -355,7 +355,7 @@ def datosExamen():
     correo = request.json["correo"]
     fechaExamen = request.json["fechaExamen"]
     tipoExamen = request.json["tipoExamen"]
-    estudio = request.json["prueba"]
+    estudio = request.json["estudio"]
 
     collExamenes.insert_one({
         "folioExamen": folioExamen,
@@ -391,7 +391,7 @@ def datosExamenes():
         return jsonify(message = 'Error')
 
 
-@ app.route("/lab/addExamen/<folio>", methods = ["PUT"])
+@app.route("/lab/addExamen/<folio>", methods = ["PUT"])
 def addExamen(folio):
 
     folioExamen = request.json["folioExamen"]
@@ -406,9 +406,10 @@ def addExamen(folio):
     correo=request.json["correo"]
     fechaExamen=request.json["fechaExamen"]
     tipoExamen=request.json["tipoExamen"]
-    prueba=request.json["prueba"]
+    estudio=request.json["estudio"]
     resultado=request.json["resultado"]
     dimensional=request.json["dimensional"]
+   
 
     test=collExamenesPacientes.update_one(
         {"folio": folio},
@@ -426,9 +427,10 @@ def addExamen(folio):
             "correo": correo,
             "fechaExamen": fechaExamen,
             "tipoExamen": tipoExamen,
-            "prueba": prueba,
+            "estudio": estudio,
             "resultado": resultado,
-            "dimensional": dimensional
+            "dimensional": dimensional,
+            
         }}}
     )
 
@@ -505,7 +507,7 @@ def finalizarExamenes(folio):
 
    test = collExamenes.update_one(
         {"folio": folio},
-        {"$addToSet": {"estado": "finalizado"}}
+        {"$set": {"estado": "finalizado"}}
         
     
     )
