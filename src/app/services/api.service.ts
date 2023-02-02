@@ -152,4 +152,9 @@ export class ApiService {
     return this.http.get(direccion);
   }
 
+  getEstudios(examen:any):Observable<any>{
+    let direccion =  `${this.url}/estudiosExamen/${examen}`; 
+    return this.http.get(direccion,examen)
+  }
+
 }
