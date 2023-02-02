@@ -101,23 +101,32 @@
         <mat-form-field appearance="outline">
           <mat-label>Tipo de Examen</mat-label>
           <mat-select formControlName="tipoExamen" placeholder="Tipo de Examen">
-            <mat-option value="Prueba de embarazo"
-              >Prueba de embarazo</mat-option>
-            <mat-option value="Grupo sanguineo">Grupo sanguineo</mat-option>
+            <mat-option
+              *ngFor="let item of tiposExamenes"
+              [value]="item.examen"
+              >{{ item.examen }}</mat-option
+            >
           </mat-select>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Prueba</mat-label>
-          <input formControlName="prueba" matInput placeholder="Prueba" />
+          <mat-label>Estudio</mat-label>
+          <mat-select formControlName="prueba" matInput placeholder="Estudio">
+            <mat-option
+              *ngFor="let item of estudios; "
+              [value]="item"
+            >
+              {{ item}}</mat-option
+            >
+          </mat-select>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" *ngIf="data?.estado === 'activo' " >
+        <mat-form-field appearance="outline" *ngIf="data?.estado === 'activo'">
           <mat-label>Resultado</mat-label>
           <input formControlName="resultado" matInput placeholder="Resultado" />
         </mat-form-field>
 
-        <mat-form-field appearance="outline" *ngIf="data?.estado === 'activo' ">
+        <mat-form-field appearance="outline" *ngIf="data?.estado === 'activo'">
           <mat-label>Dimensional</mat-label>
           <input
             formControlName="dimensional"
@@ -129,14 +138,10 @@
     </div>
   </mat-grid-list>
 
-  
-
   <div mat-dialog-action [align]="'end'">
     <button mat-raised-button color="warn" mat-dialog-close>Cerrar</button>
     <button
-      (click)="
-        registrarExamen(productForm.value)
-      "
+      (click)="registrarExamen(productForm.value)"
       style="margin-left: 8px"
       mat-raised-button
       color="primary"

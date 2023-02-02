@@ -32,8 +32,10 @@ export class DialogExamenesComponent implements OnInit {
 
   nameMedico: any;
   especialidad: any;
-
   selectPaciente: any;
+
+  tiposExamenes: any;
+  estudios:any;
 
   dataSource!: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -46,11 +48,11 @@ export class DialogExamenesComponent implements OnInit {
     private dialogRef: MatDialogRef<DialogComponent>,
     private dialogPacientes: MatDialog,
     private DialogMedicos: MatDialog,
-    private ServicioModal: ServicioModalesService,private router: Router
+    private ServicioModal: ServicioModalesService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-
     this.productForm = this.formBuilder.group({
       folioExamen: ['', Validators.required],
       nombre: ['', Validators.required],
@@ -70,10 +72,16 @@ export class DialogExamenesComponent implements OnInit {
     });
 
     if (this.data?.estado) {
-      this.actionBtn = "Finalizar";
-      this.productForm.controls["nombreMedico"].patchValue(this.data.nombreMedico);
-      this.productForm.controls["especialidad"].patchValue(this.data.especialidad);
-      this.productForm.controls['folioExamen'].patchValue(this.data.folioExamen);
+      this.actionBtn = 'Finalizar';
+      this.productForm.controls['nombreMedico'].patchValue(
+        this.data.nombreMedico
+      );
+      this.productForm.controls['especialidad'].patchValue(
+        this.data.especialidad
+      );
+      this.productForm.controls['folioExamen'].patchValue(
+        this.data.folioExamen
+      );
       this.productForm.controls['nombre'].patchValue(this.data.nombre);
       this.productForm.controls['apellidoP'].patchValue(this.data.apellidoP);
       this.productForm.controls['apellidoM'].patchValue(this.data.apellidoM);
@@ -81,10 +89,14 @@ export class DialogExamenesComponent implements OnInit {
       this.productForm.controls['sexo'].patchValue(this.data.sexo);
       this.productForm.controls['telefono'].patchValue(this.data.telefono);
       this.productForm.controls['correo'].patchValue(this.data.correo);
-      this.productForm.controls["fechaExamen"].patchValue(this.data.fechaExamen);
-      this.productForm.controls["tipoExamen"].patchValue(this.data.tipoExamen);
-    } else if(this.data) {
-      this.productForm.controls['folioExamen'].patchValue(this.data.folioExamen);
+      this.productForm.controls['fechaExamen'].patchValue(
+        this.data.fechaExamen
+      );
+      this.productForm.controls['tipoExamen'].patchValue(this.data.tipoExamen);
+    } else if (this.data) {
+      this.productForm.controls['folioExamen'].patchValue(
+        this.data.folioExamen
+      );
       this.productForm.controls['nombre'].patchValue(this.data.nombre);
       this.productForm.controls['apellidoP'].patchValue(this.data.apellidoP);
       this.productForm.controls['apellidoM'].patchValue(this.data.apellidoM);
@@ -94,13 +106,25 @@ export class DialogExamenesComponent implements OnInit {
       this.productForm.controls['correo'].patchValue(this.data.correo);
     }
 
-    
+    this.api.getTiposExamenes().subscribe((resp) => {
+      this.tiposExamenes = resp;
+      console.log(this.tiposExamenes);
+    });
 
-   
+    this.productForm.controls["tipoExamen"].valueChanges.subscribe(tipoE => {
+    console.log(tipoE)
+
+    this.api.getEstudios(tipoE).subscribe(tipoE =>{
+      console.log(tipoE)
+      console.log(tipoE.estudios)
+      
+      this.estudios = tipoE.estudios;
+
+    })
+    })
+
 
   }
-
-
 
   BuscarPacientes() {
     this.dialogPacientes
@@ -131,9 +155,7 @@ export class DialogExamenesComponent implements OnInit {
     this.traerDatos();
     this.DialogMedicos.open(DialogBuscarMedicoComponent, {
       width: '50%',
-    })
-
-    
+    });
   }
 
   traerDatos() {
@@ -145,51 +167,46 @@ export class DialogExamenesComponent implements OnInit {
     );
   }
 
-  registrarExamen( form: registrarExamen) {
-    if(!this.data){
+  registrarExamen(form: registrarExamen) {
+    if (!this.data) {
       this.api
-      .agregarExamen(this.productForm.get('folio')?.value, form)
-      .subscribe({
-        next: (res) => {
-          console.log('Examen guardado: ', res);
-          Swal.fire('Exito', 'Se ha registrado el examen', 'success');
-          this.productForm.reset();
-          this.dialogRef.close('save');
-          localStorage.removeItem('medico');
-          localStorage.removeItem('especialidad');
-          setTimeout(() => {
-            this.reloadCurrentRoute()
-          },2000)
-         
-        },
-        error: () => {
-          Swal.fire(
-            'Error',
-            'Se ha producido un error al registar el examen',
-            'error'
-          );
-        },
-      });
+        .agregarExamen(this.productForm.get('folio')?.value, form)
+        .subscribe({
+          next: (res) => {
+            console.log('Examen guardado: ', res);
+            Swal.fire('Exito', 'Se ha registrado el examen', 'success');
+            this.productForm.reset();
+            this.dialogRef.close('save');
+            localStorage.removeItem('medico');
+            localStorage.removeItem('especialidad');
+            setTimeout(() => {
+              this.reloadCurrentRoute();
+            }, 2000);
+          },
+          error: () => {
+            Swal.fire(
+              'Error',
+              'Se ha producido un error al registar el examen',
+              'error'
+            );
+          },
+        });
 
-      this.api.registarExamen(form).subscribe( resp => console.log("Registro en col Examenes", resp))
-
+      this.api
+        .registarExamen(form)
+        .subscribe((resp) => console.log('Registro en col Examenes', resp));
     } else {
-      console.log(this.productForm.get('folio')?.value)
-      this.api.finalExamen(this.productForm.get('folio')?.value)
-        .subscribe(resp => console.log(resp))
+      console.log(this.productForm.get('folio')?.value);
+      this.api
+        .finalExamen(this.productForm.get('folio')?.value)
+        .subscribe((resp) => console.log(resp));
     }
-   
   }
-
- 
-
-
-  
 
   reloadCurrentRoute() {
     let currentUrl = this.router.url;
-    this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
-        this.router.navigate([currentUrl]);
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate([currentUrl]);
     });
-}
+  }
 }
