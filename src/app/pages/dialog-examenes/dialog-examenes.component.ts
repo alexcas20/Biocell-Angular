@@ -16,6 +16,7 @@ import { ServicioModalesService } from '../servicio-modales.service';
 import { DialogBuscarMedicoComponent } from '../dialog-buscar-medico/dialog-buscar-medico.component';
 import registrarExamen from 'src/app/models/registrarExamen.interface';
 import { Router } from '@angular/router';
+import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-dialog-examenes',
@@ -35,17 +36,17 @@ export class DialogExamenesComponent implements OnInit {
   selectPaciente: any;
 
   tiposExamenes: any;
-  estudios:any;
+  estudios: any;
 
   dataSource!: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  noPaciente =  false;
-  guardar= true;
+  noPaciente = false;
+  guardar = true;
 
   //Folio Examen
-  numeroRandom = Math.round(Math.random()*5000)
+  numeroRandom = Math.round(Math.random() * 5000);
 
   constructor(
     private formBuilder: FormBuilder,
@@ -78,54 +79,70 @@ export class DialogExamenesComponent implements OnInit {
       dimensional: ['', Validators.required],
     });
 
-    
-
- 
-
-    if (this.data){
-        if(this.data.estado){
-          this.guardar =false
-          console.log(this.data)
-      this.actionBtn = "Finalizar";
-      this.productForm.controls["nombreMedico"].patchValue(this.data.nombreMedico);
-      this.productForm.controls["especialidad"].patchValue(this.data.especialidad);
-      this.productForm.controls['folioExamen'].patchValue(this.data.folioExamen);
-      this.productForm.controls['folio'].patchValue(this.data.folio);
-      this.productForm.controls['nombre'].patchValue(this.data.nombre);
-      this.productForm.controls['apellidoP'].patchValue(this.data.apellidoP);
-      this.productForm.controls['apellidoM'].patchValue(this.data.apellidoM);
-      this.productForm.controls['edad'].patchValue(this.data.edad);
-      this.productForm.controls['sexo'].patchValue(this.data.sexo);
-      this.productForm.controls['telefono'].patchValue(this.data.telefono);
-      this.productForm.controls['correo'].patchValue(this.data.correo);
-      this.productForm.controls["fechaExamen"].patchValue(this.data.fechaExamen);
-      this.productForm.controls["tipoExamen"].patchValue(this.data.tipoExamen);
-
-
-        }
-
-        else if(this.data?.folio){
-          console.log(this.data)
-       console.log("condicional folio"+ this.data.folio)
-      this.noPaciente = true
-      this.productForm.controls["folio"].patchValue(this.data.item?.folio)
-      this.productForm.controls["folioExamen"].patchValue(this.data.folio)
-      this.productForm.controls['nombre'].patchValue(this.data.item?.nombre);
-      this.productForm.controls['apellidoP'].patchValue(this.data.item?.apellidoP);
-      this.productForm.controls['apellidoM'].patchValue(this.data.item?.apellidoM);
-      this.productForm.controls['edad'].patchValue(this.data.item?.edad);
-      this.productForm.controls['sexo'].patchValue(this.data.item?.sexo);
-      this.productForm.controls['telefono'].patchValue(this.data.item?.telefono);
-      this.productForm.controls['correo'].patchValue(this.data.item?.correo);
-        }
-
+    if (this.data) {
+      if (this.data.estado) {
+        this.guardar = false;
+        console.log(this.data);
+        this.actionBtn = 'Finalizar';
+        this.productForm.controls['nombreMedico'].patchValue(
+          this.data.nombreMedico
+        );
+        this.productForm.controls['especialidad'].patchValue(
+          this.data.especialidad
+        );
+        this.productForm.controls['folioExamen'].patchValue(
+          this.data.folioExamen
+        );
+        this.productForm.controls['folio'].patchValue(this.data.folio);
+        this.productForm.controls['nombre'].patchValue(this.data.nombre);
+        this.productForm.controls['apellidoP'].patchValue(this.data.apellidoP);
+        this.productForm.controls['apellidoM'].patchValue(this.data.apellidoM);
+        this.productForm.controls['edad'].patchValue(this.data.edad);
+        this.productForm.controls['sexo'].patchValue(this.data.sexo);
+        this.productForm.controls['telefono'].patchValue(this.data.telefono);
+        this.productForm.controls['correo'].patchValue(this.data.correo);
+        this.productForm.controls['fechaExamen'].patchValue(
+          this.data.fechaExamen
+        );
+        this.productForm.controls['tipoExamen'].patchValue(
+          this.data.tipoExamen
+        );
+      } else if (this.data?.folio) {
+        console.log(this.data);
+        console.log('condicional folio' + this.data.folio);
+        this.noPaciente = true;
+        this.productForm.controls['folio'].patchValue(this.data.item?.folio);
+        this.productForm.controls['folioExamen'].patchValue(this.data.folio);
+        this.productForm.controls['nombre'].patchValue(this.data.item?.nombre);
+        this.productForm.controls['apellidoP'].patchValue(
+          this.data.item?.apellidoP
+        );
+        this.productForm.controls['apellidoM'].patchValue(
+          this.data.item?.apellidoM
+        );
+        this.productForm.controls['edad'].patchValue(this.data.item?.edad);
+        this.productForm.controls['sexo'].patchValue(this.data.item?.sexo);
+        this.productForm.controls['telefono'].patchValue(
+          this.data.item?.telefono
+        );
+        this.productForm.controls['correo'].patchValue(this.data.item?.correo);
+      }
     }
 
-  
+    this.api.getTiposExamenes().subscribe((res) => {
+      console.log(res);
+      this.tiposExamenes = res;
+    });
+
+    // Cuando cambie el examen
+    this.productForm
+      .get('tipoExamen')
+      ?.valueChanges.pipe(switchMap((estudio) => this.api.getEstudios(estudio)))
+      .subscribe((resp) => {
+        console.log(resp)
+        this.estudios =resp. estudios;
+      });  
   }
-
-    
-
 
   BuscarPacientes() {
     this.dialogPacientes
@@ -168,8 +185,8 @@ export class DialogExamenesComponent implements OnInit {
     );
   }
 
-  registrarExamen( form: registrarExamen) {
-    if(this.guardar){
+  registrarExamen(form: registrarExamen) {
+    if (this.guardar) {
       this.api
         .agregarExamen(this.productForm.get('folio')?.value, form)
         .subscribe({
@@ -194,38 +211,28 @@ export class DialogExamenesComponent implements OnInit {
         });
 
       this.api
-        .registarExamen(form)
+        .registarExamen(this.productForm.get('folio')?.value)
         .subscribe((resp) => console.log('Registro en col Examenes', resp));
     } else {
-
       Swal.fire({
         title: '¿Estas seguro/a de finalizar el examen?',
-        text: "No podras revertir los cambios!",
+        text: 'No podras revertir los cambios!',
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Si, finalizar!'
+        confirmButtonText: 'Si, finalizar!',
       }).then((result) => {
         if (result.isConfirmed) {
-          console.log(this.productForm.get('folio')?.value)
-          this.api.finalExamen(this.productForm.get('folio')?.value)
-            .subscribe(resp => console.log(resp))
-          Swal.fire(
-            '',
-            'El examen ha sido finalizado.',
-            'success'
-          )
+          console.log(this.productForm.get('folio')?.value);
+          this.api
+            .finalExamen(this.productForm.get('folio')?.value)
+            .subscribe((resp) => console.log(resp));
+          Swal.fire('', 'El examen ha sido finalizado.', 'success');
+        } else {
+          Swal.fire('Atencion!', 'Verifique sus acciones.', 'warning');
         }
-        else {
-          Swal.fire(
-            'Atencion!',
-            'Verifique sus acciones.',
-            'warning'
-          )
-        }
-      })
-      
+      });
     }
   }
 

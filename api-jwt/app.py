@@ -518,7 +518,7 @@ def finalizarExamenes(folio):
 def estudiosExamen(examen):
     test = collTiposExamenes.find_one(
         {"examen": examen}, {
-            "estudios" : 1,
+            "estudios.estudio" : 1,
             "_id":0
         }
     )
