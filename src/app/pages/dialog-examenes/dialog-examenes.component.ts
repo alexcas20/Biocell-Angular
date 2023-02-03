@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
   MatDialog,
@@ -40,6 +40,7 @@ export class DialogExamenesComponent implements OnInit {
   dataSource!: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+
 
   noPaciente =  false;
   guardar= true;
@@ -139,6 +140,9 @@ export class DialogExamenesComponent implements OnInit {
         }
       });
     this.dialogRef.close();
+   
+    
+  
   }
 
   getPacientes() {
