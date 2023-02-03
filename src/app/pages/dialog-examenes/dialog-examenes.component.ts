@@ -1,5 +1,5 @@
 import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
   MatDialog,
   MatDialogRef,
@@ -49,6 +49,10 @@ export class DialogExamenesComponent implements OnInit {
   //Folio Examen
   numeroRandom = Math.round(Math.random() * 5000);
 
+
+
+  
+
   constructor(
     private formBuilder: FormBuilder,
     private api: ApiService,
@@ -78,7 +82,13 @@ export class DialogExamenesComponent implements OnInit {
       estudio: ['', Validators.required],
       resultado: ['', Validators.required],
       dimensional: ['', Validators.required],
+      parametros: this.formBuilder.array([]),
+
     });
+
+    
+
+    
 
     if (this.data) {
       if (this.data.estado) {
@@ -239,6 +249,28 @@ export class DialogExamenesComponent implements OnInit {
       });
     }
   }
+
+
+  parametros() : FormArray {  
+    return this.productForm.get("parametros") as FormArray  
+  }  
+     
+  newParametro(): FormGroup {  
+    return this.formBuilder.group({  
+      nombre: '',  
+      resultado: 0,  
+    })  
+  }  
+     
+  addParametro() {  
+    this.parametros().push(this.newParametro());  
+  }  
+     
+  removeParametro(i:number) {  
+    this.parametros().removeAt(i);  
+  }  
+     
+  
 
   reloadCurrentRoute() {
     let currentUrl = this.router.url;
