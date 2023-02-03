@@ -67,7 +67,7 @@ export class DialogExamenesComponent implements OnInit {
   ngOnInit(): void {
     this.productForm = this.formBuilder.group({
       folioExamen: ['', Validators.required],
-      folio: ['', Validators.required],
+      folio: [''],
       nombre: ['', Validators.required],
       apellidoP: ['', Validators.required],
       apellidoM: ['', Validators.required],
@@ -243,7 +243,7 @@ export class DialogExamenesComponent implements OnInit {
           Swal.fire('', 'El examen ha sido finalizado.', 'success');
           console.log("dESDE EL FINALIZAR")
           console.log(this.productForm.value)
-          this.api.agregarExamen(form.folio).subscribe(resp => console.log(resp))
+          this.api.agregarExamen(form).subscribe(resp => console.log(resp))
 
          
         } else {

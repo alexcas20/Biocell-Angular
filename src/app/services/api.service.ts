@@ -9,6 +9,7 @@ import RegistroMedico from '../models/registerMedicos.interface';
 import registarExamen from '../models/registrarExamen.interface';
 import registrarExamen from '../models/registrarExamen.interface';
 
+
 @Injectable({
   providedIn: 'root',
 })
@@ -121,9 +122,9 @@ export class ApiService {
     return this.http.get(direccion);
   }
 
-  agregarExamen(folio:any): Observable<any>{
-    let direccion = `${this.urlMedicos}/addExamen/${folio}`;
-    return this.http.put<any>(direccion, folio);
+  agregarExamen(form:registrarExamen): Observable<registarExamen>{
+    let direccion = `${this.urlMedicos}/addExamen/${form.folio}`;
+    return this.http.put<registrarExamen>(direccion, form);
   }
 
   obtenerExamenFolio(folio:any): Observable<any>{

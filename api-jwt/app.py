@@ -394,7 +394,6 @@ def datosExamenes():
 def addExamen(folio):
 
     folioExamen = request.json["folioExamen"]
-    folio = request.json["folio"]
     nombre=request.json["nombre"]
     apellidoP=request.json["apellidoP"]
     apellidoM=request.json["apellidoM"]
@@ -405,6 +404,8 @@ def addExamen(folio):
     telefono=request.json["telefono"]
     correo=request.json["correo"]
     fechaExamen=request.json["fechaExamen"]
+   
+    
   
    
 
@@ -412,7 +413,6 @@ def addExamen(folio):
         {"folio": folio},
         {"$addToSet": {"examenesPacientes": {
             "folioExamen": folioExamen,
-            "folio": folio,
             "nombre": nombre,
             "apellidoP": apellidoP,
             "apellidoM": apellidoM,
@@ -423,6 +423,7 @@ def addExamen(folio):
             "telefono": telefono,
             "correo": correo,
             "fechaExamen": fechaExamen
+            
             
         }}}
     )
