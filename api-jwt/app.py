@@ -338,7 +338,7 @@ def datosMedico(nombreMedico):
 #########   Examenes #########
 
 
-@ app.route("/lab/nuevoExamen", methods=["POST"])
+@app.route("/lab/nuevoExamen", methods=["POST"])
 def datosExamen():
 
     folioExamen = request.json["folioExamen"]
@@ -377,7 +377,7 @@ def datosExamen():
     return jsonify(message="Se ha registrado el examen"), 201
 
 
-@ app.route("/lab/datosExamenes", methods=["GET"])
+@app.route("/lab/datosExamenes", methods=["GET"])
 def datosExamenes():
     test = collExamenes.find({}, {
         "_id": 0
@@ -394,6 +394,7 @@ def datosExamenes():
 def addExamen(folio):
 
     folioExamen = request.json["folioExamen"]
+    folio = request.json["folio"]
     nombre=request.json["nombre"]
     apellidoP=request.json["apellidoP"]
     apellidoM=request.json["apellidoM"]
@@ -404,10 +405,7 @@ def addExamen(folio):
     telefono=request.json["telefono"]
     correo=request.json["correo"]
     fechaExamen=request.json["fechaExamen"]
-    tipoExamen=request.json["tipoExamen"]
-    estudio=request.json["estudio"]
-    resultado=request.json["resultado"]
-    dimensional=request.json["dimensional"]
+  
    
 
     test = collExamenesPacientes.update_one(
@@ -424,11 +422,7 @@ def addExamen(folio):
             "sexo": sexo,
             "telefono": telefono,
             "correo": correo,
-            "fechaExamen": fechaExamen,
-            "tipoExamen": tipoExamen,
-            "estudio": estudio,
-            "resultado": resultado,
-            "dimensional": dimensional,
+            "fechaExamen": fechaExamen
             
         }}}
     )
@@ -441,7 +435,7 @@ def addExamen(folio):
 @ app.route('/lab/addPacienteExamen', methods=['POST'])
 def addPacienteExamen():
 
-    folioExamen = request.json["folioExamen"]
+   
     folio = request.json["folio"]
     nombre = request.json["nombre"]
     apellidoP = request.json["apellidoP"]
@@ -452,7 +446,7 @@ def addPacienteExamen():
     correo = request.json["correo"]
 
     collExamenesPacientes.insert_one({
-        "folioEXamen": folioExamen,
+
         "folio": folio,
         "nombre": nombre,
         "apellidoP": apellidoP,
@@ -500,11 +494,11 @@ def tiposExamenes():
     return Response(response, mimetype='application/json'), 201
 
 
-@app.route("/lab/finalizarExamen/<folio>", methods=["PUT"])
-def finalizarExamenes(folio):
+@app.route("/lab/finalizarExamen/<folioExamen>", methods=["PUT"])
+def finalizarExamenes(folioExamen):
 
     test = collExamenes.update_one(
-        {"folio": folio},
+        {"folioExamen": folioExamen},
         {"$set": {"estado": "finalizado"}}
         
     

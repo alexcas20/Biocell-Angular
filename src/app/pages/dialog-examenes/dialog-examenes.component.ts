@@ -51,7 +51,7 @@ export class DialogExamenesComponent implements OnInit {
 
 
 
-  
+
 
   constructor(
     private formBuilder: FormBuilder,
@@ -78,10 +78,10 @@ export class DialogExamenesComponent implements OnInit {
       telefono: ['', Validators.required],
       correo: ['', Validators.required],
       fechaExamen: ['', Validators.required],
-      tipoExamen: ['', Validators.required],
-      estudio: ['', Validators.required],
-      resultado: ['', Validators.required],
-      dimensional: ['', Validators.required],
+      tipoExamen: ['', ],
+      estudio: ['', ],
+      resultado: ['',],
+      dimensional: ['',],
       parametros: this.formBuilder.array([]),
 
     });
@@ -202,12 +202,12 @@ export class DialogExamenesComponent implements OnInit {
   registrarExamen(form: registrarExamen) {
     if (this.guardar) {
       this.api
-        .agregarExamen(this.productForm.get('folio')?.value, form)
+        .registarExamen(form)
         .subscribe({
           next: (res) => {
             console.log('Examen guardado: ', res);
             Swal.fire('Exito', 'Se ha registrado el examen', 'success');
-            this.productForm.reset();
+           
             this.dialogRef.close('save');
             localStorage.removeItem('medico');
             localStorage.removeItem('especialidad');
@@ -224,9 +224,6 @@ export class DialogExamenesComponent implements OnInit {
           },
         });
 
-      this.api
-        .registarExamen(this.productForm.get('folio')?.value)
-        .subscribe((resp) => console.log('Registro en col Examenes', resp));
     } else {
       Swal.fire({
         title: '¿Estas seguro/a de finalizar el examen?',
@@ -238,11 +235,17 @@ export class DialogExamenesComponent implements OnInit {
         confirmButtonText: 'Si, finalizar!',
       }).then((result) => {
         if (result.isConfirmed) {
-          console.log(this.productForm.get('folio')?.value);
+          const folio = this.productForm.get('folioExamen')?.value;
+          console.log(folio);
           this.api
-            .finalExamen(this.productForm.get('folio')?.value)
-            .subscribe((resp) => console.log(resp));
+            .finalExamen(folio).subscribe(resp => console.log(resp))
+           
           Swal.fire('', 'El examen ha sido finalizado.', 'success');
+          console.log("dESDE EL FINALIZAR")
+          console.log(this.productForm.value)
+          this.api.agregarExamen(form.folio).subscribe(resp => console.log(resp))
+
+         
         } else {
           Swal.fire('Atencion!', 'Verifique sus acciones.', 'warning');
         }

@@ -45,6 +45,7 @@ export class DialogAsignarExamenPacienteComponent implements OnInit {
 
   getExamenFolio() {
     this.api.obtenerExamenFolio(this.data).subscribe((resp) => {
+      
       const respFinal = resp[0].examenesPacientes;
       console.log(respFinal);
       this.dataSource = new MatTableDataSource(respFinal);

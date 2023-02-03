@@ -14,7 +14,7 @@ import { DialogExamenesComponent } from '../dialog-examenes/dialog-examenes.comp
 export class ExamenesComponent implements OnInit {
   displayedColumns: string[] = [
   
-    'folio',
+    'folioExamen',
     'nombre',
     'nombreMedico',
     'fechaExamen',

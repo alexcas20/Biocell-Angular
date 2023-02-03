@@ -136,21 +136,6 @@
         </mat-form-field>
 
 
-        <table class="table table-bordered" formArrayName="parametros">  
-          <tr>  
-            <th colspan="2">Add Parametros:</th>  
-            <th width="150px"><button type="button" (click)="addParametro()" class="btn btn-primary">Add More</button></th>  
-          </tr>  
-          <tr *ngFor="let parametro of parametros().controls; let i=index" [formGroupName]="i">  
-            <td>  
-                Paraemtro :  
-                <input type="text" formControlName="resultado" class="form-control">  
-            </td>   
-            <td>  
-                <button (click)="removeParametro(i)" class="btn btn-danger">Remove</button>  
-            </td>  
-          </tr>  
-        </table>  
 
         <mat-form-field appearance="outline" *ngIf="data?.estado === 'activo'">
           <mat-label>Resultado</mat-label>
