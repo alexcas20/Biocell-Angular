@@ -245,6 +245,10 @@ export class DialogExamenesComponent implements OnInit {
           console.log(this.productForm.value)
           this.api.agregarExamen(form).subscribe(resp => console.log(resp))
 
+
+
+          
+
          
         } else {
           Swal.fire('Atencion!', 'Verifique sus acciones.', 'warning');
