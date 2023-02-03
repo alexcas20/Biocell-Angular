@@ -7,13 +7,13 @@ from werkzeug.security import generate_password_hash
 from bson import json_util
 
 
-# Making a Connection with MongoClient
-# client = MongoClient(
-#   "mongodb+srv://HJuve:-Diminombre8906@cluster0.7gpeolt.mongodb.net/biocell?retryWrites=true&w=majority")
-# database
+ #Making a Connection with MongoClient
+client = MongoClient(
+  "mongodb+srv://HJuve:-Diminombre8906@cluster0.7gpeolt.mongodb.net/biocell?retryWrites=true&w=majority")
+ #database
 
 client = MongoClient("mongodb://localhost:27017/")
-db = client["biocell"]
+#db = client["biocell"]
 # collection
 collUser = db["users"]
 collPaciente = db["pacientes"]
