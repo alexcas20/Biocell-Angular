@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { tap } from 'rxjs';
 import { LoginI } from '../../models/login.interface';
 import { RegisterI } from 'src/app/models/response.interface';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-register',
@@ -13,7 +14,11 @@ import { RegisterI } from 'src/app/models/response.interface';
 })
 export class RegisterComponent implements OnInit {
 
+  //Code
+    nRandom = Math.round(Math.random()*100)
+
   registerForm : FormGroup = this.fb.group({
+    code: ['LB'+this.nRandom],
     user: ['', Validators.required],
     password: ['', [Validators.required, Validators.minLength(6)]]
   })
@@ -31,7 +36,20 @@ export class RegisterComponent implements OnInit {
     this.loginService.registroUserLogin(form)
       .subscribe(resp => {
         console.log(resp)
+        Swal.fire(
+          'Exito!',
+          'Usuario creado!',
+          'success'
+        )
         this.router.navigateByUrl('login')
+      },
+      err => {
+        console.log(err)
+        Swal.fire(
+          'Error',
+          err.error.message,
+          'error'
+        )
       })
   }
 

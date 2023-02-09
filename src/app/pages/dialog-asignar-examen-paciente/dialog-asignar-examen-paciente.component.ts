@@ -41,6 +41,8 @@ export class DialogAsignarExamenPacienteComponent implements OnInit {
 
   ngOnInit(): void {
     this.getExamenFolio();
+    localStorage.getItem('medico');
+    localStorage.getItem('especialidad')
   }
 
   getExamenFolio() {

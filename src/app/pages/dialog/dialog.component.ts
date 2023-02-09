@@ -16,7 +16,7 @@ export class DialogComponent implements OnInit {
   productForm !: FormGroup;
   actionBtn : string = "Guardar"
   hide = true;
-  codeId = Math.floor(Math.random()*100)
+  nRandom = Math.round(Math.random()*100)
   
   constructor(private formBuilder : FormBuilder, 
     private login : loginService,
@@ -26,6 +26,7 @@ export class DialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.productForm = this.formBuilder.group({
+      code: ['LB'+this.nRandom],
       user : ['',Validators.required],
       password : ['',Validators.required],
       rol : ['',Validators.required],

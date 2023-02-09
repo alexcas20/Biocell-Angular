@@ -17,14 +17,8 @@ export class DialogMedicosComponent implements OnInit {
   actionBtn: string = 'Guardar';
   hide = true;
 
-  folioCode = ['B','C','L','A','B','B','C','L','A','B']
-  folioCode2 = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O']
-  folioRandomCode = Math.floor(Math.random()*this.folioCode.length)
-  folioPositionCode = this.folioCode[this.folioRandomCode]
-
-  folioRandomCode2 = Math.floor(Math.random()*this.folioCode2.length)
-  folioPositionCode2 = this.folioCode2[this.folioRandomCode2]
-  folioRandomNumber = Math.floor(Math.random()*10000)
+  
+  folioRandomNumber = Math.round(Math.random()*300)
 
   constructor(
     private formBuilder: FormBuilder,
@@ -35,7 +29,7 @@ export class DialogMedicosComponent implements OnInit {
 
   ngOnInit(): void {
     this.productForm = this.formBuilder.group({
-      folio: ["MBCL"+this.folioPositionCode+this.folioPositionCode2+this.folioRandomNumber,Validators.required],
+      folio: ["MLB"+this.folioRandomNumber,Validators.required],
       nombreMedico: ['', [Validators.required, Validators.maxLength(30)]],
       apellidoP:['',Validators.required],
       apellidoM:['',Validators.required],

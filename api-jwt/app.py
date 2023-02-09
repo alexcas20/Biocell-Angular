@@ -79,7 +79,7 @@ def register():
     hashed_Pass= generate_password_hash(password)
     test = collUser.find_one({"user": user})
     if test:
-        return jsonify(message="User Already Exist"), 409
+        return jsonify(message="El usuario ya existe."), 409
     else:
 
         collUser.insert_one({
@@ -96,6 +96,7 @@ def register():
 def registerL():
 
     print('creacion de usuario desde registro')
+    code = request.json['code']
     user = request.json['user']
     password = request.json['password']
 
@@ -103,11 +104,13 @@ def registerL():
 
     
     test = collUser.find_one({"user": user})
-    if test:
-        return jsonify(message="User Already Exist"), 409
+    test2 = collUser.find_one({"code": code})
+    if test | test2:
+        return jsonify(message="El usuario ya existe."), 409
     else:
 
         collUser.insert_one({
+            'code': code,
             'user': user,
             'password': password ,
             'status': "activo",
