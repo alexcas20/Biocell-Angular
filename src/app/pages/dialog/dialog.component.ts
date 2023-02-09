@@ -4,6 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { ApiService } from 'src/app/services/api.service';
 import Register from 'src/app/models/register.interface';
 import Swal from 'sweetalert2';
+import { loginService } from 'src/app/services/login.service';
 
 @Component({
   selector: 'app-dialog',
@@ -18,13 +19,13 @@ export class DialogComponent implements OnInit {
   codeId = Math.floor(Math.random()*100)
   
   constructor(private formBuilder : FormBuilder, 
-    private api : ApiService, 
+    private login : loginService,
+    private api: ApiService, 
     @Inject(MAT_DIALOG_DATA) public editData : any,
     private dialogRef : MatDialogRef<DialogComponent>) { }
 
   ngOnInit(): void {
     this.productForm = this.formBuilder.group({
-      code: ['LAB'+this.codeId,Validators.required],
       user : ['',Validators.required],
       password : ['',Validators.required],
       rol : ['',Validators.required],
@@ -35,9 +36,8 @@ export class DialogComponent implements OnInit {
     console.log(this.editData);
     this.actionBtn = "Actualizar";
 
-    this.productForm.controls["code"].setValue(this.editData.code);
-    this.productForm.controls["user"].setValue(this.editData.user);
-    this.productForm.controls["rol"].setValue(this.editData.rol);
+   
+    this.productForm.controls["user"].patchValue(this.editData.user);
     this.productForm.controls["password"].setValue("");
 
     }
@@ -47,7 +47,7 @@ export class DialogComponent implements OnInit {
   addUser(form:Register){
     if(!this.editData){
       if(this.productForm.valid){
-        this.api.postData(form).subscribe({
+        this.login.registrarUsuario(form).subscribe({
           next:(res)=>{
             Swal.fire('Exito!','Se ha agregado correctamente el usuario','success')
             this.productForm.reset();

@@ -67,7 +67,7 @@ export class UsuariosComponent implements OnInit {
     })
   }
 
-  deleteUser(code:any){
+  deleteUser(user:any){
     Swal.fire({
       title: 'Estas seguro?',
       text: "Tu no podras revertir esto!",
@@ -80,7 +80,7 @@ export class UsuariosComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
 
-        this.api.deleteUser(code).subscribe({
+        this.api.deleteUser(user).subscribe({
           next:(res:any)=>{
             
             this.getAllUsers();

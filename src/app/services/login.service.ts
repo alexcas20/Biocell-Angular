@@ -1,28 +1,39 @@
-import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { Observable } from "rxjs";
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, tap } from 'rxjs';
+import { RegisterI } from '../models/response.interface';
+import { LoginI } from '../models/login.interface';
+import Register from '../models/register.interface';
 
 @Injectable({
-    providedIn : 'root'
+  providedIn: 'root',
 })
+export class loginService {
+  url: string = 'http://localhost:5000/lab';
+  private _auth: any;
 
-export class loginService{
+  constructor(private http: HttpClient) {}
 
-    
+  login(form: LoginI): Observable<RegisterI> {
+    let direccion = `${this.url}/auth`;
+    return this.http.post<RegisterI>(direccion, form).pipe(
+      tap((auth) => {
+        console.log(auth);
+        this._auth = auth.result;
+        console.log(this._auth);
+      }),
+      tap((auth) => localStorage.setItem('user', auth.result.user))
+    );
+  }
 
-    url:string = 'http://localhost/';
+  registrarUsuario(form: any): Observable<Register> {
+    let direccion = `${this.url}/registerUser`;
+    return this.http.post<Register>(direccion, form);
+  }
 
-    constructor(private http:HttpClient){ }
+  registroUserLogin(form: any): Observable<Register> {
+    let direccion = `${this.url}/registerUserL`;
+    return this.http.post<Register>(direccion, form);
+  }
 
-
-    loginService(form:any):Observable<Response>{
-        let direccion = this.url + '/users/'
-        return this.http.post<Response>(direccion,form);
-    }
-
-    
-
-   
-
-    
 }

@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="card-header">
+  <div class="card-header resp">
     <h1 class="card-title">Listado de Examenes</h1>
     <button
       class="btn btn-success btn-sm float-right"
@@ -19,32 +19,28 @@
         #input
       />
     </mat-form-field>
-    <div class="mat-elevation-z8">
+    <div class="mat-elevation-z8 resp">
       <table mat-table [dataSource]="dataSource" matSort>
-        <!-- Rol Column -->
-        <ng-container matColumnDef="user">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Usuario</th>
-          <td mat-cell *matCellDef="let row">{{ row.user }}</td>
-        </ng-container>
-
-        <!-- User Column -->
+  
+        <!-- Folio Examen Column -->
         <ng-container matColumnDef="folioExamen">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Folio</th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Folio Examen</th>
           <td mat-cell *matCellDef="let row">{{ row.folioExamen }}</td>
         </ng-container>
 
-        <!-- Status Column -->
+        <!-- Nombre Paciente Column -->
         <ng-container matColumnDef="nombre">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Paciente</th>
           <td mat-cell *matCellDef="let row">{{ row.nombre }}</td>
         </ng-container>
 
-        <!-- Status Column -->
+        <!-- Nombre Medico Column -->
         <ng-container matColumnDef="nombreMedico">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Medico</th>
           <td mat-cell *matCellDef="let row">{{ row.nombreMedico }}</td>
         </ng-container>
-        <!-- Status Column -->
+
+        <!-- Fecha Examen Column -->
         <ng-container matColumnDef="fechaExamen">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Fecha</th>
           <td mat-cell *matCellDef="let row">{{ row.fechaExamen | date: "dd MMMM  yyyy "}}</td>

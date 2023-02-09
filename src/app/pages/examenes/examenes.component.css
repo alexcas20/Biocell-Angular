@@ -1,44 +1,41 @@
 .iconos{
-    font-size: 1.2rem;
-    cursor: pointer;
-    border: 1px solid #000;
-    border-radius: 5px;
-    padding: 5px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  border: 1px solid #000;
+  border-radius: 5px;
+  padding: 5px;
 }
 
 .edit:hover{
-    background-color: rgb(15, 182, 15); ;
-    color: #fff;
+  background-color: rgb(15, 182, 15); ;
+  color: #fff;
 }
 
 
 .delete{
-    margin-left: 12px;
+  margin-left: 12px;
 }
 
 .delete:hover{
-    color: #fff;
+  color: #fff;
 
-    background-color: rgb(182, 40, 15);
+  background-color: rgb(182, 40, 15);
 }
 
 table {
-    width: 100%;
-  }
-  
-  .mat-form-field {
-    font-size: 14px;
-    width: 100%;
-  }
+  width: 100%;
+}
 
-  .container{
-    width: 1200px;
-    margin: 0 auto;
-    
-  }
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
 
-  span{
-    font-size: .8rem;
-  }
+.container{
+  max-width: 1200px;
+  margin: 0 auto;
   
-  
+}
+
+
+

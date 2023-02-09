@@ -1,1 +1,67 @@
-<p>register works!</p>
+<div class="hold-transition login-page area">
+    <ul class="circles">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+    <div class="login-box">
+        <div class="login-logo">
+            <a href="../../index2.html" class="login-title"><b>BioCell</b> Lab</a>
+        </div>
+        <!-- /.login-logo -->
+        <div class="card">
+            <div class="card-body login-card-body">
+
+                <form [formGroup]="registerForm"
+                (ngSubmit)="registrarUser(registerForm.value)">
+                    <h2 class="title">Nuevo Usuario</h2>
+                    <div class="input-group mb-3">
+                        <input type="text" name="user" formControlName="user" class="form-control"
+                            placeholder="Usuario">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-user"></span>
+                            </div>
+                        </div>
+                        <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                            Usuario Obligatorio
+                        </div>
+
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="password" formControlName="password" name="pass" class="form-control"
+                            placeholder="Password">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
+                        </div>
+                        <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                            Password Obligatoria
+                        </div>
+
+                    </div>
+                    <div class="row">
+                      
+                        <!-- /.col -->
+                        <div class="col">
+                            <button type="submit" class="btn btn-primary float-right"
+                          >Registrar</button>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                </form>
+
+            </div>
+            <!-- /.login-card-body -->
+        </div>
+    </div>
+</div>
+<!-- /.login-box -->

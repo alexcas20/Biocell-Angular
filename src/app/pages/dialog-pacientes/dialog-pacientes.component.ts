@@ -64,7 +64,7 @@ export class DialogPacientesComponent implements OnInit {
         if(this.productForm.valid){
           this.api.postPaciente(form).subscribe({
             next:(res)=>{
-              Swal.fire('Exito','Se ha registrado el usuario','success')
+              Swal.fire('Exito','Se ha registrado el paciente','success')
               this.productForm.reset();
               this.dialogRef.close('save');
             },

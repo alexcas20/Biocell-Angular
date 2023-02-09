@@ -135,3 +135,14 @@
     border-radius: 40%;
     padding-top: 2rem;
 }
+
+
+.container{
+    margin-top: 1rem;
+    width: 100%;
+    text-align: center;
+}
+
+.container a{
+    cursor: pointer;
+}

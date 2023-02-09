@@ -1,10 +1,7 @@
 <h1 mat-dialog-title>Añadir Usuario</h1>
 <div mat-dialog-content>
   <form [formGroup]="productForm">
-    <mat-form-field *ngIf="!editData" appearance="outline">
-      <mat-label>Code</mat-label>
-      <input formControlName="code" matInput placeholder="code" readonly />
-    </mat-form-field>
+    
     <mat-form-field appearance="outline">
       <mat-label>Usuario</mat-label>
       <input formControlName="user" matInput placeholder="Usuario" />

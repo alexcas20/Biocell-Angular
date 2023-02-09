@@ -2,61 +2,56 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 
-
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.css']
+  styleUrls: ['./sidebar.component.css'],
 })
 export class SidebarComponent implements OnInit {
-
-  constructor(private ruta: Router) { }
+  constructor(private ruta: Router) {}
 
   ngOnInit(): void {
-    this.checkLocalStorage()
+    this.checkLocalStorage();
   }
 
-  
-  checkLocalStorage(){
-    if(!localStorage.getItem('token')){
-      this.ruta.navigate(['login'])
+  checkLocalStorage() {
+    if (!localStorage.getItem('token')) {
+      this.ruta.navigate(['login']);
     }
   }
 
-
-  logOut(){
+  logOut() {
     Swal.fire({
       title: 'Estas seguro?',
-      text: "Que deseas salir!",
+      text: 'Que deseas salir!',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Si, Salir!',
-      cancelButtonText: 'Cancelar'
+      cancelButtonText: 'Cancelar',
     }).then((result) => {
       if (result.isConfirmed) {
-
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
-        this.ngOnInit();
-       
+        Swal.fire({
+          title: '👋',
+          html: 'Hasta luego!',
+          timer: 1500,
+          timerProgressBar: true,
+        }).then((result) => {
+          /* Read more about handling dismissals below */
+          if (result.dismiss === Swal.DismissReason.timer) {
+          }
+          localStorage.clear();
+          this.ruta.navigate(['/login']);
+        });
+      } else {
+        Swal.fire('Atencion!', 'Verifique sus acciones.', 'warning');
       }
-      else{
-        Swal.fire(
-          'Atencion!',
-          'Verifique sus acciones.',
-          'warning'
-        )
-      }
-    })
-    
+    });
   }
 
   timerToken = setTimeout(() => {
-    localStorage.removeItem('token')
+    localStorage.removeItem('token');
     this.ngOnInit();
-  },86400000)
-  
-
+  }, 86400000);
 }

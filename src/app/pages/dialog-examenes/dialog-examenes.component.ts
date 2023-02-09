@@ -1,4 +1,10 @@
-import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  Inject,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
   MatDialog,
@@ -42,16 +48,19 @@ export class DialogExamenesComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-
-  noPaciente =  false;
-  guardar= true;
+  noPaciente = false;
+  guardar = true;
 
   //Folio Examen
   numeroRandom = Math.round(Math.random() * 5000);
 
+  //data parametros
+  dataParametros: any;
+
+  parametro= false
 
 
-
+  parametrosTipo: any
 
   constructor(
     private formBuilder: FormBuilder,
@@ -78,22 +87,15 @@ export class DialogExamenesComponent implements OnInit {
       telefono: ['', Validators.required],
       correo: ['', Validators.required],
       fechaExamen: ['', Validators.required],
-      tipoExamen: ['', ],
-      estudio: ['', ],
-      resultado: ['',],
-      dimensional: ['',],
+      tipoExamen: [''],
+      estudio: [''],
       parametros: this.formBuilder.array([]),
-
     });
-
-    
-
-    
 
     if (this.data) {
       if (this.data.estado) {
         this.guardar = false;
-        console.log(this.data);
+        console.log(this.data.estudio);
         this.actionBtn = 'Finalizar';
         this.productForm.controls['nombreMedico'].patchValue(
           this.data.nombreMedico
@@ -112,12 +114,10 @@ export class DialogExamenesComponent implements OnInit {
         this.productForm.controls['sexo'].patchValue(this.data.sexo);
         this.productForm.controls['telefono'].patchValue(this.data.telefono);
         this.productForm.controls['correo'].patchValue(this.data.correo);
-        this.productForm.controls['fechaExamen'].patchValue(
-          this.data.fechaExamen
-        );
-        this.productForm.controls['tipoExamen'].patchValue(
-          this.data.tipoExamen
-        );
+        this.productForm.controls['fechaExamen'].patchValue(this.data.fechaExamen);
+        this.productForm.controls['tipoExamen'].patchValue(this.data.tipoExamen);
+        this.productForm.get('estudio').patchValue(this.data.estudio)
+        console.log('Valor estudio:', this.productForm.get('estudio').value )
       } else if (this.data?.folio) {
         console.log(this.data);
         console.log('condicional folio' + this.data.folio);
@@ -146,13 +146,18 @@ export class DialogExamenesComponent implements OnInit {
     });
 
     // Cuando cambie el examen
-    this.productForm
+
+      this.productForm
       .get('tipoExamen')
       ?.valueChanges.pipe(switchMap((estudio) => this.api.getEstudios(estudio)))
       .subscribe((resp) => {
-        console.log(resp)
-        this.estudios =resp. estudios;
-      });  
+        console.log(resp);
+        this.dataParametros = resp.estudios.parametros;
+        console.log(this.dataParametros);
+        this.estudios = resp.estudios;
+      });
+    
+    
   }
 
   BuscarPacientes() {
@@ -167,9 +172,6 @@ export class DialogExamenesComponent implements OnInit {
         }
       });
     this.dialogRef.close();
-   
-    
-  
   }
 
   getPacientes() {
@@ -201,29 +203,26 @@ export class DialogExamenesComponent implements OnInit {
 
   registrarExamen(form: registrarExamen) {
     if (this.guardar) {
-      this.api
-        .registarExamen(form)
-        .subscribe({
-          next: (res) => {
-            console.log('Examen guardado: ', res);
-            Swal.fire('Exito', 'Se ha registrado el examen', 'success');
-           
-            this.dialogRef.close('save');
-            localStorage.removeItem('medico');
-            localStorage.removeItem('especialidad');
-            setTimeout(() => {
-              this.reloadCurrentRoute();
-            }, 2000);
-          },
-          error: () => {
-            Swal.fire(
-              'Error',
-              'Se ha producido un error al registar el examen',
-              'error'
-            );
-          },
-        });
+      this.api.registarExamen(form).subscribe({
+        next: (res) => {
+          console.log('Examen guardado: ', res);
+          Swal.fire('Exito', 'Se ha registrado el examen', 'success');
 
+          this.dialogRef.close('save');
+          localStorage.removeItem('medico');
+          localStorage.removeItem('especialidad');
+          setTimeout(() => {
+            this.reloadCurrentRoute();
+          }, 2000);
+        },
+        error: () => {
+          Swal.fire(
+            'Error',
+            'Se ha producido un error al registar el examen',
+            'error'
+          );
+        },
+      });
     } else {
       Swal.fire({
         title: '¿Estas seguro/a de finalizar el examen?',
@@ -237,19 +236,14 @@ export class DialogExamenesComponent implements OnInit {
         if (result.isConfirmed) {
           const folio = this.productForm.get('folioExamen')?.value;
           console.log(folio);
-          this.api
-            .finalExamen(folio).subscribe(resp => console.log(resp))
-           
+          console.log(this.productForm.value);
+          this.api.finalExamen(folio).subscribe((resp) => console.log(resp));
+
           Swal.fire('', 'El examen ha sido finalizado.', 'success');
-          console.log("dESDE EL FINALIZAR")
-          console.log(this.productForm.value)
-          this.api.agregarExamen(form).subscribe(resp => console.log(resp))
-
-
-
-          
-
-         
+          this.dialogRef.close('save');
+          console.log('dESDE EL FINALIZAR');
+          console.log(this.productForm.value);
+          this.api.agregarExamen(form).subscribe((resp) => console.log(resp));
         } else {
           Swal.fire('Atencion!', 'Verifique sus acciones.', 'warning');
         }
@@ -257,27 +251,43 @@ export class DialogExamenesComponent implements OnInit {
     }
   }
 
+  parametros(): FormArray {
+    return this.productForm.get('parametros') as FormArray;
+  }
 
-  parametros() : FormArray {  
-    return this.productForm.get("parametros") as FormArray  
-  }  
-     
-  newParametro(): FormGroup {  
-    return this.formBuilder.group({  
-      nombre: '',  
-      resultado: 0,  
-    })  
-  }  
-     
-  addParametro() {  
-    this.parametros().push(this.newParametro());  
-  }  
-     
-  removeParametro(i:number) {  
-    this.parametros().removeAt(i);  
-  }  
-     
-  
+  newParametro(): FormGroup {
+    if(this.parametro){
+      return this.formBuilder.group({
+        nombre: this.parametrosTipo,
+        resultado: 0,
+        unidades: '',
+        ref: ''
+      });
+    } else{
+      return this.formBuilder.group({
+        nombre: '',
+        resultado: 0,
+        unidades: '',
+        ref: ''
+      });
+    }
+   
+  }
+
+  addParametro() {
+    this.parametro= false
+    this.parametros().push(this.newParametro());
+  }
+
+  addParametroSelect(str:string) {
+    this.parametro= true
+    this.parametrosTipo = str
+    this.parametros().push(this.newParametro());
+  }
+
+  deleteParametros(i: number) {
+    this.parametros().removeAt(i);
+  }
 
   reloadCurrentRoute() {
     let currentUrl = this.router.url;

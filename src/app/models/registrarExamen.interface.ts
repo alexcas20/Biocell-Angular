@@ -9,7 +9,7 @@ export default interface registrarExamen{
     telefono: string,
     correo: string,
     tipoExamen:string,
-    prueba:string,
-    resultado:string,
-    dimensional:string
+    estudio:string,
+    resultado?:string,
+    dimensional?:string
 }

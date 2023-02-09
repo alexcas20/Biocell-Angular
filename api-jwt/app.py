@@ -3,17 +3,17 @@ from flask import Flask, jsonify, request, Response
 from flask_jwt_extended import JWTManager, jwt_required, create_access_token
 from pymongo import MongoClient
 from flask_cors import CORS
-from werkzeug.security import generate_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
 from bson import json_util
 
 
  #Making a Connection with MongoClient
-client = MongoClient(
-  "mongodb+srv://HJuve:-Diminombre8906@cluster0.7gpeolt.mongodb.net/biocell?retryWrites=true&w=majority")
+#client = MongoClient(
+ #"mongodb+srv://HJuve:-Diminombre8906@cluster0.7gpeolt.mongodb.net/?retryWrites=true&w=majority")
  #database
 
 client = MongoClient("mongodb://localhost:27017/")
-#db = client["biocell"]
+db = client["biocell_tiposExamenes"]
 # collection
 collUser = db["users"]
 collPaciente = db["pacientes"]
@@ -30,6 +30,8 @@ jwt = JWTManager(app)
 app.config["JWT_SECRET_KEY"] = "jacs1"  # change it
 
 
+
+
 #
 #               AUTH
 #
@@ -40,7 +42,10 @@ def login():
     user = request.json['user']
     password = request.json['password']
 
-    test = collUser.find_one({"user": user, "password": password})
+    
+  
+    
+    test = collUser.find_one({"user": user, "password": password })
 
     if test:
         token = create_access_token(identity=user)
@@ -52,7 +57,11 @@ def login():
             }
         }), 201
     else:
-        return jsonify(message="Bad Username or Password"), 401
+        return jsonify({
+            "status": "false",
+            "result": {
+                "msg": 'Datos incorrectos.'}
+        }), 401
 
 
 # Register
@@ -62,24 +71,46 @@ def login():
 def register():
 
     print('creacion de usuario')
-    code = request.json['code']
     user = request.json['user']
     password = request.json['password']
-    rol = None if ('rol' not in request.json) else request.json['rol']
-    status = request.json['status']
 
-    hashed_password = generate_password_hash(password)
+   
+
+    hashed_Pass= generate_password_hash(password)
     test = collUser.find_one({"user": user})
     if test:
         return jsonify(message="User Already Exist"), 409
     else:
 
         collUser.insert_one({
-            "code": code,
             'user': user,
-            'password': hashed_password,
-            'rol': rol,
-            'status': status,
+            'password': hashed_Pass ,
+            'status': "activo",
+        })
+        return jsonify(message="User added sucessfully"), 201
+
+# Register sin hash
+
+
+@ app.route("/lab/registerUserL", methods=["POST"])
+def registerL():
+
+    print('creacion de usuario desde registro')
+    user = request.json['user']
+    password = request.json['password']
+
+   
+
+    
+    test = collUser.find_one({"user": user})
+    if test:
+        return jsonify(message="User Already Exist"), 409
+    else:
+
+        collUser.insert_one({
+            'user': user,
+            'password': password ,
+            'status': "activo",
         })
         return jsonify(message="User added sucessfully"), 201
 
@@ -98,38 +129,36 @@ def allUsers():
 
 
 #   Edit usuario
-@ app.route('/lab/editUser/<code>', methods=['PUT'])
-def editUser(code):
-    code = request.json['code']
+@ app.route('/lab/editUser/<user>', methods=['PUT'])
+def editUser(user):
+    #code = request.json['code']
     user = request.json['user']
     password = request.json['password']
-    rol = request.json['rol']
-    status = request.json['status']
+    #rol = request.json['rol']
+    #status = request.json['status']
 
-    hashed_password = generate_password_hash(password)
+    #hashed_password = generate_password_hash(password)
 
-    test = collUser.update_one({"code": code}, {'$set': {
-        "code": code,
+    test = collUser.update_one({"user": user}, {'$set': {
+        
         "user": user,
-        "password": hashed_password,
-        "rol": rol,
-        "status": status
+        "password": password
     }})
 
     if test:
-        return jsonify(message="User with id: "+code + " update succesfully"), 201
+        return jsonify(message="User: "+user + " update succesfully"), 201
     else:
         return jsonify(message='Error')
 
 
 #   Delete usuario
-@ app.route('/lab/deleteUser/<code>', methods=['DELETE'])
-def deleteUser(code):
+@ app.route('/lab/deleteUser/<user>', methods=['DELETE'])
+def deleteUser(user):
 
-    test = collUser.delete_one({"code": code})
+    test = collUser.delete_one({"user": user})
 
     if test:
-        return jsonify(message="User with code: "+code + " deleted succesfully"), 201
+        return jsonify(message="User deleted: "+user + " deleted succesfully"), 201
     else:
         return jsonify(message='Error')
 
@@ -403,7 +432,10 @@ def addExamen(folio):
     sexo=request.json["sexo"]
     telefono=request.json["telefono"]
     correo=request.json["correo"]
+    tipoExamen=request.json["tipoExamen"]
     fechaExamen=request.json["fechaExamen"]
+    estudio=request.json["estudio"]
+    parametros=request.json["parametros"]
    
     
   
@@ -422,7 +454,10 @@ def addExamen(folio):
             "sexo": sexo,
             "telefono": telefono,
             "correo": correo,
-            "fechaExamen": fechaExamen
+            "fechaExamen": fechaExamen,
+            "tipoExamen": tipoExamen,
+            "estudio": estudio,
+            "parametros": parametros
             
             
         }}}
@@ -516,6 +551,21 @@ def estudiosExamen(examen):
             "estudios.estudio" : 1,
             "_id":0
         }
+    )
+
+    response = json_util.dumps(test)
+    return Response(response, mimetype="application/json"), 201
+
+##Get parametros Examen
+@app.route("/lab/parametrosEstudio/<estudio>", methods=["GET"])
+def parametrosEstudio(estudio):
+    test = collTiposExamenes.find_one({},
+    {
+        "estudios": {"$elemMatch": {"nombre": estudio}},
+    
+        "_id": 0
+    }
+        
     )
 
     response = json_util.dumps(test)
