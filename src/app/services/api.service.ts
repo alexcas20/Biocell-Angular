@@ -137,4 +137,25 @@ export class ApiService {
     let direccion = `${this.url}/estudiosExamen/${examen}`;
     return this.http.get(direccion, examen);
   }
+
+  getParametros(examen: string, estudio: string): Observable<any> {
+    let direccion = `${this.url}/parametrosEstudio/${examen}/${estudio}`;
+    return this.http.get(direccion)
+      
+   }
+
+   borrarExamen(folio:string): Observable<any>{
+    let direccion = `${this.url}/borrarExamen/${folio}`;
+    return this.http.delete(direccion)
+   }
+
+   borrarExamenes(): Observable<any>{
+    let direccion = `${this.url}/borrarExamenes`;
+    return this.http.delete(direccion)
+   }
+
+   eliminarPacientes(): Observable<any>{
+    let direccion = `${this.url}/deletePacientes`;
+    return this.http.delete(direccion)
+   }
 }

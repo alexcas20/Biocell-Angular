@@ -21,7 +21,7 @@ export class DialogAsignarExamenPacienteComponent implements OnInit {
     'nombreMedico',
     'fechaExamen',
     'tipoExamen',
-    'prueba',
+    'estudio',
     'accion',
   ];
 

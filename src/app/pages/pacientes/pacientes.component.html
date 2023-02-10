@@ -1,6 +1,14 @@
 <div class="container">
   <div class="card-header">
     <h1 class="card-title">Listado de Pacientes</h1>
+
+    <button *ngIf="pacientes.length > 0"
+      class="btn btn-danger btn-sm ml-2 float-right"
+      (click)="eliminarPacientes()"
+    >
+      <i class="fas fa-trash"> </i> Eliminar Pacientes
+    </button>
+
     <button
       class="btn btn-success btn-sm float-right"
       (click)="openDialogPacientes()"

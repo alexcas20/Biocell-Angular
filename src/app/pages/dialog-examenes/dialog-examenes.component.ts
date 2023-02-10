@@ -18,11 +18,11 @@ import { ApiService } from 'src/app/services/api.service';
 import Swal from 'sweetalert2';
 import { DialogBuscarPacienteComponent } from '../dialog-buscar-paciente/dialog-buscar-paciente.component';
 import { DialogComponent } from '../dialog/dialog.component';
-import { ServicioModalesService } from '../servicio-modales.service';
 import { DialogBuscarMedicoComponent } from '../dialog-buscar-medico/dialog-buscar-medico.component';
 import registrarExamen from 'src/app/models/registrarExamen.interface';
 import { Router } from '@angular/router';
 import { switchMap } from 'rxjs';
+import { MatSelect } from '@angular/material/select';
 
 @Component({
   selector: 'app-dialog-examenes',
@@ -57,10 +57,9 @@ export class DialogExamenesComponent implements OnInit {
   //data parametros
   dataParametros: any;
 
-  parametro= false
+  parametro = false;
 
-
-  parametrosTipo: any
+  parametrosTipo: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -69,7 +68,6 @@ export class DialogExamenesComponent implements OnInit {
     private dialogRef: MatDialogRef<DialogComponent>,
     private dialogPacientes: MatDialog,
     private DialogMedicos: MatDialog,
-    private ServicioModal: ServicioModalesService,
     private router: Router
   ) {}
 
@@ -87,8 +85,8 @@ export class DialogExamenesComponent implements OnInit {
       telefono: ['', Validators.required],
       correo: ['', Validators.required],
       fechaExamen: ['', Validators.required],
-      tipoExamen: [''],
-      estudio: [''],
+      tipoExamen: ['', Validators.required],
+      estudio: ['', Validators.required],
       parametros: this.formBuilder.array([]),
     });
 
@@ -114,10 +112,29 @@ export class DialogExamenesComponent implements OnInit {
         this.productForm.controls['sexo'].patchValue(this.data.sexo);
         this.productForm.controls['telefono'].patchValue(this.data.telefono);
         this.productForm.controls['correo'].patchValue(this.data.correo);
-        this.productForm.controls['fechaExamen'].patchValue(this.data.fechaExamen);
-        this.productForm.controls['tipoExamen'].patchValue(this.data.tipoExamen);
-        this.productForm.get('estudio').patchValue(this.data.estudio)
-        console.log('Valor estudio:', this.productForm.get('estudio').value )
+        this.productForm.controls['fechaExamen'].patchValue(
+          this.data.fechaExamen
+        );
+        this.productForm.controls['tipoExamen'].patchValue(
+          this.data.tipoExamen
+        );
+        this.productForm.get('estudio').patchValue(this.data.estudio);
+        console.log('Valor estudio:', this.productForm.get('estudio').value);
+
+        //Llenado de parametros
+        this.api
+          .getParametros(this.data.tipoExamen, this.data.estudio)
+          .subscribe((resp) => {
+            console.log(resp.estudios.parametros);
+            const preDataParametros = resp.estudios;
+            for (const key in preDataParametros) {
+              if (preDataParametros.hasOwnProperty(key)) {
+                const element = preDataParametros[key];
+                this.dataParametros = element.parametros;
+                console.log(key + ': ', element.parametros);
+              }
+            }
+          });
       } else if (this.data?.folio) {
         console.log(this.data);
         console.log('condicional folio' + this.data.folio);
@@ -147,17 +164,15 @@ export class DialogExamenesComponent implements OnInit {
 
     // Cuando cambie el examen
 
-      this.productForm
+    this.productForm
       .get('tipoExamen')
       ?.valueChanges.pipe(switchMap((estudio) => this.api.getEstudios(estudio)))
       .subscribe((resp) => {
-        console.log(resp);
+        console.log(resp.estudios);
         this.dataParametros = resp.estudios.parametros;
         console.log(this.dataParametros);
         this.estudios = resp.estudios;
       });
-    
-    
   }
 
   BuscarPacientes() {
@@ -256,32 +271,31 @@ export class DialogExamenesComponent implements OnInit {
   }
 
   newParametro(): FormGroup {
-    if(this.parametro){
+    if (this.parametro) {
       return this.formBuilder.group({
         nombre: this.parametrosTipo,
         resultado: 0,
         unidades: '',
-        ref: ''
+        ref: '',
       });
-    } else{
+    } else {
       return this.formBuilder.group({
         nombre: '',
         resultado: 0,
         unidades: '',
-        ref: ''
+        ref: '',
       });
     }
-   
   }
 
   addParametro() {
-    this.parametro= false
+    this.parametro = false;
     this.parametros().push(this.newParametro());
   }
 
-  addParametroSelect(str:string) {
-    this.parametro= true
-    this.parametrosTipo = str
+  addParametroSelect(str: string) {
+    this.parametro = true;
+    this.parametrosTipo = str;
     this.parametros().push(this.newParametro());
   }
 

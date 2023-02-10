@@ -13,7 +13,7 @@ from bson import json_util
  #database
 
 client = MongoClient("mongodb://localhost:27017/")
-db = client["biocell_tiposExamenes"]
+db = client["biocell"]
 # collection
 collUser = db["users"]
 collPaciente = db["pacientes"]
@@ -105,7 +105,7 @@ def registerL():
     
     test = collUser.find_one({"user": user})
     test2 = collUser.find_one({"code": code})
-    if test | test2:
+    if test or test2:
         return jsonify(message="El usuario ya existe."), 409
     else:
 
@@ -245,6 +245,7 @@ def updatePaciente(folio):
         return jsonify(message='Error')
 
 
+#BORRAR PACIENTE
 @ app.route('/lab/deletePaciente/<code>', methods=['DELETE'])
 def deletePaciente(code):
 
@@ -254,6 +255,13 @@ def deletePaciente(code):
         return jsonify(message="User with folio: "+code + " deleted succesfully"), 201
     else:
         return jsonify(message='Error')
+
+#BORRAR PACIENTES
+@app.route('/lab/deletePacientes', methods=['DELETE'])
+def deletePacientes():
+    test = collPaciente.delete_many({})
+
+    return jsonify(message='Todos los pacientes han sido borrados'),201
 
 
 ##########  MEDICOS  #############################################################
@@ -551,7 +559,7 @@ def finalizarExamenes(folioExamen):
 def estudiosExamen(examen):
     test = collTiposExamenes.find_one(
         {"examen": examen}, {
-            "estudios.estudio" : 1,
+            "estudios" : 1,
             "_id":0
         }
     )
@@ -560,19 +568,35 @@ def estudiosExamen(examen):
     return Response(response, mimetype="application/json"), 201
 
 ##Get parametros Examen
-@app.route("/lab/parametrosEstudio/<estudio>", methods=["GET"])
-def parametrosEstudio(estudio):
-    test = collTiposExamenes.find_one({},
+@app.route("/lab/parametrosEstudio/<examen>/<estudio>", methods=["GET"])
+def parametrosEstudio(estudio,examen):
+    test = collTiposExamenes.find_one({"examen": examen},
     {
         "estudios": {"$elemMatch": {"nombre": estudio}},
     
-        "_id": 0
+        "_id": 0,
+        "examen": 0
     }
         
     )
 
     response = json_util.dumps(test)
     return Response(response, mimetype="application/json"), 201
+
+###BORRAR EXAMEN
+@app.route('/lab/borrarExamen/<folio>', methods=['DELETE'])
+def borrarExamen(folio):
+    test = collExamenes.delete_one({"folioExamen": folio})
+
+    return jsonify(message="Examen borrado correctamente"), 201
+
+
+###BORRAR TODOS LOS EXAMENES
+@app.route('/lab/borrarExamenes', methods=['DELETE'])
+def borrarExamenes():
+    test = collExamenes.delete_many({})
+
+    return jsonify(message="Examenes borrados correctamente"), 201
 
 
 if __name__ == '__main__':

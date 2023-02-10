@@ -2,7 +2,9 @@
   <h1 mat-dialog-title>Registro de Examenes</h1>
 
 
-  <div class="container-center">
+  <div class="container-center"
+  *ngIf="data?.estado !== 'activo'"
+  >
 
     <button
     style="margin-left: 8px"
@@ -113,9 +115,15 @@
           <input type="date" formControlName="fechaExamen" matInput />
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
+        <mat-form-field appearance="outline" *ngIf="data?.estado === 'activo'">
+          <mat-label>Examen</mat-label>
+          <input type="text" formControlName="tipoExamen" [value]="this.data.tipoExamen" matInput />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" *ngIf="data?.estado !== 'activo'">
           <mat-label>Tipo de Examen</mat-label>
-          <mat-select formControlName="tipoExamen" placeholder="Tipo de Examen">
+          <mat-select formControlName="tipoExamen" placeholder="Tipo de Examen"
+          [disabled]="data?.estado === 'activo'">
             <mat-option
               *ngFor="let item of tiposExamenes"
               [value]="item.examen"
@@ -124,33 +132,40 @@
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
+       
+        <mat-form-field appearance="outline" *ngIf="data?.estado !== 'activo'" >
           <mat-label>Estudio</mat-label>
           <mat-select formControlName="estudio" placeholder="Estudio">
             <mat-option
               *ngFor="let item of estudios"
-              [value]="item.estudio"
-              >{{ item.estudio }}</mat-option
+              [value]="item.nombre"
+              >{{ item.nombre }}</mat-option
             >
           </mat-select>
         </mat-form-field>
 
+        <mat-form-field appearance="outline" *ngIf="data?.estado === 'activo'">
+          <mat-label>Estudio</mat-label>
+          <input type="text" formControlName="estudio" [value]="this.data.estudio" matInput />
+        </mat-form-field>
+
         <!-- Parametros -->
 
-        <div class="parametros"
+        <div 
         *ngIf="data?.estado === 'activo'">
           <h3>Parametros: </h3>
           <hr>
   
-          <ng-container formArrayName="parametros">
-            <mat-form-field appearance="outline">
+          <ng-container
+           formArrayName="parametros">
+            <mat-form-field  appearance="outline" *ngIf="dataParametros">
   
               <mat-label>Parametros</mat-label>
-              <mat-select>
-              <mat-option
-              value="Ego1"
-              (click)="addParametroSelect('Ego1')">
-                Ego1
+              <mat-select   >
+              <mat-option *ngFor="let item of dataParametros"
+              [value]="item"
+              (click)="addParametroSelect(item)">
+                {{item}}
               </mat-option>
             </mat-select>
   
@@ -158,10 +173,10 @@
   
             <button 
             type="button"
-            class="btn btn-primary btn-sm ml-2" (click)="addParametro()">Nuevo Parametro</button>
+            class="btn btn-primary btn-sm" (click)="addParametro()">Nuevo Parametro</button>
             
   
-            <div class="form-row mb-4"
+            <div class="form-row mt-3 mb-4"
             *ngFor="let parametro of parametros().controls; let i = index"
                 [formGroupName]="i">
               <div class="input-group input-group-sm col-12 col-md-6 mb-4">
@@ -225,6 +240,7 @@
   <div mat-dialog-action [align]="'end'">
     <button mat-raised-button color="warn" mat-dialog-close>Cerrar</button>
     <button
+    [disabled]="productForm.invalid"
       (click)="registrarExamen(productForm.value)"
       style="margin-left: 8px"
       mat-raised-button

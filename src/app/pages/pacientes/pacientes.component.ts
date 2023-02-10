@@ -31,6 +31,8 @@ export class PacientesComponent implements OnInit {
   showPDF: any;
   datosExamen: any;
 
+  pacientes: [] = [];
+
 
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -63,6 +65,7 @@ export class PacientesComponent implements OnInit {
     this.api.getPacientes().subscribe({
       next: (res) => {
         console.log(res);
+        this.pacientes = res;
         this.dataSource = new MatTableDataSource(res);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
@@ -120,6 +123,40 @@ export class PacientesComponent implements OnInit {
         Swal.fire('Atencion!', 'Verifique sus acciones.', 'warning');
       }
     });
+  }
+
+  eliminarPacientes(){
+
+    Swal.fire({
+      title: 'Estas seguro/a?',
+      text: "No podras reevertir la accion!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, eliminar!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+        this.api.eliminarPacientes()
+      .subscribe(resp => {
+        console.log(resp);
+        Swal.fire(
+          'Exito!',
+          'Todos los examenes han sido eliminados.',
+          'success'
+        )
+        
+        this.getPacientes();
+      })
+      }
+      else{
+       
+          Swal.fire('Atencion!', 'Verifique sus acciones.', 'warning');
+        
+      }
+    })
+    
   }
 
   asignarExamenPaciente(folio:any){
