@@ -5,11 +5,10 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ApiService } from 'src/app/services/api.service';
 
-import pdfMake from 'pdfmake/build/pdfmake';
-import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { ServicioModalesService } from '../servicio-modales.service';
+
 import jsPDF from 'jspdf';
-pdfMake.vfs = pdfFonts.pdfMake.vfs;
+import autoTable from 'jspdf-autotable';
 
 @Component({
   selector: 'app-dialog-asignar-examen-paciente',
@@ -30,8 +29,8 @@ export class DialogAsignarExamenPacienteComponent implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
 
   datosExamen: any;
-  apellidoP:any;
-  apellidoM:any;
+  apellidoP: any;
+  apellidoM: any;
   activarDescarga: boolean = false;
   constructor(
     private api: ApiService,
@@ -42,12 +41,11 @@ export class DialogAsignarExamenPacienteComponent implements OnInit {
   ngOnInit(): void {
     this.getExamenFolio();
     localStorage.getItem('medico');
-    localStorage.getItem('especialidad')
+    localStorage.getItem('especialidad');
   }
 
   getExamenFolio() {
     this.api.obtenerExamenFolio(this.data).subscribe((resp) => {
-      
       const respFinal = resp[0].examenesPacientes;
       console.log(respFinal);
       this.dataSource = new MatTableDataSource(respFinal);
@@ -56,21 +54,16 @@ export class DialogAsignarExamenPacienteComponent implements OnInit {
     });
   }
 
-   selectExamen(item: any) {
+  selectExamen(item: any) {
     console.log(item);
-    this.datosExamen =  item;
+    this.datosExamen = item;
     this.servicioModal.getDatos(item);
     this.activarDescarga = true;
-    this.api.getDatosMedico(this.datosExamen.nombreMedico)
-      .subscribe(resp => {
-        this.apellidoP= resp.apellidoP;
-        this.apellidoM = resp.apellidoM;
-        console.log(resp)
-      })
-    
-
-
-
+    this.api.getDatosMedico(this.datosExamen.nombreMedico).subscribe((resp) => {
+      this.apellidoP = resp.apellidoP;
+      this.apellidoM = resp.apellidoM;
+      console.log(resp);
+    });
   }
 
   applyFilter(event: Event) {
@@ -82,161 +75,65 @@ export class DialogAsignarExamenPacienteComponent implements OnInit {
     }
   }
 
-  /*
-  createPDF() {
-    const pdfDefinition: any = {
-      content: [
-        {
-          columns: [
-            {
-              image: 'logo',
-              width: 200,
-              height: 100,
-              alignment: 'left',
-            },
-            {
-              text: '\n\n\nResponsable: LAQB. Salvador Martinez Ruiz \n Ced.Prof: 9036591',
-              alignment: 'right',
-              style: 'header',
-            },
-          ],
-        },
-        {
-          text: 'Análisis Clínicos',
-          margin: [35, 0, 0, 0],
-          style: 'header',
-        },
-        {
-          text: '________________________________________________________________________________________\n\n',
-          margin: [35, 0, 0, 0],
-          style: 'hr',
-        },
-        {
-          text: 'Paciente:  datosExamen.nombre  \n\n',
-          margin: [35, 0, 0, 0],
-          style: 'texto',
-        },
-        {
-          text: 'Edad: \n\n',
-          margin: [35, 0, 0, 0],
-          style: 'texto',
-        },
-        {
-          text: 'Fecha del examen:\n\n',
-          margin: [35, 0, 0, 0],
-          style: 'texto',
-        },
-        {
-          text: 'Medico:\n\n',
-          margin: [35, 0, 0, 0],
-          style: 'texto',
-        },
-        {
-          text: 'Diagnostico:\n\n',
-          margin: [35, 0, 0, 0],
-          style: 'texto',
-        },
+  public openPDF(): void {
+    const datosExamen = this.datosExamen;
 
-        {
-          style: 'tabla',
-          table: {
-            headerRows: 1,
-            body: [
-              [
-                { text: 'ESTUDIO', style: 'tableHeader' },
-                { text: 'RESULTADO', style: 'tableHeader' },
-                { text: 'UNIDADES', style: 'tableHeader' },
-                { text: 'VALORES DE REFERENCIA', style: 'tableHeader' },
-              ],
-            ],
-          },
-          layout: 'headerLineOnly',
-          margin: [100, 0, 0, 0],
-        },
-      ],
-      footer: {
-        columns: [
-          'Logo',
-          { text: 'Sucursal' },
-          {
-            text: 'Direccion',
-          },
-        ],
-        style: 'footer',
-      },
+    console.log(datosExamen);
 
-      images: {
-        logo: 'https://th.bing.com/th/id/R.d155bd6c7311a4cb2c8ca272438e09a9?rik=3AOC%2bTK8YFd%2beQ&pid=ImgRaw&r=0',
-      },
+    var img = new Image();
+    img.src = '../../../assets/images/plantillaBiocell.jpg';
 
-      styles: {
-        header: {
-          fontSize: 12,
-        },
+    var img2 = new Image();
+    img2.src = '../../../assets/images/footerbiocell.jpg';
 
-        tableHeader: {},
-        texto: {
-          color: 'grey',
-          fontSize: 14,
-        },
-        hr: {
-          color: 'green',
-        },
-        tabla: {
-          color: 'red',
-        },
-      },
-    };
-    const pdf = pdfMake.createPdf(pdfDefinition);
-    pdf.open();
-  }
-  */
-  public openPDF():void{
+    let doc = new jsPDF();
 
-    const datosExamen = this.datosExamen
-    console.log(datosExamen)
+    const values = datosExamen.parametros.map((item)=>Object.values(item));
 
-    var img = new Image()
-    img.src = "../../../assets/images/plantillaBiocell.jpg"
-    
-    var img2 = new Image()
-    img2.src = "../../../assets/images/footerbiocell.jpg"
-    
-    
-    var doc = new jsPDF();
+    doc.addImage(img, 'JPEG', 1, 1, 200, 300);
+    doc.addImage(img2, 'JPEG', 10, 260, 190, 30);
 
-    doc.addImage(img, 'JPEG',1,1,200,300 )
-    doc.addImage(img2, 'JPEG',10,260,190,30 )
-
-    doc.setFont("helvetica", "bold");
     doc.setFontSize(12);
-    
-    doc.text("Paciente: " + datosExamen?.nombre + " "+datosExamen?.apellidoP + " "+datosExamen?.apellidoM , 20, 50);
-    
-    doc.text("Edad: "+ datosExamen?.edad, 20, 60);
-    doc.text("años ", 40, 60)
-    doc.text("Sexo: "+datosExamen?.sexo, 80, 60);
-    doc.text("Fecha del Examen: "+datosExamen?.fechaExamen, 20, 70)
-    doc.text("Medico: "+datosExamen?.nombreMedico+  " "+  this.apellidoP+ " " + this.apellidoM , 20, 80)
-    doc.text("Diagostico del paciente", 20, 90)
-    
-    
-    doc.text("___________________________________________________________________________",20,101)
-    doc.text("ESTUDIO", 40, 100)
-    doc.text("RESULTADO", 70, 100)
-    doc.text("UNIDADES", 107, 100)
-    doc.text("VALORES DE REFERENCIA",140,100) 
 
+    doc.setFont('helvetica', 'bold');
+    doc.text('Paciente: ' , 20, 50);
+    doc.setFont('helvetica', 'normal');
+    doc.text(datosExamen?.nombre + ' ' +datosExamen?.apellidoP + ' ' + datosExamen?.apellidoM, 40, 50)
 
-    doc.setFont("arial", "normal")
-    doc.text(""+datosExamen?.tipoExamen, 30, 110)
-    doc.text(""+datosExamen?.resultado, 80, 110)
-    doc.text(""+datosExamen?.dimensional, 117, 110)
-    doc.text("",140,110) 
+    doc.setFont('helvetica', 'bold');
+    doc.text('Edad: ', 20, 60);
+    doc.setFont('helvetica', 'normal');
+    doc.text(datosExamen?.edad + ' años', 33, 60);
 
+    doc.setFont('helvetica', 'bold');
+    doc.text('Sexo: ' , 80, 60);
+    doc.setFont('helvetica', 'normal');
+    doc.text(datosExamen?.sexo, 93, 60 )
+
+    doc.setFont('helvetica', 'bold');
+    doc.text('Fecha del Examen: ' , 20, 70);
+    doc.setFont('helvetica', 'normal');
+    doc.text(datosExamen?.fechaExamen, 60, 70)
+
+    doc.setFont('helvetica', 'bold');
+    doc.text('Medico: ', 20, 80);
+    doc.setFont('helvetica', 'normal');
+    doc.text(datosExamen?.nombreMedico + ' ' +this.apellidoP + ' ' + this.apellidoM, 37, 80)
+
+    doc.setFont('helvetica', 'bold');
+    doc.text('Diagostico del paciente', 20, 90);
+
+    autoTable(doc, {
+      columnStyles: {0: {halign: 'center'}},
+      margin: {top: 100, left: 18.4},
+      head:[["ESTUDIO","RESULTADO", "UNIDADES", "VALORES DE REFERENCIA"]],
+      theme: "plain",
+      body:[
+        [datosExamen.estudio],
+        [values]
+      ]
+    })
     
-
-    doc.save("Examen de " + datosExamen?.nombre + ".pdf")
+    doc.save('Examen de ' + datosExamen?.nombre + '.pdf');
   }
- 
 }
