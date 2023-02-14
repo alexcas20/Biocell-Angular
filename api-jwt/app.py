@@ -1,4 +1,5 @@
 
+import os
 from flask import Flask, jsonify, request, Response
 from flask_jwt_extended import JWTManager, jwt_required, create_access_token
 from pymongo import MongoClient
@@ -85,6 +86,7 @@ def register():
         collUser.insert_one({
             'user': user,
             'password': hashed_Pass ,
+            'rol': 'USER',
             'status': "activo",
         })
         return jsonify(message="User added sucessfully"), 201
@@ -99,6 +101,7 @@ def registerL():
     code = request.json['code']
     user = request.json['user']
     password = request.json['password']
+    rol = request.json['rol']
 
    
 
@@ -113,7 +116,7 @@ def registerL():
             'code': code,
             'user': user,
             'password': password ,
-            'status': "activo",
+            'rol': rol
         })
         return jsonify(message="User added sucessfully"), 201
 
@@ -132,36 +135,68 @@ def allUsers():
 
 
 #   Edit usuario
-@ app.route('/lab/editUser/<user>', methods=['PUT'])
-def editUser(user):
-    #code = request.json['code']
-    user = request.json['user']
+@ app.route('/lab/editUser/<code>', methods=['PUT'])
+def editUser(code):
+    
     password = request.json['password']
-    #rol = request.json['rol']
-    #status = request.json['status']
+    rol = request.json['rol']
+    imageUser = request.json['imageUser']
+  
+   
 
-    #hashed_password = generate_password_hash(password)
+   
 
-    test = collUser.update_one({"user": user}, {'$set': {
+    test = collUser.update_one({"code": code}, {'$set': {
         
-        "user": user,
-        "password": password
+        
+        "password": password,
+        "rol" : rol,
+        "imageUser": imageUser
+        
     }})
 
     if test:
-        return jsonify(message="User: "+user + " update succesfully"), 201
+        return jsonify(message="User update succesfully"), 201
     else:
         return jsonify(message='Error')
 
 
-#   Delete usuario
-@ app.route('/lab/deleteUser/<user>', methods=['DELETE'])
-def deleteUser(user):
 
-    test = collUser.delete_one({"user": user})
+#uploadImage
+
+# @ app.route('/lab/uploadImage/<user>', methods=['PUT'])
+# def uploadImage(user):
+
+#     if 'profile_image' in request.files:
+#         profile_image = request.files['profile_image']
+#         basepath = os.path.dirname (__file__) 
+#         filename = profile_image.filename
+#         upload_path = os.path.join (basepath, 'images', filename)
+#         profile_image.save(upload_path)
+      
+
+#         test = collUser.update_one({"user": user}, {'$set': {
+        
+        
+#         "profileImg": filename,
+    
+        
+#     }})
+
+    
+#     return jsonify(message="Image upload"), 201
+ 
+
+
+
+#   Delete usuario
+@ app.route('/lab/deleteUser/<code>', methods=['DELETE'])
+def deleteUser(code):
+
+    test = collUser.delete_one({"code": code})
 
     if test:
-        return jsonify(message="User deleted: "+user + " deleted succesfully"), 201
+        return jsonify(message="User deleted deleted succesfully"), 201
     else:
         return jsonify(message='Error')
 

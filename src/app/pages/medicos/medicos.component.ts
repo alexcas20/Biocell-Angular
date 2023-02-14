@@ -4,15 +4,15 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ApiService } from 'src/app/services/api.service';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { DialogPacientesComponent } from '../dialog-pacientes/dialog-pacientes.component';
+
 import Swal from 'sweetalert2';
-import { DialogComponent } from '../dialog/dialog.component';
+
 import { DialogMedicosComponent } from '../dialog-medicos/dialog-medicos.component';
 
 @Component({
   selector: 'app-medicos',
   templateUrl: './medicos.component.html',
-  styleUrls: ['./medicos.component.css']
+  styleUrls: ['./medicos.component.css'],
 })
 export class MedicosComponent implements OnInit {
   displayedColumns: string[] = [
@@ -32,7 +32,7 @@ export class MedicosComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private api: ApiService, private dialogMedicos: MatDialog) { }
+  constructor(private api: ApiService, private dialogMedicos: MatDialog) {}
 
   ngOnInit(): void {
     this.getMedicos();
@@ -79,50 +79,36 @@ export class MedicosComponent implements OnInit {
       });
   }
 
-
-  deleteMedico(folio:any){
+  deleteMedico(folio: any) {
     Swal.fire({
       title: 'Estas seguro?',
-      text: "Tu no podras revertir esto!",
+      text: 'Tu no podras revertir esto!',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Si, Borrar Medico!',
-      cancelButtonText: 'Cancelar'
+      cancelButtonText: 'Cancelar',
     }).then((result) => {
       if (result.isConfirmed) {
-
         this.api.deleteMedico(folio).subscribe({
-          next:(res:any)=>{
-            
+          next: (res: any) => {
             this.getMedicos();
-           
           },
-          error:()=>{
-            Swal.fire('Error','Se ha producido un error al eliminar el Medico','error')
-          }
-        })
-        Swal.fire(
-          'Exito!',
-          'El Medico fue borrado correctamente.',
-          'success'
-        )
+          error: () => {
+            Swal.fire(
+              'Error',
+              'Se ha producido un error al eliminar el Medico',
+              'error'
+            );
+          },
+        });
+        Swal.fire('Exito!', 'El Medico fue borrado correctamente.', 'success');
+      } else {
+        Swal.fire('Atencion!', 'Verifique sus acciones.', 'warning');
       }
-      else{
-        Swal.fire(
-          'Atencion!',
-          'Verifique sus acciones.',
-          'warning'
-        )
-      }
-    })
-   
-
+    });
   }
-
- 
-      
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -132,5 +118,4 @@ export class MedicosComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
-
 }

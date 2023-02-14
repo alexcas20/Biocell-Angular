@@ -1,12 +1,13 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { DialogComponent } from 'src/app/pages/dialog/dialog.component';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
-import { filter } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogComponent } from '../dialog/dialog.component';
+
 import Swal from 'sweetalert2';
+import { Observable, Subscriber, filter } from 'rxjs';
+import { DomSanitizer } from '@angular/platform-browser';
+
+
 
 @Component({
   selector: 'app-usuarios',
@@ -16,17 +17,24 @@ import Swal from 'sweetalert2';
 export class UsuariosComponent implements OnInit {
   titulo = 'Usuarios';
   usuarios: any;
-  displayedColumns: string[] = ['code', 'user', 'rol', 'status', 'accion'];
-  dataSource!: MatTableDataSource<any>;
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
+ 
 
-  constructor(private api: ApiService, private dialog: MatDialog) {}
+
+
+
+
+
+  constructor(private api: ApiService, private dialog: MatDialog,
+    private sanitizer : DomSanitizer) {}
 
   ngOnInit(): void {
     this.getAllUsers();
   }
+
+  
+
+  
 
   openDialog() {
     this.dialog
@@ -44,10 +52,9 @@ export class UsuariosComponent implements OnInit {
   getAllUsers() {
     this.api.getUsers().subscribe({
       next: (res) => {
-        console.log(res);
-        this.dataSource = new MatTableDataSource(res);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
+
+        this.usuarios = res;
+       
       },
       error:(err)=>{
         Swal.fire('Error','No se han encontrado los usuarios','error')
@@ -67,7 +74,7 @@ export class UsuariosComponent implements OnInit {
     })
   }
 
-  deleteUser(user:any){
+  deleteUser(item:any){
     Swal.fire({
       title: 'Estas seguro?',
       text: "Tu no podras revertir esto!",
@@ -80,7 +87,7 @@ export class UsuariosComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
 
-        this.api.deleteUser(user).subscribe({
+        this.api.deleteUser(item.code).subscribe({
           next:(res:any)=>{
             
             this.getAllUsers();
@@ -107,14 +114,33 @@ export class UsuariosComponent implements OnInit {
    
 
   }
+ 
 
+  // onChange(event: any, item: any) {
+  //   const archivoCapturado = event.target.files[0];
+  //   this.arhivos.push(archivoCapturado);
+  //   this.subirArchivo(item, archivoCapturado)
+   
+   
+  // }
 
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLocaleLowerCase();
+  // subirArchivo(item:any, img: File){
+  //   console.log(item.user)
+  //   this.api.addImageProfile(item.user,img)
+  //     .subscribe(resp => console.log(resp))
 
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
+      
+
+  // }
+
+    
+
+  
+
   }
-}
+
+  
+
+ 
+
+

@@ -28,13 +28,12 @@
         hide ? "visibility_off" : "visibility"
       }}</mat-icon>
     </mat-form-field>
-    <mat-form-field *ngIf="editData" appearance="outline">
-      <mat-label>Status</mat-label>
-      <mat-select formControlName="status" placeholder="Status">
-        <mat-option value="Activo">Activo</mat-option>
-        <mat-option value="Inactivo">Inactivo</mat-option>
-      </mat-select>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Imagen usuario</mat-label>
+      <input formControlName="imageUser" matInput placeholder="Agregue una url de la imagen deseada" />
     </mat-form-field>
+    
   </form>
 </div>
 <div mat-dialog-action [align]="'end'">

@@ -27,7 +27,7 @@ export class loginService {
   }
 
   registrarUsuario(form: any): Observable<Register> {
-    let direccion = `${this.url}/registerUser`;
+    let direccion = `${this.url}/registerUserL`;
     return this.http.post<Register>(direccion, form);
   }
 

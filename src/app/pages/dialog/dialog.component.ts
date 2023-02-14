@@ -30,7 +30,7 @@ export class DialogComponent implements OnInit {
       user : ['',Validators.required],
       password : ['',Validators.required],
       rol : ['',Validators.required],
-      status: ['Activo', Validators.required]
+      imageUser: ['']
     });
 
     if(this.editData){
@@ -39,6 +39,7 @@ export class DialogComponent implements OnInit {
 
    
     this.productForm.controls["user"].patchValue(this.editData.user);
+    this.productForm.controls["code"].patchValue(this.editData.code);
     this.productForm.controls["password"].setValue("");
 
     }
