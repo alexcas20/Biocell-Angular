@@ -4,10 +4,12 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ApiService } from 'src/app/services/api.service';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { DialogPacientesComponent } from '../dialog-pacientes/dialog-pacientes.component';
+
 import Swal from 'sweetalert2';
-import { DialogAsignarExamenPacienteComponent } from '../dialog-asignar-examen-paciente/dialog-asignar-examen-paciente.component';
+
 import { ServicioModalesService } from '../servicio-modales.service';
+import { DialogPacientesComponent } from '../dialog-pacientes/dialog-pacientes.component';
+import { DialogAsignarExamenPacienteComponent } from '../dialog-asignar-examen-paciente/dialog-asignar-examen-paciente.component';
 
 @Component({
   selector: 'app-pacientes',

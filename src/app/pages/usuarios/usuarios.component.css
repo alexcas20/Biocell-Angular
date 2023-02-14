@@ -1,3 +1,8 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap');
+
+
+
 .iconos{
     font-size: 1.2rem;
     cursor: pointer;
@@ -38,7 +43,39 @@ table {
   }
   
   span{
+    width: 5rem;
     padding: .5rem;
     font-size: .8rem;
+    margin: 0 0 1rem 0;
+    position: relative;
+    left: 13rem
   }
+
+  .card-profile:hover{
+    display: inline-block;
+ 
+
+    animation: pulse;
+    animation-duration: .8s;
+
+  }
+
+  .card-body{
+   display: flex;
+   justify-content: center;
+    
+  }
+
+  .card-body h2{
+    font-family: 'Roboto', sans-serif;
+    font-weight: 900;
+  }
+
+ 
+  .imageProfile{
+    display: flex;
+    justify-content: center;
+  }
+
+  
   

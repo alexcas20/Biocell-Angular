@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import RegistroPaciente from '../models/registerPaciente.interface';
 import RegistroMedico from '../models/registerMedicos.interface';
@@ -39,7 +39,7 @@ export class ApiService {
 
   putUser(user: any, form: Register): Observable<Register> {
     let direccion = `${this.url}/editUser/${user}`;
-    return this.http.put<Register>(direccion, form);
+    return this.http.put<Register>(direccion,form);
   }
 
   deleteUser(code: any) {
@@ -157,5 +157,16 @@ export class ApiService {
    eliminarPacientes(): Observable<any>{
     let direccion = `${this.url}/deletePacientes`;
     return this.http.delete(direccion)
+   }
+
+   addImageProfile(user:any,img: File): Observable<any>{
+    const headers = new HttpHeaders();
+    headers.append('Content-Type', 'multipart/form-data');
+    const formData = new FormData(); 
+    formData.append('profile_image', img)
+    let direccion = `${this.url}/uploadImage/${user}`
+    return this.http.put<any>(direccion, formData, {
+      headers
+    })
    }
 }
