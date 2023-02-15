@@ -231,6 +231,14 @@
 
                 </div>
           </ng-container>
+
+
+          <mat-form-field appearance="outline" *ngIf="data?.estado === 'activo'">
+            <mat-label>Metodo</mat-label>
+            <input type="text" formControlName="metodo" matInput />
+          </mat-form-field>
+
+        
         </div>
       
       </form>

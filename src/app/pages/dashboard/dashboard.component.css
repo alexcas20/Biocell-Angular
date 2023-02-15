@@ -15,3 +15,40 @@
 
     
 }
+
+.imagen-dash{
+    width: 100%;
+    background-color: #ffff;
+    margin: 0 0 3rem 0;
+    border: 2px solid #2222;
+    box-shadow: 2px 2px #2222;
+    display: flex;
+    justify-content: center;
+    
+    
+}
+
+.imagen-dash .title-bio{
+    position:relative;
+    right: 7rem;
+    top: 7rem;
+    letter-spacing: 50px;
+    font-size: 8rem;
+    font-weight: bold;
+}
+
+.imagen-dash .sub-bio{
+    position: relative;
+    left: 7rem;
+    top: 7rem;
+    letter-spacing: 50px;
+    font-size: 8rem;
+    font-weight: bold;
+}
+
+
+.container{
+    max-width: 100%;
+    margin: 0 auto;
+    
+  }

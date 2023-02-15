@@ -8,10 +8,13 @@ import Swal from 'sweetalert2';
   styleUrls: ['./sidebar.component.css'],
 })
 export class SidebarComponent implements OnInit {
+
+  user: string = "";
   constructor(private ruta: Router) {}
 
   ngOnInit(): void {
     this.checkLocalStorage();
+    this.user = localStorage.getItem('user');
   }
 
   checkLocalStorage() {
