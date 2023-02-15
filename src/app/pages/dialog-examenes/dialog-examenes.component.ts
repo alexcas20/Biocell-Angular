@@ -90,6 +90,33 @@ export class DialogExamenesComponent implements OnInit {
     'U/mL'
   ]
 
+  metodos:string[] = [
+    'Turbodensitométrico COL1 WIENER LAB',
+    'Coagulométrico',
+    'Nefelometria Genius PA54',
+    'Ziehl-Neelsen ',
+    'Impedancia EMERALD CELL-DYN ABBOTT',
+    'Aglutinación en placa',
+    'Química seca FUJI- DRI- CHEM NX500i',
+    'Aglutinación con antígeno en suspensión',
+    'Inmunocromatografía',
+    'Micrometodo',
+    'Aglutinación por particulas de látex poliestireno',
+    'Inmunoensayo quimioluminiscente de micropartículas (CLIA 900) ',
+    'Prueba cualitativa rápida',
+    'ELISA',
+    'MEDIO DE CUTIVO EN PLACA CON AGAR',
+    'DIFUSIÓN EN AGAR (KIRBY BAVER)',
+    'Quimioluminiscencia ELISA',
+    'Microscopía',
+    'Química Seca',
+    'Químioluminiscencia',
+    'Cualitativo. Ensayo inmunocfomatográfico (Prueba rápida)',
+    'Quimioluminicencia (CMIA)',
+    
+  ]
+
+
   dataSource!: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
