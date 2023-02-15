@@ -482,6 +482,7 @@ def addExamen(folio):
     fechaExamen=request.json["fechaExamen"]
     estudio=request.json["estudio"]
     parametros=request.json["parametros"]
+    metodo=request.json["metodo"]
    
     
   
@@ -503,7 +504,8 @@ def addExamen(folio):
             "fechaExamen": fechaExamen,
             "tipoExamen": tipoExamen,
             "estudio": estudio,
-            "parametros": parametros
+            "parametros": parametros,
+            "metodo": metodo
             
             
         }}}
