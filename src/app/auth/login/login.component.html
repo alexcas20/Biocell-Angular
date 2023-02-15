@@ -13,13 +13,16 @@
   </ul>
     <div class="login-box">
       <div class="login-logo">
-        <a href="../../index2.html" class="login-title"><b>BioCell</b> Lab</a>
+        <a class="login-title"><b>BioCell</b> Lab</a>
       </div>
       <!-- /.login-logo -->
       <div class="card">
         <div class="card-body login-card-body">
     
           <form [formGroup]="myForm" method="post" id="form">
+            <div class="logo-img">
+              <img src="../../../assets/images/logo.png" alt="">
+            </div>
             <div class="input-group mb-3">
               <input type="text" name="user" formControlName="user" class="form-control" placeholder="Usuario" [class.is-invalid]="f.user.errors && f.user.touched">
               <div class="input-group-append">
@@ -45,24 +48,18 @@
              
             </div>
             <div class="row">
-              <!-- <div class="col-8">
-                <div class="icheck-primary">
-                  <input type="checkbox" id="remember">
-                  <label for="remember">
-                    Remember Me
-                  </label>
-                </div>
-              </div> -->
-              <!-- /.col -->
+           
+              
               <div class="col">
-                <button type="submit" class="btn btn-primary  float-right" (click)="onLogin(myForm.value)">Acceder</button>
+                <button type="submit" class="btn btn-primary  float-right" (click)="onLogin(myForm.value)"
+                [disabled]="myForm.invalid">Acceder</button>
               </div>
               <!-- /.col -->
             </div>
           </form>
     
           
-        <div class="container">
+        <div class="container container-registro">
           <p class="mb-0">
             <a [routerLink]="['/register']"
              class="text-center">Nuevo usuario</a>

@@ -175,7 +175,7 @@
                   [value]="item"
                   (click)="addParametroSelect(item)"
                 >
-                  {{ item }}
+                  {{ item | titlecase }}
                 </mat-option>
               </mat-select>
             </mat-form-field>
@@ -252,16 +252,16 @@
               </button>
             </div>
           </ng-container>
-          <div class="input-group input-group-sm col-12 col-md-6 mb-4">
-            <div class="input-group-prepend">
-              <span class="input-group-text bg-info"> Metodo </span>
-            </div>
-            <select formControlName="metodo" class="form-control">
-              <option *ngFor="let metodo of metodos" [value]="metodo">
-                {{ metodo }}
-              </option>
-            </select>
-          </div>
+          <mat-form-field class="metodos" appearance="outline" *ngIf="dataParametros">
+            <mat-label>Metodo</mat-label>
+            <mat-select>
+              <mat-option
+                *ngFor="let metodo of metodos"
+                [value]="metodo">
+                {{ metodo | titlecase }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
       </form>
     </div>

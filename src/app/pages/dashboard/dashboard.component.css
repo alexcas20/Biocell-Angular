@@ -32,18 +32,20 @@
     position:relative;
     right: 7rem;
     top: 7rem;
-    letter-spacing: 50px;
-    font-size: 8rem;
+    letter-spacing: 10px;
+    font-size: 4vh;
     font-weight: bold;
+    padding-left: 19rem;
 }
 
 .imagen-dash .sub-bio{
     position: relative;
     left: 7rem;
     top: 7rem;
-    letter-spacing: 50px;
-    font-size: 8rem;
+    letter-spacing: 10px;
+    font-size: 4vh;
     font-weight: bold;
+    padding-right: 18rem;
 }
 
 

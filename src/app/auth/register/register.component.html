@@ -21,6 +21,9 @@
 
                 <form [formGroup]="registerForm"
                 (ngSubmit)="registrarUser(registerForm.value)">
+                <div class="logo-img">
+                    <img src="../../../assets/images/logo.png" alt="">
+                  </div>
                     <h2 class="title">Nuevo Usuario</h2>
                     <div class="input-group mb-3">
                         <input type="text" name="user" formControlName="user" class="form-control"
@@ -52,7 +55,12 @@
                       
                         <!-- /.col -->
                         <div class="col">
-                            <button type="submit" class="btn btn-primary float-right"
+                            <button type="button" class="btn btn-primary" 
+                            [routerLink]="'/login'">
+                                Regresar
+                            </button>
+                            <button type="submit" class="btn btn-primary float-right" 
+                            [disabled]="registerForm.invalid"
                           >Registrar</button>
                         </div>
                         <!-- /.col -->

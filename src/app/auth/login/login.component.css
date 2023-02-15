@@ -146,3 +146,36 @@
 .container a{
     cursor: pointer;
 }
+
+.container-registro{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #0063F3;
+    height: 2rem;
+    padding: 1.5rem 0;
+    border-radius: 5px;
+    transition: all 0.2s ease-in;
+    cursor: pointer;
+}
+
+
+.container-registro .text-center{
+    color: #fff;
+    margin-bottom: .5rem;
+}
+
+.container-registro:hover{
+background-color:  #0f4eac ;
+}
+
+.logo-img{
+    display: flex;
+    justify-content: center;
+
+}
+
+.logo-img img{
+    padding: .5rem 0;
+    width: 200px;
+}
