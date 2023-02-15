@@ -223,11 +223,10 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text bg-info"> Unidades </span>
                 </div>
-                <select formControlName="unidades"
-                class="form-control">
-                  <option
-                  *ngFor="let unidad of unidades" [value]="unidad">
-                {{unidad}}</option>
+                <select formControlName="unidades" class="form-control">
+                  <option *ngFor="let unidad of unidades" [value]="unidad">
+                    {{ unidad }}
+                  </option>
                 </select>
               </div>
 
@@ -253,14 +252,16 @@
               </button>
             </div>
           </ng-container>
-
-
-          <mat-form-field appearance="outline" *ngIf="data?.estado === 'activo'">
-            <mat-label>Metodo</mat-label>
-            <input type="text" formControlName="metodo" matInput />
-          </mat-form-field>
-
-        
+          <div class="input-group input-group-sm col-12 col-md-6 mb-4">
+            <div class="input-group-prepend">
+              <span class="input-group-text bg-info"> Metodo </span>
+            </div>
+            <select formControlName="metodo" class="form-control">
+              <option *ngFor="let metodo of metodos" [value]="metodo">
+                {{ metodo }}
+              </option>
+            </select>
+          </div>
         </div>
       </form>
     </div>

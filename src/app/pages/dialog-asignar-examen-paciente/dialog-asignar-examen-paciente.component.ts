@@ -24,51 +24,7 @@ export class DialogAsignarExamenPacienteComponent implements OnInit {
     'accion',
   ];
 
-  unidades:string[] = [
-    'Seg',
-    '%',
-    'mg/L ',
-    'Leu/UI',
-    'mg/dL',
-    'HEM',
-    'por campo',
-    'x10^3/uL',
-    'x10^6/uL',
-    'g/dL',
-    'fL',
-    'pg',
-    'U/L',
-    'gr/dL',
-    'U/I',
-    'UI/mL',
-    'mm',
-    'mmol/L',
-    'ng/mL',
-    'gr',
-    'ng/dL',
-    'ug/dL',
-    'uUI/ml',
-    'mUI/mL',
-    'min',
-    'mL',
-    'millones',
-    'index',
-    'Uds. GPL',
-    'GPL-U/mL',
-    'MPL-U/mL',
-    'Kg',
-    'm',
-    'ml',
-    'm^2',
-    'ml/min',
-    'mg/24hrs',
-    'ug/min',
-    'mL/min',
-    'UI/ml',
-    'pg/mL',
-    'U/L',
-    'U/mL'
-  ]
+  
 
   dataSource!: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -181,7 +137,13 @@ export class DialogAsignarExamenPacienteComponent implements OnInit {
       theme: "plain",
       head:[["ESTUDIO","RESULTADO", "UNIDADES", "VALORES DE REFERENCIA"]],
       body: info
+
+      
+
     })
+    
+    doc.setFont('arial', 'normal');
+    doc.text("METODO: "+ " " + datosExamen.metodo, 20, 200)
     
     doc.save(datosExamen.folioExamen+ "_" + datosExamen.nombre + "_" + datosExamen.apellidoP + '.pdf');
   }
