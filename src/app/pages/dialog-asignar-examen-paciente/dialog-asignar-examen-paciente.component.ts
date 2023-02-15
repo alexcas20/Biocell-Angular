@@ -24,6 +24,52 @@ export class DialogAsignarExamenPacienteComponent implements OnInit {
     'accion',
   ];
 
+  unidades:string[] = [
+    'Seg',
+    '%',
+    'mg/L ',
+    'Leu/UI',
+    'mg/dL',
+    'HEM',
+    'por campo',
+    'x10^3/uL',
+    'x10^6/uL',
+    'g/dL',
+    'fL',
+    'pg',
+    'U/L',
+    'gr/dL',
+    'U/I',
+    'UI/mL',
+    'mm',
+    'mmol/L',
+    'ng/mL',
+    'gr',
+    'ng/dL',
+    'ug/dL',
+    'uUI/ml',
+    'mUI/mL',
+    'min',
+    'mL',
+    'millones',
+    'index',
+    'Uds. GPL',
+    'GPL-U/mL',
+    'MPL-U/mL',
+    'Kg',
+    'm',
+    'ml',
+    'm^2',
+    'ml/min',
+    'mg/24hrs',
+    'ug/min',
+    'mL/min',
+    'UI/ml',
+    'pg/mL',
+    'U/L',
+    'U/mL'
+  ]
+
   dataSource!: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -87,8 +133,11 @@ export class DialogAsignarExamenPacienteComponent implements OnInit {
     img2.src = '../../../assets/images/footerbiocell.jpg';
 
     let doc = new jsPDF();
-
-    const values = datosExamen.parametros.map((item)=>Object.values(item));
+  
+    let info = [];
+      datosExamen.parametros.forEach((item,index, array) => {
+         info.push([item.nombre, item.resultado, item.unidades, item.ref])
+        })
 
     doc.addImage(img, 'JPEG', 1, 1, 200, 300);
     doc.addImage(img2, 'JPEG', 10, 260, 190, 30);
@@ -123,17 +172,19 @@ export class DialogAsignarExamenPacienteComponent implements OnInit {
     doc.setFont('helvetica', 'bold');
     doc.text('Diagostico del paciente', 20, 90);
 
+    doc.text(datosExamen.estudio, 20, 112)
+
     autoTable(doc, {
-      columnStyles: {0: {halign: 'center'}},
       margin: {top: 100, left: 18.4},
-      head:[["ESTUDIO","RESULTADO", "UNIDADES", "VALORES DE REFERENCIA"]],
+      headStyles: {cellPadding: {bottom : 10}},
+      bodyStyles:{cellPadding: {left:7}},
       theme: "plain",
-      body:[
-        [datosExamen.estudio],
-        [values]
-      ]
+      head:[["ESTUDIO","RESULTADO", "UNIDADES", "VALORES DE REFERENCIA"]],
+      body: info
     })
     
-    doc.save('Examen de ' + datosExamen?.nombre + '.pdf');
+    doc.save(datosExamen.folioExamen+ "_" + datosExamen.nombre + "_" + datosExamen.apellidoP + '.pdf');
   }
 }
+
+
