@@ -44,6 +44,52 @@ export class DialogExamenesComponent implements OnInit {
   tiposExamenes: any;
   estudios: any;
 
+  unidades:string[] = [
+    'Seg',
+    '%',
+    'mg/L ',
+    'Leu/UI',
+    'mg/dL',
+    'HEM',
+    'por campo',
+    'x10^3/uL',
+    'x10^6/uL',
+    'g/dL',
+    'fL',
+    'pg',
+    'U/L',
+    'gr/dL',
+    'U/I',
+    'UI/mL',
+    'mm',
+    'mmol/L',
+    'ng/mL',
+    'gr',
+    'ng/dL',
+    'ug/dL',
+    'uUI/ml',
+    'mUI/mL',
+    'min',
+    'mL',
+    'millones',
+    'index',
+    'Uds. GPL',
+    'GPL-U/mL',
+    'MPL-U/mL',
+    'Kg',
+    'm',
+    'ml',
+    'm^2',
+    'ml/min',
+    'mg/24hrs',
+    'ug/min',
+    'mL/min',
+    'UI/ml',
+    'pg/mL',
+    'U/L',
+    'U/mL'
+  ]
+
   dataSource!: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;

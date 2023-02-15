@@ -1,45 +1,41 @@
 <div class="container-fluid">
   <h1 mat-dialog-title>Registro de Examenes</h1>
 
-
-  <div class="container-center"
-  *ngIf="data?.estado !== 'activo'"
-  >
+  <div class="container-center" *ngIf="data?.estado !== 'activo'">
+    <button
+      style="margin-left: 8px"
+      mat-raised-button
+      color="primary"
+      (click)="BuscarPacientes()"
+    >
+      Buscar Paciente
+      <mat-icon>search</mat-icon>
+    </button>
 
     <button
-    style="margin-left: 8px"
-    mat-raised-button
-    color="primary"
-    (click)="BuscarPacientes()"
-  >
-    Buscar Paciente
-    <mat-icon>search</mat-icon>
-  </button>
-
-  <button
-    #btnMedico
-    style="margin: 5px"
-    mat-raised-button
-    color="primary"
-    (click)="buscarMedicos()"
-  >
-    Buscar Medico
-    <mat-icon>search</mat-icon>
-  </button>
-
+      #btnMedico
+      style="margin: 5px"
+      mat-raised-button
+      color="primary"
+      (click)="buscarMedicos()"
+    >
+      Buscar Medico
+      <mat-icon>search</mat-icon>
+    </button>
   </div>
-  
 
   <mat-grid-list cols="1">
     <div mat-dialog-content>
       <form [formGroup]="productForm">
-
-
         <mat-form-field appearance="outline" *ngIf="noPaciente">
           <mat-label>Folio Examen</mat-label>
-          <input formControlName="folioExamen" matInput placeholder="Folio Examen" readonly />
+          <input
+            formControlName="folioExamen"
+            matInput
+            placeholder="Folio Examen"
+            readonly
+          />
         </mat-form-field>
-
 
         <mat-form-field appearance="outline">
           <mat-label>Nombre Medico</mat-label>
@@ -61,7 +57,12 @@
 
         <mat-form-field appearance="outline" *ngIf="noPaciente">
           <mat-label>Folio Paciente</mat-label>
-          <input formControlName="folio" matInput placeholder="Folio Paciente" readonly />
+          <input
+            formControlName="folio"
+            matInput
+            placeholder="Folio Paciente"
+            readonly
+          />
         </mat-form-field>
 
         <mat-form-field appearance="outline">
@@ -117,13 +118,21 @@
 
         <mat-form-field appearance="outline" *ngIf="data?.estado === 'activo'">
           <mat-label>Examen</mat-label>
-          <input type="text" formControlName="tipoExamen" [value]="this.data.tipoExamen" matInput />
+          <input
+            type="text"
+            formControlName="tipoExamen"
+            [value]="this.data.tipoExamen"
+            matInput
+          />
         </mat-form-field>
 
         <mat-form-field appearance="outline" *ngIf="data?.estado !== 'activo'">
           <mat-label>Tipo de Examen</mat-label>
-          <mat-select formControlName="tipoExamen" placeholder="Tipo de Examen"
-          [disabled]="data?.estado === 'activo'">
+          <mat-select
+            formControlName="tipoExamen"
+            placeholder="Tipo de Examen"
+            [disabled]="data?.estado === 'activo'"
+          >
             <mat-option
               *ngFor="let item of tiposExamenes"
               [value]="item.examen"
@@ -132,104 +141,117 @@
           </mat-select>
         </mat-form-field>
 
-       
-        <mat-form-field appearance="outline" *ngIf="data?.estado !== 'activo'" >
+        <mat-form-field appearance="outline" *ngIf="data?.estado !== 'activo'">
           <mat-label>Estudio</mat-label>
           <mat-select formControlName="estudio" placeholder="Estudio">
-            <mat-option
-              *ngFor="let item of estudios"
-              [value]="item.nombre"
-              >{{ item.nombre }}</mat-option
-            >
+            <mat-option *ngFor="let item of estudios" [value]="item.nombre">{{
+              item.nombre
+            }}</mat-option>
           </mat-select>
         </mat-form-field>
 
         <mat-form-field appearance="outline" *ngIf="data?.estado === 'activo'">
           <mat-label>Estudio</mat-label>
-          <input type="text" formControlName="estudio" [value]="this.data.estudio" matInput />
+          <input
+            type="text"
+            formControlName="estudio"
+            [value]="this.data.estudio"
+            matInput
+          />
         </mat-form-field>
 
         <!-- Parametros -->
 
-        <div 
-        *ngIf="data?.estado === 'activo'">
-          <h3>Parametros: </h3>
-          <hr>
-  
-          <ng-container
-           formArrayName="parametros">
-            <mat-form-field  appearance="outline" *ngIf="dataParametros">
-  
+        <div *ngIf="data?.estado === 'activo'">
+          <h3>Parametros:</h3>
+          <hr />
+
+          <ng-container formArrayName="parametros">
+            <mat-form-field appearance="outline" *ngIf="dataParametros">
               <mat-label>Parametros</mat-label>
-              <mat-select   >
-              <mat-option *ngFor="let item of dataParametros"
-              [value]="item"
-              (click)="addParametroSelect(item)">
-                {{item}}
-              </mat-option>
-            </mat-select>
-  
+              <mat-select>
+                <mat-option
+                  *ngFor="let item of dataParametros"
+                  [value]="item"
+                  (click)="addParametroSelect(item)"
+                >
+                  {{ item }}
+                </mat-option>
+              </mat-select>
             </mat-form-field>
-  
-            <button 
-            type="button"
-            class="btn btn-primary btn-sm" (click)="addParametro()">Nuevo Parametro</button>
-            
-  
-            <div class="form-row mt-3 mb-4"
-            *ngFor="let parametro of parametros().controls; let i = index"
-                [formGroupName]="i">
+
+            <button
+              type="button"
+              class="btn btn-primary btn-sm"
+              (click)="addParametro()"
+            >
+              Nuevo Parametro
+            </button>
+
+            <div
+              class="form-row mt-3 mb-4"
+              *ngFor="let parametro of parametros().controls; let i = index"
+              [formGroupName]="i"
+            >
               <div class="input-group input-group-sm col-12 col-md-6 mb-4">
                 <div class="input-group-prepend">
-                  <span class="input-group-text bg-info">
-                    Tipo
-                  </span>
+                  <span class="input-group-text bg-info"> Tipo </span>
                 </div>
-                <input type="text" class="form-control" aria-label="Sizing example input"
-                         aria-describedby="inputGroup-sizing-sm"
-                         formControlName="nombre">
-                         
+                <input
+                  type="text"
+                  class="form-control"
+                  aria-label="Sizing example input"
+                  aria-describedby="inputGroup-sizing-sm"
+                  formControlName="nombre"
+                />
+              </div>
+
+              <div class="input-group input-group-sm col-12 col-md-6 mb-4">
+                <div class="input-group-prepend">
+                  <span class="input-group-text bg-info"> Resultado </span>
+                </div>
+                <input
+                  type="number"
+                  class="form-control"
+                  aria-label="Sizing example input"
+                  aria-describedby="inputGroup-sizing-sm"
+                  formControlName="resultado"
+                />
+              </div>
+
+              <div class="input-group input-group-sm col-12 col-md-6 mb-4">
+                <div class="input-group-prepend">
+                  <span class="input-group-text bg-info"> Unidades </span>
+                </div>
+                <select formControlName="unidades"
+                class="form-control">
+                  <option
+                  *ngFor="let unidad of unidades" [value]="unidad">
+                {{unidad}}</option>
+                </select>
+              </div>
+
+              <div class="input-group input-group-sm col-12 col-md-6 mb-4">
+                <div class="input-group-prepend">
+                  <span class="input-group-text bg-info"> Valor Ref </span>
+                </div>
+                <input
+                  type="text"
+                  class="form-control"
+                  aria-label="Sizing example input"
+                  aria-describedby="inputGroup-sizing-sm"
+                  formControlName="ref"
+                />
+              </div>
+
+              <button
+                type="button"
+                class="btn btn-danger btn-sm ml-2"
+                (click)="deleteParametros(i)"
+              >
+                - Parametro
+              </button>
             </div>
-  
-                <div class="input-group input-group-sm col-12 col-md-6 mb-4">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text bg-info" >
-                      Resultado
-                    </span>
-                  </div>
-                  <input type="number" class="form-control" aria-label="Sizing example input"
-                         aria-describedby="inputGroup-sizing-sm"
-                         formControlName="resultado">
-                </div>
-
-                <div class="input-group input-group-sm col-12 col-md-6 mb-4">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text bg-info" >
-                      Unidades
-                    </span>
-                  </div>
-                  <input type="text" class="form-control" aria-label="Sizing example input"
-                         aria-describedby="inputGroup-sizing-sm"
-                         formControlName="unidades">
-                </div>
-
-                <div class="input-group input-group-sm col-12 col-md-6 mb-4">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text bg-info" >
-                      Valor Ref
-                    </span>
-                  </div>
-                  <input type="text" class="form-control" aria-label="Sizing example input"
-                         aria-describedby="inputGroup-sizing-sm"
-                         formControlName="ref">
-                </div>
-
-                <button 
-            type="button"
-            class="btn btn-danger btn-sm ml-2" (click)="deleteParametros(i)"> - Parametro</button>
-  
-
-                </div>
           </ng-container>
 
 
@@ -240,7 +262,6 @@
 
         
         </div>
-      
       </form>
     </div>
   </mat-grid-list>
@@ -248,7 +269,7 @@
   <div mat-dialog-action [align]="'end'">
     <button mat-raised-button color="warn" mat-dialog-close>Cerrar</button>
     <button
-    [disabled]="productForm.invalid"
+      [disabled]="productForm.invalid"
       (click)="registrarExamen(productForm.value)"
       style="margin-left: 8px"
       mat-raised-button
