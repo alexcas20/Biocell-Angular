@@ -88,7 +88,7 @@ export class DialogExamenesComponent implements OnInit {
       tipoExamen: ['', Validators.required],
       estudio: ['', Validators.required],
       parametros: this.formBuilder.array([]),
-      metodo: ['', Validators.required]
+      metodo: ['']
     });
 
     if (this.data) {
