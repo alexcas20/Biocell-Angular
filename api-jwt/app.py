@@ -101,7 +101,7 @@ def registerL():
     code = request.json['code']
     user = request.json['user']
     password = request.json['password']
-    rol = request.json['rol']
+    rol = None if('rol' not in request.json) else request.json['rol']
 
    
 
