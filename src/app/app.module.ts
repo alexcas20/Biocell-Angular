@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthModule } from './auth/auth.module';
 
-import { NopageFoundComponent } from './nopage-found/nopage-found.component';
+
 import { PagesModule } from './pages/pages.module';
 import { HttpClientModule } from '@angular/common/http';
 import { DialogComponent } from './pages/dialog/dialog.component'
@@ -33,8 +33,7 @@ registerLocaleData(localeEs)
 @NgModule({
   declarations: [
     AppComponent,
-    NopageFoundComponent,
-    DialogComponent,
+    DialogComponent
     
   ],
   imports: [
