@@ -1,0 +1,56 @@
+
+.caja-animated{
+    margin-top: 5rem;
+    animation: float 8s  linear infinite;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(4rem);
+    }
+
+    50%{
+        transform: translateY(-6.5rem);
+    }
+
+    
+}
+
+.imagen-dash{
+    width: 100%;
+    background-color: #ffff;
+    margin: 0 0 3rem 0;
+    border: 2px solid #2222;
+    box-shadow: 2px 2px #2222;
+    display: flex;
+    justify-content: center;
+    
+    
+}
+
+.imagen-dash .title-bio{
+    position:relative;
+    right: 7rem;
+    top: 7rem;
+    letter-spacing: 10px;
+    font-size: 4vh;
+    font-weight: bold;
+    padding-left: 19rem;
+}
+
+.imagen-dash .sub-bio{
+    position: relative;
+    left: 7rem;
+    top: 7rem;
+    letter-spacing: 10px;
+    font-size: 4vh;
+    font-weight: bold;
+    padding-right: 18rem;
+}
+
+
+.container{
+    max-width: 100%;
+    margin: 0 auto;
+    
+  }

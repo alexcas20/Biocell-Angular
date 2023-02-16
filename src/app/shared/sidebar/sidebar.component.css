@@ -1,0 +1,12 @@
+.nav-item{
+    cursor: pointer;
+}
+
+.sidebar{
+    width: 100%;
+}
+
+
+.nav-item{
+    margin: .7rem 0;
+}

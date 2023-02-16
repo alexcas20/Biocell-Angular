@@ -1,11 +1,11 @@
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthModule } from './auth/auth.module';
 
-import { NopageFoundComponent } from './nopage-found/nopage-found.component';
+
 import { PagesModule } from './pages/pages.module';
 import { HttpClientModule } from '@angular/common/http';
 import { DialogComponent } from './pages/dialog/dialog.component'
@@ -22,13 +22,19 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatTableModule} from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import localeEs from '@angular/common/locales/es-MX'
 
+
+
+import { registerLocaleData } from '@angular/common';
+registerLocaleData(localeEs)
 
 @NgModule({
   declarations: [
     AppComponent,
-    NopageFoundComponent,
     DialogComponent
+    
   ],
   imports: [
     BrowserModule,
@@ -48,9 +54,12 @@ import { MatSortModule } from '@angular/material/sort';
     FormsModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    SweetAlert2Module
   ],
-  providers: [],
+  providers: [{
+    provide:LOCALE_ID, useValue : 'es-MX'
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

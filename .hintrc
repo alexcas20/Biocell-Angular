@@ -8,6 +8,20 @@
       {
         "button-name": "off"
       }
-    ]
+    ],
+    "axe/aria": [
+      "default",
+      {
+        "aria-required-children": "off"
+      }
+    ],
+    "axe/forms": [
+      "default",
+      {
+        "label": "off",
+        "select-name": "off"
+      }
+    ],
+    "typescript-config/strict": "off"
   }
 }

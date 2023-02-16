@@ -1,0 +1,60 @@
+<h1 mat-dialog-title>Registro de Medico</h1>
+<div mat-dialog-content>
+  <form [formGroup]="productForm">
+    <mat-form-field appearance="outline" *ngIf="!editData">
+      <mat-label>Folio</mat-label>
+      <input formControlName="folio" matInput placeholder="Folio" readonly />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Nombre</mat-label>
+      <input formControlName="nombreMedico" matInput placeholder="Nombres" pattern="^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Apeliido Paterno</mat-label>
+        <input formControlName="apellidoP" matInput placeholder="Apeliido Paterno" />
+    </mat-form-field> 
+    
+    <mat-form-field appearance="outline">
+        <mat-label>Apeliido Materno</mat-label>
+        <input formControlName="apellidoM" matInput placeholder="Apeliido Materno" />
+    </mat-form-field> 
+
+    <mat-form-field appearance="outline">
+        <mat-label>Especialidad</mat-label>
+        <input formControlName="especialidad" matInput placeholder="Especialidad" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Edad</mat-label>
+      <input formControlName="edad" matInput placeholder="Edad" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Sexo</mat-label>
+    <mat-select formControlName="sexo" placeholder="Sexo">
+      <mat-option value="Masculino">Masculino</mat-option>
+      <mat-option value="Femenino">Femenino</mat-option>
+      <mat-option value="Otro">Otro...</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Telefono</mat-label>
+        <input formControlName="telefono" matInput placeholder="Telefono" pattern="^(\+\d{1,2}\s?)?1?\-?\.?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Correo</mat-label>
+      <input formControlName="correo" matInput placeholder="Correo" pattern="^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})$" />
+  </mat-form-field>
+  
+  </form>
+</div>
+
+<div mat-dialog-action [align]="'end'">
+  <button mat-raised-button color="warn" mat-dialog-close>Cerrar</button>
+  <button class="btn-centrar" style="margin-left: 8px;" mat-raised-button color="primary" (click)="addMedico(productForm.value)">{{actionBtn}}</button>
+</div>
+

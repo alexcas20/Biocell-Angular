@@ -1,0 +1,283 @@
+<div class="container-fluid">
+  <h1 mat-dialog-title>Registro de Examenes</h1>
+
+  <div class="container-center" *ngIf="data?.estado !== 'activo'">
+    <button
+      style="margin-left: 8px"
+      mat-raised-button
+      color="primary"
+      (click)="BuscarPacientes()"
+    >
+      Buscar Paciente
+      <mat-icon>search</mat-icon>
+    </button>
+
+    <button
+      #btnMedico
+      style="margin: 5px"
+      mat-raised-button
+      color="primary"
+      (click)="buscarMedicos()"
+    >
+      Buscar Medico
+      <mat-icon>search</mat-icon>
+    </button>
+  </div>
+
+  <mat-grid-list cols="1">
+    <div mat-dialog-content>
+      <form [formGroup]="productForm">
+        <mat-form-field appearance="outline" *ngIf="noPaciente">
+          <mat-label>Folio Examen</mat-label>
+          <input
+            formControlName="folioExamen"
+            matInput
+            placeholder="Folio Examen"
+            readonly
+          />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Nombre Medico</mat-label>
+          <input
+            formControlName="nombreMedico"
+            matInput
+            placeholder="Nombre del Medico"
+          />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Especialidad</mat-label>
+          <input
+            formControlName="especialidad"
+            matInput
+            placeholder="Especialidad"
+          />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" *ngIf="noPaciente">
+          <mat-label>Folio Paciente</mat-label>
+          <input
+            formControlName="folio"
+            matInput
+            placeholder="Folio Paciente"
+            readonly
+          />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Nombre</mat-label>
+          <input formControlName="nombre" matInput placeholder="Nombre" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Apeliido Paterno</mat-label>
+          <input
+            formControlName="apellidoP"
+            matInput
+            placeholder="Apeliido Paterno"
+          />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Apeliido Materno</mat-label>
+          <input
+            formControlName="apellidoM"
+            matInput
+            placeholder="Apeliido Materno"
+          />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Edad</mat-label>
+          <input formControlName="edad" matInput placeholder="Edad" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Sexo</mat-label>
+          <mat-select formControlName="sexo" placeholder="Sexo">
+            <mat-option value="Masculino">Masculino</mat-option>
+            <mat-option value="Femenino">Femenino</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Telefono</mat-label>
+          <input formControlName="telefono" matInput placeholder="Telefono" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Correo</mat-label>
+          <input formControlName="correo" matInput placeholder="Correo" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Fecha de examen</mat-label>
+          <input type="date" formControlName="fechaExamen" matInput />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" *ngIf="data?.estado === 'activo'">
+          <mat-label>Examen</mat-label>
+          <input
+            type="text"
+            formControlName="tipoExamen"
+            [value]="this.data.tipoExamen"
+            matInput
+          />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" *ngIf="data?.estado !== 'activo'">
+          <mat-label>Tipo de Examen</mat-label>
+          <mat-select
+            formControlName="tipoExamen"
+            placeholder="Tipo de Examen"
+            [disabled]="data?.estado === 'activo'"
+          >
+            <mat-option
+              *ngFor="let item of tiposExamenes"
+              [value]="item.examen"
+              >{{ item.examen }}</mat-option
+            >
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" *ngIf="data?.estado !== 'activo'">
+          <mat-label>Estudio</mat-label>
+          <mat-select formControlName="estudio" placeholder="Estudio">
+            <mat-option *ngFor="let item of estudios" [value]="item.nombre">{{
+              item.nombre
+            }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" *ngIf="data?.estado === 'activo'">
+          <mat-label>Estudio</mat-label>
+          <input
+            type="text"
+            formControlName="estudio"
+            [value]="this.data.estudio"
+            matInput
+          />
+        </mat-form-field>
+
+        <!-- Parametros -->
+
+        <div *ngIf="data?.estado === 'activo'">
+          <h3>Parametros:</h3>
+          <hr />
+
+          <ng-container formArrayName="parametros">
+            <mat-form-field appearance="outline" *ngIf="dataParametros">
+              <mat-label>Parametros</mat-label>
+              <mat-select>
+                <mat-option
+                  *ngFor="let item of dataParametros"
+                  [value]="item"
+                  (click)="addParametroSelect(item)"
+                >
+                  {{ item | titlecase }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <button
+              type="button"
+              class="btn btn-primary btn-sm"
+              (click)="addParametro()"
+            >
+              Nuevo Parametro
+            </button>
+
+            <div
+              class="form-row mt-3 mb-4"
+              *ngFor="let parametro of parametros().controls; let i = index"
+              [formGroupName]="i"
+            >
+              <div class="input-group input-group-sm col-12 col-md-6 mb-4">
+                <div class="input-group-prepend">
+                  <span class="input-group-text bg-info"> Tipo </span>
+                </div>
+                <input
+                  type="text"
+                  class="form-control"
+                  aria-label="Sizing example input"
+                  aria-describedby="inputGroup-sizing-sm"
+                  formControlName="nombre"
+                />
+              </div>
+
+              <div class="input-group input-group-sm col-12 col-md-6 mb-4">
+                <div class="input-group-prepend">
+                  <span class="input-group-text bg-info"> Resultado </span>
+                </div>
+                <input
+                  type="number"
+                  class="form-control"
+                  aria-label="Sizing example input"
+                  aria-describedby="inputGroup-sizing-sm"
+                  formControlName="resultado"
+                />
+              </div>
+
+              <div class="input-group input-group-sm col-12 col-md-6 mb-4">
+                <div class="input-group-prepend">
+                  <span class="input-group-text bg-info"> Unidades </span>
+                </div>
+                <select formControlName="unidades" class="form-control">
+                  <option *ngFor="let unidad of unidades" [value]="unidad">
+                    {{ unidad }}
+                  </option>
+                </select>
+              </div>
+
+              <div class="input-group input-group-sm col-12 col-md-6 mb-4">
+                <div class="input-group-prepend">
+                  <span class="input-group-text bg-info"> Valor Ref </span>
+                </div>
+                <input
+                  type="text"
+                  class="form-control"
+                  aria-label="Sizing example input"
+                  aria-describedby="inputGroup-sizing-sm"
+                  formControlName="ref"
+                />
+              </div>
+
+              <button
+                type="button"
+                class="btn btn-danger btn-sm ml-2"
+                (click)="deleteParametros(i)"
+              >
+                - Parametro
+              </button>
+            </div>
+          </ng-container>
+          <mat-form-field class="metodos" appearance="outline" *ngIf="dataParametros">
+            <mat-label>Metodo</mat-label>
+            <mat-select
+            formControlName="metodo">
+              <mat-option
+                *ngFor="let metodo of metodos"
+                [value]="metodo">
+                {{ metodo | titlecase }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </form>
+    </div>
+  </mat-grid-list>
+
+  <div mat-dialog-action [align]="'end'">
+    <button mat-raised-button color="warn" mat-dialog-close>Cerrar</button>
+    <button
+      [disabled]="productForm.invalid"
+      (click)="registrarExamen(productForm.value)"
+      style="margin-left: 8px"
+      mat-raised-button
+      color="primary"
+    >
+      {{ actionBtn }}
+    </button>
+  </div>
+</div>
