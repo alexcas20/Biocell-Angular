@@ -10,11 +10,11 @@ from bson import json_util
 
 
  #Making a Connection with MongoClient
-#client = MongoClient(
- #"mongodb+srv://HJuve:-Diminombre8906@cluster0.7gpeolt.mongodb.net/?retryWrites=true&w=majority")
+client = MongoClient(
+ "mongodb+srv://HJuve:-Diminombre8906@cluster0.7gpeolt.mongodb.net/?retryWrites=true&w=majority")
  #database
 
-client = MongoClient("mongodb://localhost:27017/")
+#client = MongoClient("mongodb://localhost:27017/")
 db = client["biocell"]
 # collection
 collUser = db["users"]
