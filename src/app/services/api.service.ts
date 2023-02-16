@@ -169,4 +169,10 @@ export class ApiService {
       headers
     })
    }
+
+   borrarPacienteExamen(folio:any){
+    let direccion = `${this.url}/borrarPacienteExamen/${folio}`;
+      return this.http.delete(direccion)
+   }
+   
 }

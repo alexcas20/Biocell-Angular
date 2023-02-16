@@ -254,7 +254,8 @@
           </ng-container>
           <mat-form-field class="metodos" appearance="outline" *ngIf="dataParametros">
             <mat-label>Metodo</mat-label>
-            <mat-select>
+            <mat-select
+            formControlName="metodo">
               <mat-option
                 *ngFor="let metodo of metodos"
                 [value]="metodo">

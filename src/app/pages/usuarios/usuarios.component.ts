@@ -33,7 +33,13 @@ export class UsuariosComponent implements OnInit {
   }
 
   
-
+  isAdmin(): boolean{
+    const admin = localStorage.getItem('rol');
+    if(admin === 'admin'){
+      return true;
+    } else
+      return false
+  }
   
 
   openDialog() {

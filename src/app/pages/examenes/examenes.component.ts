@@ -105,6 +105,8 @@ export class ExamenesComponent implements OnInit {
         )
         this.getExamenes();
       })
+      this.api.borrarPacienteExamen(folio)
+        .subscribe(resp => console.log('Pacientes y examenes borrados'))
       }
       else{
        

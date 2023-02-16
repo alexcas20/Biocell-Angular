@@ -9,11 +9,11 @@
       <mat-label>Usuario</mat-label>
       <input formControlName="user" matInput placeholder="Usuario" />
     </mat-form-field>
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="outline" *ngIf="isAdmin()">
       <mat-label>Rol</mat-label>
       <mat-select formControlName="rol" placeholder="Rol">
-        <mat-option value="Admin">Administrador</mat-option>
-        <mat-option value="Usuario">Usuario</mat-option>
+        <mat-option  value="Admin">Administrador</mat-option>
+        <mat-option  value="Usuario">Usuario</mat-option>
       </mat-select>
     </mat-form-field>
     <mat-form-field appearance="outline">

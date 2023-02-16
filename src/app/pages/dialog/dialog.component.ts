@@ -46,6 +46,15 @@ export class DialogComponent implements OnInit {
 
   }
 
+
+  isAdmin(): boolean{
+    const admin = localStorage.getItem('rol');
+    if(admin === 'admin'){
+      return true;
+    } else
+      return false
+  }
+
   addUser(form:Register){
     if(!this.editData){
       if(this.productForm.valid){

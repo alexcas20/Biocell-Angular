@@ -1,4 +1,5 @@
 
+import json
 import os
 from flask import Flask, jsonify, request, Response
 from flask_jwt_extended import JWTManager, jwt_required, create_access_token
@@ -47,14 +48,18 @@ def login():
   
     
     test = collUser.find_one({"user": user, "password": password })
-
+    
     if test:
+        
+        rol = test['rol']
+        print(rol)
         token = create_access_token(identity=user)
         return jsonify({
             "status": "ok",
             "result": {
                 "token": token,
-                "user": user
+                "user": user,
+                "rol": rol
             }
         }), 201
     else:
@@ -634,6 +639,13 @@ def borrarExamenes():
     test = collExamenes.delete_many({})
 
     return jsonify(message="Examenes borrados correctamente"), 201
+
+###BORRAR PACIENTE EXAMENES/PACIENTES
+@app.route('/lab/borrarPacienteExamen/<folio>', methods=['DELETE'])
+def borrarPacienteExamen(folio):
+    test = collExamenesPacientes.delete_one({"folio": folio})
+
+    return jsonify(message="Paciente y examenes borrados correctamente"), 201
 
 
 if __name__ == '__main__':

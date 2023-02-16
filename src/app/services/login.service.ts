@@ -22,7 +22,11 @@ export class loginService {
         this._auth = auth.result;
         console.log(this._auth);
       }),
-      tap((auth) => localStorage.setItem('user', auth.result.user))
+      tap((auth) =>  {
+        localStorage.setItem('user', auth.result.user)
+        localStorage.setItem('rol', auth.result.rol)
+      }),
+
     );
   }
 

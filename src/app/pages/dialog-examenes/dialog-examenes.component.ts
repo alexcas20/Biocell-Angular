@@ -302,7 +302,7 @@ export class DialogExamenesComponent implements OnInit {
           localStorage.removeItem('especialidad');
           setTimeout(() => {
             this.reloadCurrentRoute();
-          }, 2000);
+          }, 1000);
         },
         error: () => {
           Swal.fire(

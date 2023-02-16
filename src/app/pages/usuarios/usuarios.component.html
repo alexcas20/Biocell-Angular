@@ -23,7 +23,8 @@
               <i class="fa fa-edit"></i>
             </a>
             <a  class="btn btn-danger float-right"
-            (click)="deleteUser(item)">
+            (click)="deleteUser(item)"
+            *ngIf="isAdmin()">
               <i class="fa fa-trash"></i>
             </a>
           </div>

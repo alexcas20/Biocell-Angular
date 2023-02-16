@@ -114,13 +114,20 @@ export class PacientesComponent implements OnInit {
               'Se ha producido un error al eliminar el Paciente',
               'error'
             );
-          },
+          }
+
+  
+
         });
         Swal.fire(
           'Exito!',
           'El Paciente fue borrado correctamente.',
           'success'
         );
+
+          this.api.borrarPacienteExamen(folio)
+            .subscribe(resp => console.log('Paciente y examenes borrados.'))
+
       } else {
         Swal.fire('Atencion!', 'Verifique sus acciones.', 'warning');
       }
