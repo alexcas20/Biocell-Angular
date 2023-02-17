@@ -34,6 +34,7 @@ export class DialogAsignarExamenPacienteComponent implements OnInit {
   apellidoP: any;
   apellidoM: any;
   activarDescarga: boolean = false;
+  datosMedico:any;
   constructor(
     private api: ApiService,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -64,7 +65,7 @@ export class DialogAsignarExamenPacienteComponent implements OnInit {
     this.api.getDatosMedico(this.datosExamen.nombreMedico).subscribe((resp) => {
       this.apellidoP = resp.apellidoP;
       this.apellidoM = resp.apellidoM;
-      console.log(resp);
+      this.datosMedico = resp;
     });
   }
 
@@ -123,7 +124,7 @@ export class DialogAsignarExamenPacienteComponent implements OnInit {
     doc.setFont('helvetica', 'bold');
     doc.text('Medico: ', 20, 80);
     doc.setFont('helvetica', 'normal');
-    doc.text(datosExamen?.nombreMedico + ' ' +this.apellidoP + ' ' + this.apellidoM, 37, 80)
+    doc.text(datosExamen?.nombreMedico + ' ' +this.datosMedico?.apellidoP + ' ' + this.datosMedico?.apellidoM, 37, 80)
 
     doc.setFont('helvetica', 'bold');
     doc.text('Diagostico del paciente', 20, 90);

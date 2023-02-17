@@ -34,7 +34,6 @@ export class DialogComponent implements OnInit {
     });
 
     if(this.editData){
-    console.log(this.editData);
     this.actionBtn = "Actualizar";
 
    
