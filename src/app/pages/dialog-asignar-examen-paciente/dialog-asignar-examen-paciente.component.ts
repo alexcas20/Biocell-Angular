@@ -124,7 +124,7 @@ export class DialogAsignarExamenPacienteComponent implements OnInit {
     doc.setFont('helvetica', 'bold');
     doc.text('Medico: ', 20, 80);
     doc.setFont('helvetica', 'normal');
-    doc.text(datosExamen?.nombreMedico + ' ' +this.datosMedico?.apellidoP + ' ' + this.datosMedico?.apellidoM, 37, 80)
+    doc.text(datosExamen?.nombreMedico + ' ' +this.datosMedico.apellidoP + ' ' + this.datosMedico.apellidoM, 37, 80)
 
     doc.setFont('helvetica', 'bold');
     doc.text('Diagostico del paciente', 20, 90);
