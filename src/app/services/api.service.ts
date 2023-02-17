@@ -6,6 +6,7 @@ import RegistroMedico from '../models/registerMedicos.interface';
 import registarExamen from '../models/registrarExamen.interface';
 import registrarExamen from '../models/registrarExamen.interface';
 import Register from '../models/register.interface';
+import { environment } from 'src/environments/environment.prod';
 
 @Injectable({
   providedIn: 'root',
@@ -22,9 +23,7 @@ export class ApiService {
     return { ...this._mDicos! };
   }
 
-  private url: string = 'http://127.0.0.1:5000/lab';
-  private urlPacientes: string = 'http://127.0.0.1:5000/lab';
-  private urlMedicos: string = 'http://127.0.0.1:5000/lab';
+  private url = environment.API_URL;
   constructor(private http: HttpClient) {}
 
  
@@ -48,12 +47,12 @@ export class ApiService {
   }
 
   postPaciente(form: RegistroPaciente): Observable<RegistroPaciente> {
-    let direccion = `${this.urlPacientes}/addPaciente`;
+    let direccion = `${this.url}/addPaciente`;
     return this.http.post<RegistroPaciente>(direccion, form);
   }
 
   getPacientes(): Observable<any> {
-    let direccion = `${this.urlPacientes}/allPacientes`;
+    let direccion = `${this.url}/allPacientes`;
     return this.http.get(direccion);
   }
 
@@ -61,49 +60,49 @@ export class ApiService {
     folio: any,
     form: RegistroPaciente
   ): Observable<RegistroPaciente> {
-    let direccion = `${this.urlPacientes}/updatePaciente/${folio}`;
+    let direccion = `${this.url}/updatePaciente/${folio}`;
     return this.http.put<RegistroPaciente>(direccion, form);
   }
 
   deletePaciente(folio: any) {
-    let direccion = `${this.urlPacientes}/deletePaciente/${folio}`;
+    let direccion = `${this.url}/deletePaciente/${folio}`;
     return this.http.delete(direccion, folio);
   }
 
   getMedicos(): Observable<any> {
-    let direccion = `${this.urlMedicos}/allMedicos`;
+    let direccion = `${this.url}/allMedicos`;
     return this.http
       .get(direccion)
       .pipe(tap((medicos) => (this._mDicos = medicos)));
   }
 
   postMedicos(form: RegistroMedico): Observable<RegistroMedico> {
-    let direccion = `${this.urlMedicos}/addMedico`;
+    let direccion = `${this.url}/addMedico`;
     return this.http.post<RegistroMedico>(direccion, form);
   }
 
   putMedico(folio: any, form: RegistroMedico): Observable<RegistroMedico> {
-    let direccion = `${this.urlMedicos}/updateMedico/${folio}`;
+    let direccion = `${this.url}/updateMedico/${folio}`;
     return this.http.put<RegistroMedico>(direccion, form);
   }
 
   deleteMedico(folio: any) {
-    let direccion = `${this.urlMedicos}/deleteMedico/${folio}`;
+    let direccion = `${this.url}/deleteMedico/${folio}`;
     return this.http.delete(direccion, folio);
   }
 
   registarExamen(form: registarExamen): Observable<registarExamen> {
-    let direccion = `${this.urlMedicos}/nuevoExamen`;
+    let direccion = `${this.url}/nuevoExamen`;
     return this.http.post<registarExamen>(direccion, form);
   }
 
   getExamenes(): Observable<any> {
-    let direccion = `${this.urlMedicos}/datosExamenes`;
+    let direccion = `${this.url}/datosExamenes`;
     return this.http.get(direccion);
   }
 
   agregarExamen(form: registrarExamen): Observable<registarExamen> {
-    let direccion = `${this.urlMedicos}/addExamen/${form.folio}`;
+    let direccion = `${this.url}/addExamen/${form.folio}`;
     return this.http.put<registrarExamen>(direccion, form);
   }
 
@@ -113,7 +112,7 @@ export class ApiService {
   }
 
   postPacienteExamen(form: RegistroPaciente): Observable<RegistroPaciente> {
-    let direccion = `${this.urlPacientes}/addPacienteExamen`;
+    let direccion = `${this.url}/addPacienteExamen`;
     return this.http.post<RegistroPaciente>(direccion, form);
   }
 
@@ -129,7 +128,7 @@ export class ApiService {
   }
 
   getTiposExamenes(): Observable<any> {
-    let direccion = `${this.urlMedicos}/tiposExamenes`;
+    let direccion = `${this.url}/tiposExamenes`;
     return this.http.get(direccion);
   }
 

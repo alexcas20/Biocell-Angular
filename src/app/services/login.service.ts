@@ -4,12 +4,13 @@ import { Observable, tap } from 'rxjs';
 import { RegisterI } from '../models/response.interface';
 import { LoginI } from '../models/login.interface';
 import Register from '../models/register.interface';
+import { environment } from '../../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root',
 })
 export class loginService {
-  url: string = 'http://localhost:5000/lab';
+  private url = environment.API_URL;
   private _auth: any;
 
   constructor(private http: HttpClient) {}

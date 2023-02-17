@@ -13,7 +13,7 @@
           <span class="badge bg-success float-right">{{item.rol | uppercase}}</span>
           <div class="imageProfile" *ngIf="item.imageUser">
 
-            <img [src]="item.imageUser "  width="150" class=" img-fluid rounded-circle mb-1 img-thumbnail shadow-sm" alt="user-profile" #profileImage>
+            <img [src]="item.imageUser" fallback="../../../assets/images/User.png"  width="150" class=" img-fluid rounded-circle mb-1 img-thumbnail shadow-sm" alt="user-profile" #profileImage>
           </div>
           <div class="card-body">
             <h2 class="card-title">{{item.user}}</h2>
